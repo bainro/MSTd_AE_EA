@@ -6,7 +6,7 @@ This is the code accompanying the following publication:
 
 
 ## Requiremments
-- CARLsim5: https://github.com/UCI-CARL/CARLsim5
+- CARLsim6: https://github.com/UCI-CARL/CARLsim5
 - ECJ: https://github.com/GMUEClab/ecj
 - MATLAB 2017a
 
