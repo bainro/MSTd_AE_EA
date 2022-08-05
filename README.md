@@ -6,7 +6,7 @@ This is the code accompanying the following publication:
 
 
 ## Requiremments
-- CARLsim5: https://github.com/UCI-CARL/CARLsim5
+- CARLsim5: https://github.com/UCI-CARL/CARLsim5 ([this](https://github.com/UCI-CARL/CARLsim5/tree/feat/STDP_per_conn) branch)
 - ECJ: https://github.com/GMUEClab/ecj
 - MATLAB 2017a
 
