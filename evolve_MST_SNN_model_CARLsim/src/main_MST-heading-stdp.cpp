@@ -140,8 +140,8 @@ public:
 		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON); //input
 		for (unsigned int i = 0; i < numIndi; i++) {
 			// creat neuron groups
-			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON);
-			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON);
+			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON, 0, GPU_CORES);
+			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON, 0, GPU_CORES);
 
 			network->setNeuronParameters(gMST[i], REG_IZH[0], REG_IZH[1], REG_IZH[2], REG_IZH[3]);
 			network->setNeuronParameters(gInh[i], FAST_IZH[0], FAST_IZH[1], FAST_IZH[2], FAST_IZH[3]);
@@ -171,7 +171,7 @@ public:
 		// ---------------- SETUP STATE -------------------
 		// network->setupNetwork();
 		
-		PoissonRate* const poissRate = new PoissonRate(nMT);
+		PoissonRate* const poissRate = new PoissonRate(nMT, true);
 
 		// naming for monitors
 		string spk_name_prefix = "spk_MST_";
