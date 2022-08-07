@@ -392,6 +392,7 @@ int main(int argc, char* argv[]) {
 	
 	const PTI pti(argc, argv, cout, cin);
 	
+	cout << "sanity check 4 \n";
 	pti.runExperiment(experiment);
 
 	return 0;
