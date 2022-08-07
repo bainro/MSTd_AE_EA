@@ -379,16 +379,16 @@ public:
 
 
 int main(int argc, char* argv[]) {
-	cout << "sanity check";
+	cout << "sanity check \n";
 	
 	const SimMode simMode = GPU_MODE;
   	const LoggerMode verbosity = DEVELOPER; // SILENT;
 
-	cout << "sanity check 2";
+	cout << "sanity check 2 \n";
 	
   	const MSTHeadingExperiment experiment(simMode, verbosity);
 
-	cout << "sanity check 3";
+	cout << "sanity check 3 \n";
 	
 	const PTI pti(argc, argv, cout, cin);
 	
