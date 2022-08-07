@@ -379,6 +379,8 @@ public:
 
 
 int main(int argc, char* argv[]) {
+	cout << "sanity check";
+	
 	const SimMode simMode = GPU_MODE;
   	const LoggerMode verbosity = DEVELOPER; // SILENT;
 
@@ -386,6 +388,8 @@ int main(int argc, char* argv[]) {
 
 	const PTI pti(argc, argv, cout, cin);
 
+	cout << "sanity check 2";
+	
 	pti.runExperiment(experiment);
 
 	return 0;
