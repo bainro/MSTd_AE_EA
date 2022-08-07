@@ -1,4 +1,5 @@
 #include "PTI.h"
+#include <cassert>
 #include <carlsim.h>
 #include <stdio.h>
 #include <vector>
