@@ -4,10 +4,10 @@
 #include <vector>
 #include <iostream>
 #include <ctime>
-#include <cassert>
 
 #include "util.h"
 #include "helper.h"
+#include <assert.h>
 
 using namespace std;
 
