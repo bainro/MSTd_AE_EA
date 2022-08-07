@@ -138,13 +138,16 @@ public:
 		SpikeMonitor* SpikeMonMST[numIndi];
 		ConnectionMonitor* CMMtToMst[numIndi];
 		
+		cout << "sanity check 5 \n";
 		MTData = loadData(MTDataFile, nMT, totalSimTrial); // Load MT response 
-
+		cout << "sanity check 6 \n";
+		
 		// ---------------- CONFIG STATE ------------------- 
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
-
+		cout << "sanity check 7 \n";
+		
 		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON); //input
-		cout << "sanity check 5 \n";
+		cout << "sanity check 8 \n";
 		for (unsigned int i = 0; i < numIndi; i++) {
 			
 			// creat neuron groups
@@ -175,8 +178,6 @@ public:
 			network->setHomeoBaseFiringRate(gMST[i], parameters.getParameter(i,12), 0);
 			network->setHomeoBaseFiringRate(gInh[i], parameters.getParameter(i,13), 0);
 		}
-		
-		cout << "sanity check 6 \n";
 
 		// ---------------- SETUP STATE -------------------
 		// network->setupNetwork();
@@ -204,7 +205,6 @@ public:
 			network->setupNetwork();	
 		}
 
-		cout << "sanity check 7 \n";	
 		for (int i = 0; i < numIndi; i++) {
 			stringstream name_id_ss;
 			name_id_ss << i;
@@ -225,7 +225,6 @@ public:
 
 		// ---------------- RUN STATE -------------------
 
-		cout << "sanity check 8 \n";
 		shuffleTrials(totalSimTrial, numTrain, numTest, trainTrials, testTrials); 
 
 		if (!loadSimulation) {
@@ -262,7 +261,6 @@ public:
 		/******************* TESTING ***********************/ 
 		network->startTesting(); // turn off STDP-H
 
-		cout << "sanity check 9 \n";
 		std::ofstream fileFitness; 
 		string fitFileName = (result_dir_root + "fitness.txt");
     	fileFitness.open(fitFileName.c_str(), std::ofstream::out | std::ofstream::app); 
