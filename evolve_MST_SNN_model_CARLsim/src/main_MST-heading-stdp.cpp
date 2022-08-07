@@ -1,10 +1,10 @@
 #include "PTI.h"
-#include <cassert>
 #include <carlsim.h>
 #include <stdio.h>
 #include <vector>
 #include <iostream>
 #include <ctime>
+#include <cassert>
 
 #include "util.h"
 #include "helper.h"
