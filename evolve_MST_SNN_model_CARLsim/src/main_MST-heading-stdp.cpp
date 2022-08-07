@@ -23,6 +23,7 @@ public:
 
 	void run(const ParameterInstances &parameters, std::ostream &outputStream) const {
 
+		cout << "sanity check 1 \n";
 		const float REG_IZH[] = { 0.02f, 0.2f, -65.0f, 8.0f };
 		const float FAST_IZH[] = { 0.1f, 0.2f, -65.0f, 2.0f };
 
@@ -54,6 +55,7 @@ public:
 		Grid3D inhDim(nMSTDim, nMSTDim, 1);
 		int nInh = nMST; 
 
+		cout << "sanity check 2 \n";
 		// neuron groups
 		int gMT;
 		int gMST[numIndi];
@@ -93,6 +95,9 @@ public:
 		//array to store sorted MT for all test trials
 		float** testMTMatrix;
 		testMTMatrix = new float*[numTest];
+		
+	    cout << "sanity check 3 \n";
+		
 	    for (int i = 0; i < numTest; i ++) {
 	        testMTMatrix[i] = new float[nMT];
 	    }
@@ -125,6 +130,7 @@ public:
 	        popCorrCoef[i] = new float[numTest];
 	    }
 
+	    cout << "sanity check 4 \n";
 
 		// fitness scores for the two measurements
 		float popFitness[numIndi];
@@ -138,7 +144,9 @@ public:
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
 
 		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON); //input
+		cout << "sanity check 5 \n";
 		for (unsigned int i = 0; i < numIndi; i++) {
+			
 			// creat neuron groups
 			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON, 0, GPU_CORES);
 			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON, 0, GPU_CORES);
@@ -167,6 +175,8 @@ public:
 			network->setHomeoBaseFiringRate(gMST[i], parameters.getParameter(i,12), 0);
 			network->setHomeoBaseFiringRate(gInh[i], parameters.getParameter(i,13), 0);
 		}
+		
+		cout << "sanity check 6 \n";
 
 		// ---------------- SETUP STATE -------------------
 		// network->setupNetwork();
@@ -194,6 +204,7 @@ public:
 			network->setupNetwork();	
 		}
 
+		cout << "sanity check 7 \n";	
 		for (int i = 0; i < numIndi; i++) {
 			stringstream name_id_ss;
 			name_id_ss << i;
@@ -214,6 +225,7 @@ public:
 
 		// ---------------- RUN STATE -------------------
 
+		cout << "sanity check 8 \n";
 		shuffleTrials(totalSimTrial, numTrain, numTest, trainTrials, testTrials); 
 
 		if (!loadSimulation) {
@@ -250,6 +262,7 @@ public:
 		/******************* TESTING ***********************/ 
 		network->startTesting(); // turn off STDP-H
 
+		cout << "sanity check 9 \n";
 		std::ofstream fileFitness; 
 		string fitFileName = (result_dir_root + "fitness.txt");
     	fileFitness.open(fitFileName.c_str(), std::ofstream::out | std::ofstream::app); 
@@ -379,20 +392,12 @@ public:
 
 
 int main(int argc, char* argv[]) {
-	cout << "sanity check \n";
 	
 	const SimMode simMode = GPU_MODE;
   	const LoggerMode verbosity = DEVELOPER; // SILENT;
-
-	cout << "sanity check 2 \n";
-	
   	const MSTHeadingExperiment experiment(simMode, verbosity);
-
-	cout << "sanity check 3 \n";
-	
 	const PTI pti(argc, argv, cout, cin);
 	
-	cout << "sanity check 4 \n";
 	pti.runExperiment(experiment);
 
 	return 0;
