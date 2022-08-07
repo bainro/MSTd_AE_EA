@@ -384,11 +384,13 @@ int main(int argc, char* argv[]) {
 	const SimMode simMode = GPU_MODE;
   	const LoggerMode verbosity = DEVELOPER; // SILENT;
 
+	cout << "sanity check 2";
+	
   	const MSTHeadingExperiment experiment(simMode, verbosity);
 
+	cout << "sanity check 3";
+	
 	const PTI pti(argc, argv, cout, cin);
-
-	cout << "sanity check 2";
 	
 	pti.runExperiment(experiment);
 
