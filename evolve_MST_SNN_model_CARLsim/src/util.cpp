@@ -93,7 +93,7 @@ float** loadData(string file, int numRow, int numCol) {
             getline(ip, line);
             istringstream s(line);
 		
-	    cout << "debug ckpt 5 \n";
+	    cout << "hmm " << std::to_string(42) << "\n";
 		
             for (int j = 0; j < numCol; j++) {
                 getline(s, field, ',');
@@ -103,7 +103,7 @@ float** loadData(string file, int numRow, int numCol) {
         }
     }
 
-    cout << "debug ckpt 6 \n";
+    cout << "debug ckpt 5 \n";
 	
     ip.close();
     fileErrors.close();
