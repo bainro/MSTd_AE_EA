@@ -9,10 +9,10 @@ numSpeeds = 5;
 vecSpeeds = 2.^(linspace(log2(0.5), log2(16), numSpeeds));
 numDirs = 8;
 vecDirs = (0:numDirs-1)/numDirs*2*pi;
-nMT = prod(dimPx) * numSpeeds * numDirs;
 
 % initialize models
 [flow, MT] = setupModel(vecSpeeds, vecDirs);
+nMT = prod(flow.dimPx) * numSpeeds * numDirs;
 
 %% Set up parameters for generating the training and validation dataset
 origFlowTemplate = csvread('16-flow-field-type-param.csv');
@@ -44,11 +44,16 @@ for r = 1:numRep
         p(4) = normrnd(p(4), 10);
         p(5) = normrnd(p(5), 10);
 
-        [x,y,z] = sph2cartGu(p(1), p(2), p(3));
+        % [x,y,z] = sph2cartGu(p(1), p(2), p(3));
+        [x,y,z] = sph2cart(p(1), p(2), p(3));
+
+
         T = [x y z];
         TT = [p(1), p(2), p(3)];
 
-        [x,y,z] = sph2cartGu(p(4), p(5), p(6));
+        % [x,y,z] = sph2cartGu(p(4), p(5), p(6));
+        [x,y,z] = sph2cart(p(4), p(5), p(6));
+
         R = [x y z];
         RR = [p(4), p(5), p(6)];
 
@@ -69,10 +74,12 @@ flow.setDepth('backplane', struct('depth', 1));
 for i = 1:numFlows
     p = origFlowTemplate(i,:);
 
-    [x,y,z] = sph2cartGu(p(1), p(2), p(3));
+    % [x,y,z] = sph2cartGu(p(1), p(2), p(3));
+    [x,y,z] = sph2cart(p(1), p(2), p(3));
     T = [x y z];
 
-    [x,y,z] = sph2cartGu(p(4), p(5), p(6));
+    % [x,y,z] = sph2cartGu(p(4), p(5), p(6));
+    [x,y,z] = sph2cart(p(4), p(5), p(6));
     R = [x y z];
 
     [vx,vy] = flow.getFlow(T, R);
@@ -111,12 +118,14 @@ for m=1:length(modes)
         switch lower(mode)
             case 'trans'
                 % translational stimulus has zero rotation
-                [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
+                % [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
+                [x,y,z] = sph2cart(azi(s), ele(s), rad(s));
                 T = [x y z];
                 R = [0 0 0];
             case 'rot'
                 % rotational stimulus has zero translation
-                [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
+                % [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
+                [x,y,z] = sph2cart(azi(s), ele(s), rad(s));
                 T = [0 0 0];
                 R = [x y z];
         end
@@ -146,7 +155,8 @@ sampleCount = 1;
 for r = 1:numReps
     for s = 1:numel(azi)
         % translational stimulus has zero rotation
-        [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
+        % [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
+        [x,y,z] = sph2cart(azi(s), ele(s), rad(s));
         T = [x y z];
         R = [0 0 0];
 
@@ -158,7 +168,9 @@ for r = 1:numReps
         sampleCount = sampleCount + 1;
     end
 end
-csvwrite([data_dir,'headingGu2010-V-8dir-5speed.csv'], V)
+% csvwrite([data_dir,'headingGu2010-V-8dir-5speed.csv'], V)
+csvwrite(['/tmp/','headingGu2010-V-8dir-5speed.csv'], V)
+
 %% Generate dataset for analysis [Population encoding of heading]
 
 numStim = 10000;                 
