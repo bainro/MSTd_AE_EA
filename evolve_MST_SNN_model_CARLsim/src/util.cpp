@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <cmath>
+#include <cassert>
 
 #include "util.h"
 
@@ -65,18 +66,15 @@ float** loadData(string file, int numRow, int numCol) {
     for (int i = 0; i < numRow; i++) {
         out_data[i] = new float[numCol];
     }
-
-    cout << "debug ckpt 1 \n";
 	
     ofstream fileErrors;
     fileErrors.open("./results/data_file_errors.txt", ofstream::out | ofstream::app);
-    
-    cout << "debug ckpt 3 \n";
 	
     ifstream ip;
     ip.open(file.c_str());
-    
-    cout << "debug ckpt 3 \n";
+
+    cout << file.c_str() << "\n";
+    assert(false);
     
     if (ip.fail()) {
         fileErrors << file << " failed" << endl;
