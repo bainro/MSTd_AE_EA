@@ -66,17 +66,24 @@ float** loadData(string file, int numRow, int numCol) {
         out_data[i] = new float[numCol];
     }
 
+    cout << "debug ckpt 1 \n";
+	
     ofstream fileErrors;
     fileErrors.open("./results/data_file_errors.txt", ofstream::out | ofstream::app);
     
+    cout << "debug ckpt 3 \n";
+	
     ifstream ip;
     ip.open(file.c_str());
     
+    cout << "debug ckpt 3 \n";
     
     if (ip.fail()) {
         fileErrors << file << " failed" << endl;
     }
 
+    cout << "debug ckpt 4 \n";
+	
     string line, field;
     
     while (!ip.eof()) {
@@ -85,7 +92,9 @@ float** loadData(string file, int numRow, int numCol) {
 
             getline(ip, line);
             istringstream s(line);
-
+		
+	    cout << "debug ckpt 5 \n";
+		
             for (int j = 0; j < numCol; j++) {
                 getline(s, field, ',');
                 istringstream str(field);
@@ -94,6 +103,8 @@ float** loadData(string file, int numRow, int numCol) {
         }
     }
 
+    cout << "debug ckpt 6 \n";
+	
     ip.close();
     fileErrors.close();
     return out_data;
