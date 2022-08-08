@@ -181,9 +181,7 @@ public:
 			network->setHomeoBaseFiringRate(gInh[i], parameters.getParameter(i,13), 0);
 		}
 
-		// ---------------- SETUP STATE -------------------
-		// network->setupNetwork();
-		
+		// ---------------- SETUP STATE -------------------		
 		PoissonRate* const poissRate = new PoissonRate(nMT, true);
 
 		// naming for monitors
@@ -199,13 +197,9 @@ public:
 		if (loadSimulation) {
 			FILE* fId = NULL;
 			fId = fopen(sim_name.c_str(), "rb");
-
 			network->loadSimulation(fId);
-
-			network->setupNetwork();	
-		} else {
-			network->setupNetwork();	
-		}
+		} 
+		network->setupNetwork();	
 
 		for (int i = 0; i < numIndi; i++) {
 			stringstream name_id_ss;
