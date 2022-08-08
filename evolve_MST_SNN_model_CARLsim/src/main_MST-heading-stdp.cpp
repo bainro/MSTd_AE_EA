@@ -24,7 +24,6 @@ public:
 
 	void run(const ParameterInstances &parameters, std::ostream &outputStream) const {
 
-		cout << "sanity check 1 \n";
 		const float REG_IZH[] = { 0.02f, 0.2f, -65.0f, 8.0f };
 		const float FAST_IZH[] = { 0.1f, 0.2f, -65.0f, 2.0f };
 
@@ -56,7 +55,6 @@ public:
 		Grid3D inhDim(nMSTDim, nMSTDim, 1);
 		int nInh = nMST; 
 
-		cout << "sanity check 2 \n";
 		// neuron groups
 		int gMT;
 		int gMST[numIndi];
@@ -97,8 +95,6 @@ public:
 		float** testMTMatrix;
 		testMTMatrix = new float*[numTest];
 		
-	    cout << "sanity check 3 \n";
-		
 	    for (int i = 0; i < numTest; i ++) {
 	        testMTMatrix[i] = new float[nMT];
 	    }
@@ -131,25 +127,18 @@ public:
 	        popCorrCoef[i] = new float[numTest];
 	    }
 
-	    cout << "sanity check 4 \n";
-
 		// fitness scores for the two measurements
 		float popFitness[numIndi];
 
 		SpikeMonitor* SpikeMonMST[numIndi];
 		ConnectionMonitor* CMMtToMst[numIndi];
 		
-		cout << "sanity check 5 \n";
 		MTData = loadData(MTDataFile, nMT, totalSimTrial); // Load MT response 
-		cout << "sanity check 6 \n";
 		
 		// ---------------- CONFIG STATE ------------------- 
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
-		cout << "sanity check 7 \n";
-		// assert(false);
 		
 		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON, 1, GPU_CORES); //input
-		cout << "sanity check 8 \n";
 		for (unsigned int i = 0; i < numIndi; i++) {
 			
 			// creat neuron groups
