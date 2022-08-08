@@ -38,7 +38,7 @@ public:
 		float alpha; // homeostatic scaling factor
 		float T; // homeostatic time constant
 
-		string data_dir_root = "./input_data";
+		string data_dir_root = "./input_data/";
 		string result_dir_root = "./results/";
 
 		// MT group dimensions 
