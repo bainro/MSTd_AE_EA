@@ -146,7 +146,7 @@ public:
 		// ---------------- CONFIG STATE ------------------- 
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
 		cout << "sanity check 7 \n";
-		# assert(false);
+		// assert(false);
 		
 		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON); //input
 		cout << "sanity check 8 \n";
