@@ -45,7 +45,8 @@ end
 specs = zeros(numSamples, 14);
 for s=1:numSamples
     if ls(s) > 0
-		[x,y,z] = sph2cartGu(linAzi(s), linEle(s), ls(s));
+		% [x,y,z] = sph2cartGu(linAzi(s), linEle(s), ls(s));
+        [x,y,z] = sph2cart(linAzi(s), linEle(s), ls(s));
         T = [x y z];
         TT = [linAzi(s) linEle(s) ls(s)];
     else
