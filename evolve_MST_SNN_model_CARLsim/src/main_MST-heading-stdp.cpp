@@ -148,7 +148,7 @@ public:
 		cout << "sanity check 7 \n";
 		// assert(false);
 		
-		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON); //input
+		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON, 1, GPU_CORES); //input
 		cout << "sanity check 8 \n";
 		for (unsigned int i = 0; i < numIndi; i++) {
 			
