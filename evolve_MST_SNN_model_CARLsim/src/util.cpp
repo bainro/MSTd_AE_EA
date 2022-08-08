@@ -99,6 +99,7 @@ float** loadData(string file, int numRow, int numCol) {
                 getline(s, field, ',');
                 istringstream str(field);
                 str >> out_data[i][j];
+		    cout << str << "\n";	
             }
         }
     }
