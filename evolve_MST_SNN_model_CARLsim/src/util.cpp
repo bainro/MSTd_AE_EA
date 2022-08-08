@@ -93,7 +93,7 @@ float** loadData(string file, int numRow, int numCol) {
             getline(ip, line);
             istringstream s(line);
 		
-	    cout << "hmm " << std::to_string(42) << "\n";
+	    cout << "hmm " << std::to_string(i) << "\n";
 		
             for (int j = 0; j < numCol; j++) {
                 getline(s, field, ',');
