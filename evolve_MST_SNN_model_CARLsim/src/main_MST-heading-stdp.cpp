@@ -140,7 +140,7 @@ public:
 		ConnectionMonitor* CMMtToMst[numIndi];
 		
 		cout << "sanity check 5 \n";
-		//MTData = loadData(MTDataFile, nMT, totalSimTrial); // Load MT response 
+		MTData = loadData(MTDataFile, nMT, totalSimTrial); // Load MT response 
 		cout << "sanity check 6 \n";
 		
 		// ---------------- CONFIG STATE ------------------- 
