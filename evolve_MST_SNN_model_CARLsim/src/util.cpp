@@ -74,7 +74,7 @@ float** loadData(string file, int numRow, int numCol) {
     ip.open(file.c_str());
 
     cout << file.c_str() << "\n";
-    assert(false);
+    // assert(false);
     
     if (ip.fail()) {
         fileErrors << file << " failed" << endl;
