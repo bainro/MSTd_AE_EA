@@ -71,7 +71,6 @@ float** loadData(string file, int numRow, int numCol) {
     fileErrors.open("./results/data_file_errors.txt", ofstream::out | ofstream::app);
 	
     ifstream ip;
-    // cout << file.c_str() << "\n";
     ip.open(file.c_str());
     
     if (ip.fail()) {
@@ -94,8 +93,6 @@ float** loadData(string file, int numRow, int numCol) {
             }
         }
     }
-
-    cout << "HOORAY! \n";
 	
     ip.close();
     fileErrors.close();
