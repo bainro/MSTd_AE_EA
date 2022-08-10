@@ -44,15 +44,16 @@ for r = 1:numRep
         p(4) = normrnd(p(4), 10);
         p(5) = normrnd(p(5), 10);
 
-        % [x,y,z] = sph2cartGu(p(1), p(2), p(3));
-        [x,y,z] = sph2cart(p(1), p(2), p(3));
-
+        % matches Gu et al., 2006; Takahashi et al., 2007;
+        [x,y,z] = sph2cart(p(1), p(3), p(2));
+        y = -y;
 
         T = [x y z];
         TT = [p(1), p(2), p(3)];
 
-        % [x,y,z] = sph2cartGu(p(4), p(5), p(6));
-        [x,y,z] = sph2cart(p(4), p(5), p(6));
+        % matches Gu et al., 2006; Takahashi et al., 2007;
+        [x,y,z] = sph2cart(p(4), p(6), p(5));
+        y = -y;
 
         R = [x y z];
         RR = [p(4), p(5), p(6)];
@@ -74,12 +75,14 @@ flow.setDepth('backplane', struct('depth', 1));
 for i = 1:numFlows
     p = origFlowTemplate(i,:);
 
-    % [x,y,z] = sph2cartGu(p(1), p(2), p(3));
-    [x,y,z] = sph2cart(p(1), p(2), p(3));
+    % matches Gu et al., 2006; Takahashi et al., 2007;
+    [x,y,z] = sph2cart(p(1), p(3), p(2));
+    y = -y;
     T = [x y z];
 
-    % [x,y,z] = sph2cartGu(p(4), p(5), p(6));
+    % matches Gu et al., 2006; Takahashi et al., 2007;
     [x,y,z] = sph2cart(p(4), p(5), p(6));
+    y = -y;
     R = [x y z];
 
     [vx,vy] = flow.getFlow(T, R);
@@ -118,14 +121,16 @@ for m=1:length(modes)
         switch lower(mode)
             case 'trans'
                 % translational stimulus has zero rotation
-                % [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
-                [x,y,z] = sph2cart(azi(s), ele(s), rad(s));
+                % matches Gu et al., 2006; Takahashi et al., 2007;
+                [x,y,z] = sph2cart(azi(s), rad(s), ele(s));
+                y = -y;
                 T = [x y z];
                 R = [0 0 0];
             case 'rot'
                 % rotational stimulus has zero translation
-                % [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
-                [x,y,z] = sph2cart(azi(s), ele(s), rad(s));
+                % matches Gu et al., 2006; Takahashi et al., 2007;
+                [x,y,z] = sph2cart(azi(s), rad(s), ele(s));
+                y = -y;
                 T = [0 0 0];
                 R = [x y z];
         end
@@ -155,8 +160,9 @@ sampleCount = 1;
 for r = 1:numReps
     for s = 1:numel(azi)
         % translational stimulus has zero rotation
-        % [x,y,z] = sph2cartGu(azi(s), ele(s), rad(s));
-        [x,y,z] = sph2cart(azi(s), ele(s), rad(s));
+        % matches Gu et al., 2006; Takahashi et al., 2007;
+        [x,y,z] = sph2cart(azi(s), rad(s), ele(s));
+        y = -y;
         T = [x y z];
         R = [0 0 0];
 
