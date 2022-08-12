@@ -90,7 +90,7 @@ def vis_test(file="test.pfm"):
     v = flow[:,:,1]
 
     # Defining color
-    color = np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
+    color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
 
     # Creating plot
     fig, ax = plt.subplots(figsize =(14, 9))
