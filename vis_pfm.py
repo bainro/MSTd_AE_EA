@@ -81,7 +81,7 @@ def vis_test(file="test.pfm"):
 
     flow, _ = readPFM(file)
     print(flow.shape)
-    flow = flow.transpose(1,0,2)
+    # flow = flow.transpose(1,0,2)
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
     assert flow.shape[-1] == 2, "should be 2 channels :-/"
@@ -94,6 +94,8 @@ def vis_test(file="test.pfm"):
     # v = v.transpose(1,0,2)
     
     a = np.sqrt((u ** 2) * (v ** 2))
+    # normalize
+    a = a / a.max()
     _ = plt.imshow(a)
 
     # Defining color
