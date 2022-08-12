@@ -86,13 +86,23 @@ def vis_test(file="test.pfm"):
     flow = flow[:,:,:2]
     assert flow.shape[-1] == 2, "should be 2 channels :-/"
     
-    flow[::2,:,0] = 0
-    flow[:,::2,0] = 0
-    flow[::2,:,1] = 0
-    flow[:,::2,1] = 0
     
-    u = flow[:,:,0]
-    v = flow[:,:,1]
+    
+    u = np.copy(flow[:,:,0])
+    v = np.copy(flow[:,:,1])
+    
+    u_shape = u.shape
+    u = u.flatten()
+    v = v.flatten()
+    for i in range(u.shape[0]):
+        if i % 16:
+            continue
+        else:
+            u[i] = 0
+            v[i] = 0
+            
+    u = u.reshape(u_shape)
+    v = v.reshape(u_shape)
 
     # Defining color
     color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
