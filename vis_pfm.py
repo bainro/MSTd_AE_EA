@@ -96,6 +96,8 @@ def vis_test(file="test.pfm"):
     a = np.sqrt((u ** 2) * (v ** 2))
     # normalize
     a = a / a.max()
+    # maybe scale should be 0-255 ?
+    a = a * 255
     _ = plt.imshow(a)
 
     # Defining color
