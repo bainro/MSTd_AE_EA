@@ -88,9 +88,10 @@ def vis_test(file="test.pfm"):
         
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
+    print(u.shape)
     
-    u = u.transpose(1,0,2)
-    v = v.transpose(1,0,2)
+    # u = u.transpose(1,0,2)
+    # v = v.transpose(1,0,2)
     
     a = np.sqrt((u ** 2) * (v ** 2))
     _ = plt.imshow(a)
