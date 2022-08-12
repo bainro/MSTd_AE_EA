@@ -86,6 +86,9 @@ def vis_test(file="test.pfm"):
     flow = flow[:,:,:2]
     assert flow.shape[-1] == 2, "should be 2 channels :-/"
     
+    flow[::2,::2,0] = 0
+    flow[::2,::2,1] = 0
+    
     u = flow[:,:,0]
     v = flow[:,:,1]
 
