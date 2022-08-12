@@ -96,10 +96,12 @@ def vis_test(file="test.pfm"):
     fig, ax = plt.subplots(figsize =(14, 9))
     ax.quiver(X, Y, u, v, color, alpha = 1)
 
+    """
     ax.xaxis.set_ticks([])
     ax.yaxis.set_ticks([])
     ax.axis([0, 2 * np.pi, 0, 2 * np.pi])
     ax.set_aspect('equal')
+    """
 
     # show plot
     plt.show()
