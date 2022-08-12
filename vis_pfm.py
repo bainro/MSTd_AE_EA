@@ -94,10 +94,8 @@ def vis_test(file="test.pfm"):
     # v = v.transpose(1,0,2)
     
     a = np.sqrt((u ** 2) * (v ** 2))
-    # trying to see extra resolution far away where flow is small...
+    # see extra resolution far away where flow is small
     a = np.log(a)
-    # normalize
-    # a = a / a.max()
     _ = plt.imshow(a)
 
     # Defining color
