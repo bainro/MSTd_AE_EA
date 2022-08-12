@@ -84,7 +84,7 @@ def vis_test(file="test.pfm"):
     flow = flow.transpose(1,0,2)
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
-    assert flow.shape[-2] == 2, "should be 2 channels :-/"
+    assert flow.shape[-1] == 2, "should be 2 channels :-/"
     
     u = flow[:,:,0]
     v = flow[:,:,1]
