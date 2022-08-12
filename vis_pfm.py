@@ -2,7 +2,7 @@
 
 import re
 import numpy as np
-import sysimport matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 def readPFM(file):
