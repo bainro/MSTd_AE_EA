@@ -85,31 +85,19 @@ def vis_test(file="test.pfm"):
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
     assert flow.shape[-1] == 2, "should be 2 channels :-/"
-    
-    
-    
+        
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
     
-    u_shape = u.shape
-    u = u.flatten()
-    v = v.flatten()
-    for i in range(u.shape[0]):
-        if i % 16:
-            continue
-        else:
-            u[i] = 0
-            v[i] = 0
-            
-    u = u.reshape(u_shape)
-    v = v.reshape(u_shape)
+    a = np.sqrt((u ** 2) * (v ** 2))
+    _ = plt.imshow(a)
 
     # Defining color
     color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
 
     # Creating plot
-    fig, ax = plt.subplots(figsize =(14, 9))
-    ax.quiver(X, Y, u, v, color, alpha = 1)
+    # fig, ax = plt.subplots(figsize =(14, 9))
+    # ax.quiver(X, Y, u, v, color, alpha = 1)
 
     """
     ax.xaxis.set_ticks([])
