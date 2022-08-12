@@ -95,7 +95,7 @@ def vis_test(file="test.pfm"):
     
     a = np.sqrt((u ** 2) * (v ** 2))
     # see extra resolution far away where flow is small
-    a = np.log(a)
+    a = np.log(a + 1e-4) # prevent NaN
     _ = plt.imshow(a)
 
     # Defining color
