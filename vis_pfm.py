@@ -71,7 +71,7 @@ def writePFM(file, image, scale=1):
 
     image.tofile(file)
     
-vis_test(file="test.pfm"):
+def vis_test(file="test.pfm"):
     
     # @TODO remove hardcoded img dims!
     x = np.arange(0, 960, 1)
