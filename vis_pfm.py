@@ -71,17 +71,20 @@ def writePFM(file, image, scale=1):
 
     image.tofile(file)
     
-vis_test():
-    # Creating arrow
-    x = np.arange(0, 2 * np.pi + 2 * np.pi / 20,
-                  2 * np.pi / 20)
-    y = np.arange(0, 2 * np.pi + 2 * np.pi / 20,
-                  2 * np.pi / 20)
+vis_test(file="test.pfm"):
+    
+    # @TODO remove hardcoded img dims!
+    x = np.arange(0, 960, 1)
+    y = np.arange(0, 540, 1)
 
     X, Y = np.meshgrid(x, y)
 
-    u = np.sin(X)*np.cos(Y)
-    v = -np.cos(X)*np.sin(Y)
+    flow, _ = readPFM(file)
+    flow = flow[:,:,:2].transpose(1,0)
+    assert flow.shape[-2] == 2, "should be 2 channels :-/"
+    
+    u = flow[:,:,0]
+    v = flow[:,:,1]
 
     # Defining color
     color = np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
