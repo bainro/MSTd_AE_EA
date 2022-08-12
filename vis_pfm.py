@@ -80,6 +80,7 @@ def vis_test(file="test.pfm"):
     X, Y = np.meshgrid(x, y)
 
     flow, _ = readPFM(file)
+    print(flow.shape)
     flow = flow.transpose(1,0,2)
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
