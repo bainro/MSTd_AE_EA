@@ -84,15 +84,15 @@ def vis_img_flow(file="test.pfm"):
     
     import cv2
     flow_dims = (150, 150)
-    flow[:,:,0] = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-    flow[:,:,1] = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
     x = np.arange(0, flow.shape[0], 1)
     y = np.arange(0, flow.shape[1], 1)
     X, Y = np.meshgrid(x, y)
     
-    u = np.copy(flow[:,:,0])
-    v = np.copy(flow[:,:,1])
+    #u = np.copy(flow[:,:,0])
+    #v = np.copy(flow[:,:,1])
     
     a = np.sqrt((u ** 2) * (v ** 2))
     a = np.log(a + 1)
