@@ -87,10 +87,6 @@ def vis_img_flow(file="test.pfm"):
     u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
-    x = np.arange(0, flow.shape[0], 1)
-    y = np.arange(0, flow.shape[1], 1)
-    X, Y = np.meshgrid(x, y)
-    
     a = np.sqrt((u ** 2) * (v ** 2))
     a = np.log(a + 1)
     _ = plt.imshow(a)
@@ -107,14 +103,24 @@ def vis_quiver_flow(file="test.pfm"):
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
+    
+    flow_dims = (150, 150)
+    u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    
+    # every 5th element (well, in 1D) so arrow density is not absurd
+    u = u[::5, ::5, :]
+    v = v[::5, ::5, :]
 
-    u = np.copy(flow[:,:,0])
-    v = np.copy(flow[:,:,1])
     u = np.abs(u)
     v = np.abs(v)
     # see extra resolution far away where flow is small
     u = np.log(u + 1) 
     v = np.log(v + 1) 
+    
+    x = np.arange(0, u.shape[0], 1)
+    y = np.arange(0, u.shape[1], 1)
+    X, Y = np.meshgrid(x, y)
 
     # Defining color
     color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
