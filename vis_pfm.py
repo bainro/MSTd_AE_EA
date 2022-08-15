@@ -128,6 +128,8 @@ def vis_quiver_flow(file="test.pfm"):
     # Creating plot
     fig, ax = plt.subplots()
     ax.quiver(X, Y, u, v, color)
+    # trying to make top-left pt 0,0
+    plt.gca().invert_yaxis()
 
     # show plot
     plt.show()
