@@ -128,7 +128,7 @@ def vis_quiver_flow(file="test.pfm"):
     X, Y = np.meshgrid(x, y)
 
     # Defining color
-    color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
+    color = np.sqrt(u**2 + v**2).flatten()
 
     # Creating plot
     fig, ax = plt.subplots()
