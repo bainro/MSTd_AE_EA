@@ -103,9 +103,7 @@ def vis_quiver_flow(file="test.pfm"):
 
     flow, _ = readPFM(file)
     # optical flow is 2D, the z-dim is 0s anyway :)
-    flow = flow[:,:,:2]
-    assert flow.shape[-1] == 2, "should be 2 channels :-/"
-        
+    flow = flow[:,:,:2]        
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
     # see extra resolution far away where flow is small
@@ -117,7 +115,7 @@ def vis_quiver_flow(file="test.pfm"):
     color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
 
     # Creating plot
-    fig, ax = plt.subplots() # figsize =(14, 9))
+    fig, ax = plt.subplots(figsize = (14, 9))
     ax.quiver(X, Y, u, v, color)
 
     """
