@@ -80,7 +80,7 @@ def vis_img_flow(file="test.pfm"):
     h, w = flow.shape[:2]
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
-    flow = flow[new_l:new_r,:,:]
+    flow = flow[:,new_l:new_r,:]
     print(flow.shape);exit()
     
     import cv2
