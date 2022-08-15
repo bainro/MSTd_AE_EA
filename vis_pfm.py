@@ -71,7 +71,29 @@ def writePFM(file, image, scale=1):
 
     image.tofile(file)
     
-def vis_test(file="test.pfm"):
+def vis_img_flow(file="test.pfm"):
+    
+    # @TODO remove hardcoded img dims!
+    x = np.arange(0, 960, 1)
+    y = np.arange(0, 540, 1)
+    X, Y = np.meshgrid(x, y)
+
+    flow, _ = readPFM(file)
+    # optical flow is 2D, the z-dim is 0s anyway :)
+    flow = flow[:,:,:2]
+    assert flow.shape[-1] == 2, "should be 2 channels :-/"
+        
+    u = np.copy(flow[:,:,0])
+    v = np.copy(flow[:,:,1])
+    
+    a = np.sqrt((u ** 2) * (v ** 2))
+    # see extra resolution far away where flow is small
+    a = np.log(a + 1e-5) # prevent NaN
+    _ = plt.imshow(a)
+
+    plt.show()
+    
+def vis_quiver_flow(file="test.pfm"):
     
     # @TODO remove hardcoded img dims!
     x = np.arange(0, 960, 1)
@@ -80,30 +102,23 @@ def vis_test(file="test.pfm"):
     X, Y = np.meshgrid(x, y)
 
     flow, _ = readPFM(file)
-    print(flow.shape)
-    # flow = flow.transpose(1,0,2)
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
     assert flow.shape[-1] == 2, "should be 2 channels :-/"
         
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
-    print(u.shape)
-    
-    # u = u.transpose(1,0,2)
-    # v = v.transpose(1,0,2)
-    
-    a = np.sqrt((u ** 2) * (v ** 2))
     # see extra resolution far away where flow is small
-    a = np.log(a + 1e-4) # prevent NaN
-    _ = plt.imshow(a)
+    eps = 1e-5 # prevent NaN in log computation
+    u = np.log(u + eps) 
+    v = np.log(v + eps) 
 
     # Defining color
     color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
 
     # Creating plot
-    # fig, ax = plt.subplots(figsize =(14, 9))
-    # ax.quiver(X, Y, u, v, color, alpha = 1)
+    fig, ax = plt.subplots() # figsize =(14, 9))
+    ax.quiver(X, Y, u, v, color)
 
     """
     ax.xaxis.set_ticks([])
@@ -116,4 +131,4 @@ def vis_test(file="test.pfm"):
     plt.show()
     
 if __name__ == "__main__":
-    vis_test()
+    vis_quiver_flow()
