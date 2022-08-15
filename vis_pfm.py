@@ -87,8 +87,7 @@ def vis_img_flow(file="test.pfm"):
     v = np.copy(flow[:,:,1])
     
     a = np.sqrt((u ** 2) * (v ** 2))
-    # see extra resolution far away where flow is small
-    a = np.log(a + 1e-5) # prevent NaN
+    a = np.log(a + 1)
     _ = plt.imshow(a)
 
     plt.show()
