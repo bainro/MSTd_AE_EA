@@ -91,9 +91,6 @@ def vis_img_flow(file="test.pfm"):
     y = np.arange(0, flow.shape[1], 1)
     X, Y = np.meshgrid(x, y)
     
-    #u = np.copy(flow[:,:,0])
-    #v = np.copy(flow[:,:,1])
-    
     a = np.sqrt((u ** 2) * (v ** 2))
     a = np.log(a + 1)
     _ = plt.imshow(a)
