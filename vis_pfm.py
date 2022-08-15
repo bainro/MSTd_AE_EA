@@ -1,6 +1,7 @@
 # script to visualize optic flow from driving dataset: tinyurl.com/3ufzcdaa
 
 import re
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -81,8 +82,7 @@ def vis_img_flow(file="test.pfm"):
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
-    
-    import cv2
+   
     flow_dims = (150, 150)
     u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
@@ -99,15 +99,15 @@ def vis_img_flow(file="test.pfm"):
     
 def vis_quiver_flow(file="test.pfm"):
     
-    # @TODO remove hardcoded img dims!
-    x = np.arange(0, 960, 1)
-    y = np.arange(0, 540, 1)
-
-    X, Y = np.meshgrid(x, y)
-
     flow, _ = readPFM(file)
     # optical flow is 2D, the z-dim is 0s anyway :)
-    flow = flow[:,:,:2]        
+    flow = flow[:,:,:2]
+    
+    h, w = flow.shape[:2]
+    new_l = round(w/2 - h/2)
+    new_r = round(w/2 + h/2)
+    flow = flow[:,new_l:new_r,:]
+
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
     u = np.abs(u)
