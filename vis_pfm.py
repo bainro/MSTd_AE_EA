@@ -115,9 +115,8 @@ def vis_quiver_flow(file="test.pfm"):
     color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
 
     # Creating plot
-    fig, ax = plt.subplots(figsize = (14, 9))
-    print(X.shape, Y.shape, u.shape, v.shape)
-    ax.quiver(X, Y, u, v) # , color)
+    fig, ax = plt.subplots()
+    ax.quiver(X, Y, u, v, color)
 
     # show plot
     plt.show()
