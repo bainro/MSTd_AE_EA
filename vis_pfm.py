@@ -106,9 +106,8 @@ def vis_quiver_flow(file="test.pfm"):
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
     # see extra resolution far away where flow is small
-    eps = 1e-5 # prevent NaN in log computation
-    u = np.log(u + eps) 
-    v = np.log(v + eps) 
+    u = np.log(u + 1) 
+    v = np.log(v + 1) 
 
     # Defining color
     color = 1 # np.sqrt(((dx-n)/2)*2 + ((dy-n)/2)*2)
