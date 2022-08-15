@@ -105,6 +105,8 @@ def vis_quiver_flow(file="test.pfm"):
     flow = flow[:,:,:2]        
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
+    u = np.abs(u)
+    v = np.abs(v)
     # see extra resolution far away where flow is small
     u = np.log(u + 1) 
     v = np.log(v + 1) 
