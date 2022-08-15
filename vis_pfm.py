@@ -111,12 +111,17 @@ def vis_quiver_flow(file="test.pfm"):
     # every 5th element (well, in 1D) so arrow density is not absurd
     u = u[::5, ::5]
     v = v[::5, ::5]
-
+    
+    og_u = np.copy(u)
+    og_v = np.copy(v)
     u = np.abs(u)
     v = np.abs(v)
     # see extra resolution far away where flow is small
     u = np.log(u + 1) 
     v = np.log(v + 1) 
+    # reapply the neg's, which indicate direction of flow
+    u[og_u < 0] = u[og_u < 0] * -1
+    v[og_v < 0] = v[og_v < 0] * -1
     
     x = np.arange(0, u.shape[0], 1)
     y = np.arange(0, u.shape[1], 1)
