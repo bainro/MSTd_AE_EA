@@ -72,17 +72,25 @@ def writePFM(file, image, scale=1):
     image.tofile(file)
     
 def vis_img_flow(file="test.pfm"):
-    
-    # @TODO remove hardcoded img dims!
-    x = np.arange(0, 960, 1)
-    y = np.arange(0, 540, 1)
-    X, Y = np.meshgrid(x, y)
 
     flow, _ = readPFM(file)
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
-    assert flow.shape[-1] == 2, "should be 2 channels :-/"
-        
+    
+    w, h = flow.shape[:2]
+    new_l = w/2 - h/2
+    new_r = w/2 + h/2
+    flow = flow[new_l:new_r,:,:]
+    
+    import cv2
+    flow_dims = (150, 150)
+    flow[:,:,0] = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    flow[:,:,1] = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    
+    x = np.arange(0, flow.shape[0], 1)
+    y = np.arange(0, flow.shape[1], 1)
+    X, Y = np.meshgrid(x, y)
+    
     u = np.copy(flow[:,:,0])
     v = np.copy(flow[:,:,1])
     
