@@ -159,7 +159,7 @@ def flow_img(file="test.pfm", show=False):
     
     return img_from_fig(fig)
     
-def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
+def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     
     frames = []
     PFM_dir = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/into_future/left")
