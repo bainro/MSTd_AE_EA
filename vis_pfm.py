@@ -176,6 +176,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     writer = cv2.VideoWriter(v_name, fourcc, fps, (w, h))
 
     for frame in frames:
+        print("hmm")
         writer.write(frame)
 
     writer.release() 
