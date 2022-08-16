@@ -99,7 +99,7 @@ def flow_img(file="test.pfm"):
     rgb = cv2.resize(rgb, dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
     # Creating plot
-    fig, axes = plt.subplots(1, 3, figsize=(22, 6))
+    fig, axes = plt.subplots(1, 3, figsize=(25, 6))
     axes[0].imshow(rgb)
     
     flow, _ = readPFM(file)
@@ -116,7 +116,8 @@ def flow_img(file="test.pfm"):
     
     a = np.sqrt((u ** 2) * (v ** 2))
     a = np.log(a + 1)
-    axes[1].axis('off')
+    axes[1].set_xticks([])
+    axes[1].set_yticks([])
     axes[1].imshow(a)
     
     h, w = flow.shape[:2]
@@ -147,6 +148,7 @@ def flow_img(file="test.pfm"):
     color = np.sqrt(u**2 + v**2).flatten()
 
     axes[2].set_xticks([])
+    axes[2].set_yticks([])
     axes[2].quiver(X, Y, u, v, color)
     # trying to make top-left pt 0,0
     axes[2].invert_yaxis()
