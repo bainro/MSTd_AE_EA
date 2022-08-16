@@ -103,6 +103,19 @@ def flow_img(file="test.pfm"):
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
+   
+    flow_dims = (150, 150)
+    u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    
+    a = np.sqrt((u ** 2) * (v ** 2))
+    a = np.log(a + 1)
+    axes[1].imshow(a)
+    
+    h, w = flow.shape[:2]
+    new_l = round(w/2 - h/2)
+    new_r = round(w/2 + h/2)
+    flow = flow[:,new_l:new_r,:]
     
     flow_dims = (150, 150)
     u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
@@ -130,22 +143,9 @@ def flow_img(file="test.pfm"):
     # Defining color
     color = np.sqrt(u**2 + v**2).flatten()
 
-    axes[1].quiver(X, Y, u, v, color)
+    axes[2].quiver(X, Y, u, v, color)
     # trying to make top-left pt 0,0
-    axes[1].invert_yaxis()
-    
-    h, w = flow.shape[:2]
-    new_l = round(w/2 - h/2)
-    new_r = round(w/2 + h/2)
-    flow = flow[:,new_l:new_r,:]
-   
-    flow_dims = (150, 150)
-    u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-    v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-    
-    a = np.sqrt((u ** 2) * (v ** 2))
-    a = np.log(a + 1)
-    axes[2].imshow(a)
+    axes[2].invert_yaxis()
 
     plt.show()
     
