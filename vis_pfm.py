@@ -171,13 +171,13 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
             if len(frames) >= 10:
                 break    
                 
-    recording_shape = frames[0].shape[0:2]
+    recording_shape = frames[0].shape[:2]
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
     writer = cv2.VideoWriter(v_name, fourcc, fps, recording_shape)
 
     for frame in frames:
         writer.write(frame)
-        assert frame.shape == recording_shape, f"{frame.shape}, {recording_shape}"
+        assert frame.shape[:2] == recording_shape, f"{frame.shape}, {recording_shape}"
 
     cv2.destroyAllWindows()
     writer.release() 
