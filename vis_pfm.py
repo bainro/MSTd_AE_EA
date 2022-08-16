@@ -83,7 +83,7 @@ def img_from_fig(fig, dpi=180):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     return img
     
-def vis_quiver_flow(file="test.pfm"):
+def flow_img(file="test.pfm"):
     
     flow, _ = readPFM(file)
     # optical flow is 2D, the z-dim is 0s anyway :)
@@ -150,21 +150,20 @@ def make_flow_mp4(load_dir, fps, v_name):
     v_name: what to name the new video
     """
     
-    PFMs = os.path.join([load_dir, "pfms/15mm/left/fast"])
-    RGBs = os.path.join([load_dir, "cleanpass/15mm/left/fast"])
+    PFMs = os.path.join([load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/left"])
+    RGBs = os.path.join([load_dir, "frames_finalpass_webp/15mm_focallength/scene_forwards/fast/left"])
  
     frames = []
-    for of in PFMs:
+    for of_f in PFMs:
+        np_img = flow_img(of_f)
+        frames.append(np_img)
         if len(frames) >= 100:
-            break
-        if of.endswith(".png"):
-            frames.append()
-
-    
+            break    
+ 
             
     w, h = frames[0].size
     fourcc = cv.VideoWriter_fourcc('m', 'p', '4', 'v')
-    writer = cv.VideoWriter(file_path, fourcc, fps, (w, h))
+    writer = cv.VideoWriter(v_name, fourcc, fps, (w, h))
 
     for frame in frames:
         writer.write(frame)
