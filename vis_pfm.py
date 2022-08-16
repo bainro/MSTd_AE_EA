@@ -88,9 +88,10 @@ def flow_img(file="test.pfm"):
     rgb_file = rgb_file.replace("into_future/", "")
     rgb_file = rgb_file.replace(".pfm", ".webp")
     rgb = cv2.imread(rgb_file)
+    print(type(rgb))
     # Creating plot
     fig, axes = plt.subplots(1, 3)
-    axes[2].imshow(rgb)
+    axes[0].imshow(rgb)
     
     flow, _ = readPFM(file)
     # optical flow is 2D, the z-dim is 0s anyway :)
