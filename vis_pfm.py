@@ -1,4 +1,5 @@
 # script to visualize optic flow from driving dataset: tinyurl.com/3ufzcdaa
+import io
 import os
 import re
 import cv2
