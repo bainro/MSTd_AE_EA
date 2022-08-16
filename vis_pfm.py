@@ -172,7 +172,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
                 break    
                 
     recording_shape = frames[0].shape[:2]
-    fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+    fourcc = 0 # cv2.VideoWriter_fourcc(*'MJPG')
     writer = cv2.VideoWriter(v_name, fourcc, fps, recording_shape)
 
     for frame in frames:
