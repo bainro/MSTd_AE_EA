@@ -157,7 +157,7 @@ def make_flow_mp4(load_dir="~/Downloads/driving", fps=10, v_name="test.mp4"):
             if len(frames) >= 100:
                 break    
             
-    w, h = frames[0].size
+    w, h = frames[0].shape
     fourcc = cv.VideoWriter_fourcc('m', 'p', '4', 'v')
     writer = cv.VideoWriter(v_name, fourcc, fps, (w, h))
 
