@@ -84,7 +84,7 @@ def img_from_fig(fig, dpi=180):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     return img
     
-def flow_img(file="test.pfm"):
+def flow_img(file="test.pfm", show=False):
     flow_dims = (150, 150)
     
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
@@ -153,7 +153,8 @@ def flow_img(file="test.pfm"):
     # trying to make top-left pt 0,0
     axes[2].invert_yaxis()
 
-    plt.show()
+    if show:
+        plt.show()
     
     return img_from_fig(fig)
     
@@ -162,7 +163,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     frames = []
     PFM_dir = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/into_future/left")
     PFMs = os.listdir(PFM_dir)
-    for of_f in PFMs:
+    for of_f in sorted(PFMs):
         if of_f.endswith(".pfm"):
             np_img = flow_img(os.path.join(PFM_dir, of_f))
             frames.append(np_img)
