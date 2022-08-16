@@ -1,5 +1,5 @@
 # script to visualize optic flow from driving dataset: tinyurl.com/3ufzcdaa
-
+import os
 import re
 import cv2
 import numpy as np
