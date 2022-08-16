@@ -85,8 +85,7 @@ def img_from_fig(fig, dpi=180):
     
 def flow_img(file="test.pfm"):
     
-    rgb = cv2.imread(file.replace("", "."))
-    
+    rgb = cv2.imread(file.replace(".pfm", ".webp"))
     # Creating plot
     fig, axes = plt.subplots(1, 3)
     axes[2].imshow(rgb)
@@ -147,22 +146,16 @@ def flow_img(file="test.pfm"):
     
     return img_from_fig(fig)
     
-def make_flow_mp4(load_dir, fps, v_name):
-    """
-    load_dir: where the .PFMs and .WEBPs are saved
-    fps: Desired frames per second
-    v_name: what to name the new video
-    """
+def make_flow_mp4(load_dir="~/Downloads/driving", fps=10, v_name="test.mp4"):
     
-    PFMs = os.path.join([load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/left"])
- 
     frames = []
+    PFMs = os.path.join([load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/left"])
     for of_f in PFMs:
-        np_img = flow_img(of_f)
-        frames.append(np_img)
-        if len(frames) >= 100:
-            break    
- 
+        if of_f.endsWith(".pfm"):
+            np_img = flow_img(of_f)
+            frames.append(np_img)
+            if len(frames) >= 100:
+                break    
             
     w, h = frames[0].size
     fourcc = cv.VideoWriter_fourcc('m', 'p', '4', 'v')
