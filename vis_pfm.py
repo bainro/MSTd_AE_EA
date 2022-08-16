@@ -179,6 +179,8 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
         print(frames[_i].shape)
         writer.write(frame)
 
+    cv2.destroyAllWindows()
+    writer.close()
     writer.release() 
     
     
