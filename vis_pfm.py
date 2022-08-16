@@ -132,7 +132,7 @@ def flow_img(file="test.pfm"):
 
     axes[1].quiver(X, Y, u, v, color)
     # trying to make top-left pt 0,0
-    axes[1].gca().invert_yaxis()
+    axes[1].invert_yaxis()
     
     h, w = flow.shape[:2]
     new_l = round(w/2 - h/2)
