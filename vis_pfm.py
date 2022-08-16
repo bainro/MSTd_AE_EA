@@ -86,7 +86,8 @@ def img_from_fig(fig, dpi=180):
 def flow_img(file="test.pfm"):
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
     rgb_file = rgb_file.replace("into_future/", "")
-    rgb_file = rgb_file.replace(".pfm", ".webp")
+    rgb_file = rgb_file.replace("OpticalFlowIntoFuture_", "")
+    rgb_file = rgb_file.replace("_L.pfm", ".webp")
     rgb = cv2.imread(rgb_file)
     print(rgb_file)
     print(type(rgb))
