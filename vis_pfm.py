@@ -72,27 +72,6 @@ def writePFM(file, image, scale=1):
 
     image.tofile(file)
     
-def vis_img_flow(file="test.pfm"):
-
-    flow, _ = readPFM(file)
-    # optical flow is 2D, the z-dim is 0s anyway :)
-    flow = flow[:,:,:2]
-    
-    h, w = flow.shape[:2]
-    new_l = round(w/2 - h/2)
-    new_r = round(w/2 + h/2)
-    flow = flow[:,new_l:new_r,:]
-   
-    flow_dims = (150, 150)
-    u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-    v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-    
-    a = np.sqrt((u ** 2) * (v ** 2))
-    a = np.log(a + 1)
-    _ = plt.imshow(a)
-
-    plt.show()
-    
 def vis_quiver_flow(file="test.pfm"):
     
     flow, _ = readPFM(file)
@@ -131,13 +110,27 @@ def vis_quiver_flow(file="test.pfm"):
     color = np.sqrt(u**2 + v**2).flatten()
 
     # Creating plot
-    fig, ax = plt.subplots()
-    ax.quiver(X, Y, u, v, color)
+    fig, axes = plt.subplots(1, 3)
+    axes[1].quiver(X, Y, u, v, color)
     # trying to make top-left pt 0,0
-    plt.gca().invert_yaxis()
+    axes[1].gca().invert_yaxis()
+    
+    h, w = flow.shape[:2]
+    new_l = round(w/2 - h/2)
+    new_r = round(w/2 + h/2)
+    flow = flow[:,new_l:new_r,:]
+   
+    flow_dims = (150, 150)
+    u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+    
+    a = np.sqrt((u ** 2) * (v ** 2))
+    a = np.log(a + 1)
+    axes[2].imshow(a)
 
-    # show plot
     plt.show()
+    
+    return 
     
 def make_flow_mp4(load_dir, fps, v_name):
     """
@@ -146,13 +139,18 @@ def make_flow_mp4(load_dir, fps, v_name):
     v_name: what to name the new video
     """
     
-    img_files = os.path.list_dir(load_dir)
+    PFMs = os.path.join([load_dir, "pfms/15mm/left/fast"])
+    RGBs = os.path.join([load_dir, "cleanpass/15mm/left/fast"])
+ 
     frames = []
-    for fin img_files:
-        if f.endswith(".png"):
-            tmp_f = os.path.join([img_dir, f])
-            frames.append(cv2.imread(tmp_f))
+    for of in PFMs:
+        if len(frames) >= 100:
+            break
+        if of.endswith(".png"):
+            frames.append()
 
+    
+            
     w, h = frames[0].size
     fourcc = cv.VideoWriter_fourcc('m', 'p', '4', 'v')
     writer = cv.VideoWriter(file_path, fourcc, fps, (w, h))
