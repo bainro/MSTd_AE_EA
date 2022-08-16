@@ -90,7 +90,7 @@ def flow_img(file="test.pfm"):
     rgb_file = rgb_file.replace("into_future/", "")
     rgb_file = rgb_file.replace("OpticalFlowIntoFuture_", "")
     rgb_file = rgb_file.replace("_L.pfm", ".webp")
-    rgb = cv2.imread(rgb_file)
+    rgb = cv2.imread(rgb_file, mode="RGB")
     h, w = rgb.shape[:2]
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
