@@ -4,6 +4,7 @@ import os
 import re
 import cv2
 import numpy as np
+from PIL import Image
 import matplotlib.pyplot as plt
 
 
@@ -166,26 +167,13 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
     for of_f in sorted(PFMs):
         if of_f.endswith(".pfm"):
             np_img = flow_img(os.path.join(PFM_dir, of_f))
-            np_img = np_img.transpose(1,0,2)
             frames.append(np_img)
             if len(frames) >= 10:
                 break    
-                
-    recording_shape = frames[0].shape[:2]
-    fourcc = 0 # cv2.VideoWriter_fourcc(*'MJPG')
-    writer = cv2.VideoWriter(v_name, fourcc, fps, recording_shape)
-
-    from PIL import Image
     
     for frame in frames:
         img = Image.fromarray(frame, 'RGB')
-        # img.save('my.png')
-        img.show()
-        writer.write(frame)
-        assert frame.shape[:2] == recording_shape, f"frame shape is wrong!"
-
-    cv2.destroyAllWindows()
-    writer.release() 
+        img.save(f"./tmp/rgb_{n:04}.png")
     
     
 if __name__ == "__main__":
