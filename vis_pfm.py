@@ -177,7 +177,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
 
     for frame in frames:
         writer.write(frame)
-        assert frame.shape[:2] == recording_shape, f"{frame.shape}, {recording_shape}"
+        assert frame.shape[:2] == recording_shape, f"frame shape is wrong!"
 
     cv2.destroyAllWindows()
     writer.release() 
