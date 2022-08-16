@@ -158,7 +158,7 @@ def flow_img(file="test.pfm", show=False):
     
     return img_from_fig(fig)
     
-def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
+def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
     
     frames = []
     PFM_dir = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/into_future/left")
@@ -172,7 +172,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
                 break    
                 
     w, h, _c = frames[0].shape
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    fourcc = cv2.VideoWriter_fourcc(*'DIVX')
     writer = cv2.VideoWriter(v_name, fourcc, fps, (w, h))
 
     for _i, frame in enumerate(frames):
