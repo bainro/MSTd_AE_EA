@@ -170,7 +170,8 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
             if len(frames) >= 10:
                 break    
             
-    w, h, _c = frames[0].shape
+    # w, h, _c = frames[0].shape
+    h, w, _c = frames[0].shape
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     writer = cv2.VideoWriter(v_name, fourcc, fps, (w, h))
 
