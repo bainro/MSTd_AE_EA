@@ -72,6 +72,17 @@ def writePFM(file, image, scale=1):
 
     image.tofile(file)
     
+def img_from_fig(fig, dpi=180):
+    # returns an image as numpy array from figure
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", dpi=dpi)
+    buf.seek(0)
+    img_arr = np.frombuffer(buf.getvalue(), dtype=np.uint8)
+    buf.close()
+    img = cv2.imdecode(img_arr, 1)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    return img
+    
 def vis_quiver_flow(file="test.pfm"):
     
     flow, _ = readPFM(file)
@@ -130,7 +141,7 @@ def vis_quiver_flow(file="test.pfm"):
 
     plt.show()
     
-    return 
+    return img_from_fig(fig)
     
 def make_flow_mp4(load_dir, fps, v_name):
     """
