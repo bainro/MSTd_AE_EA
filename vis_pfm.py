@@ -166,13 +166,12 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
     for of_f in sorted(PFMs):
         if of_f.endswith(".pfm"):
             np_img = flow_img(os.path.join(PFM_dir, of_f))
+            np_img = np_img.transpose(1,0,2)
             frames.append(np_img)
             if len(frames) >= 10:
                 break    
-            
-    # w, h, _c = frames[0].shape
-    h, w, _c = frames[0].shape
-    print(h,w,_c);exit()
+                
+    w, h, _c = frames[0].shape
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     writer = cv2.VideoWriter(v_name, fourcc, fps, (w, h))
 
