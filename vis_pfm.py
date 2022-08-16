@@ -84,6 +84,8 @@ def img_from_fig(fig, dpi=180):
     return img
     
 def flow_img(file="test.pfm"):
+    flow_dims = (150, 150)
+    
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
     rgb_file = rgb_file.replace("into_future/", "")
     rgb_file = rgb_file.replace("OpticalFlowIntoFuture_", "")
@@ -93,6 +95,7 @@ def flow_img(file="test.pfm"):
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     rgb = rgb[:,new_l:new_r,:]
+    rgb = cv2.resize(rgb, dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
     # Creating plot
     fig, axes = plt.subplots(1, 3)
@@ -106,8 +109,7 @@ def flow_img(file="test.pfm"):
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
-   
-    flow_dims = (150, 150)
+  
     u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
@@ -119,10 +121,6 @@ def flow_img(file="test.pfm"):
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
-    
-    flow_dims = (150, 150)
-    u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-    v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
     # every 5th element (well, in 1D) so arrow density is not absurd
     u = u[::5, ::5]
