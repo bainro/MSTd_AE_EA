@@ -175,7 +175,12 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
     fourcc = 0 # cv2.VideoWriter_fourcc(*'MJPG')
     writer = cv2.VideoWriter(v_name, fourcc, fps, recording_shape)
 
+    from PIL import Image
+    
     for frame in frames:
+        img = Image.fromarray(frame, 'RGB')
+        # img.save('my.png')
+        img.show()
         writer.write(frame)
         assert frame.shape[:2] == recording_shape, f"frame shape is wrong!"
 
