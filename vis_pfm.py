@@ -146,7 +146,7 @@ def flow_img(file="test.pfm"):
     # Defining color
     color = np.sqrt(u**2 + v**2).flatten()
 
-    axes[2].axis('off')
+    axes[2].set_xticks([])
     axes[2].quiver(X, Y, u, v, color)
     # trying to make top-left pt 0,0
     axes[2].invert_yaxis()
