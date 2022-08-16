@@ -176,7 +176,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
         img = Image.fromarray(frame, 'RGB')
         img.save(f"./tmp/rgb_{i:04}.png")
     
-    os.system(f"ffmpeg -r {fps} -i rgb_%04d.png -vcodec mpeg4 -y {v_name}")
+    os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec mpeg4 -y {v_name}")
     
 if __name__ == "__main__":
     make_flow_mp4()
