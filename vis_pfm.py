@@ -85,6 +85,7 @@ def img_from_fig(fig, dpi=180):
     
 def flow_img(file="test.pfm"):
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
+    rgb_file = rgb_file.replace("into_future/", "")
     rgb_file = rgb_file.replace(".pfm", ".webp")
     rgb = cv2.imread(rgb_file)
     # Creating plot
@@ -150,7 +151,7 @@ def flow_img(file="test.pfm"):
 def make_flow_mp4(load_dir="~/Downloads/driving", fps=10, v_name="test.mp4"):
     
     frames = []
-    PFMs = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/left")
+    PFMs = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/into_future/left")
     PFMs = os.listdir(PFMs)
     for of_f in PFMs:
         if of_f.endswith(".pfm"):
