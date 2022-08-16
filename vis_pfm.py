@@ -84,8 +84,9 @@ def img_from_fig(fig, dpi=180):
     return img
     
 def flow_img(file="test.pfm"):
-    
-    rgb = cv2.imread(file.replace(".pfm", ".webp"))
+    rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
+    rgb_file = rgb_file.replace(".pfm", ".webp")
+    rgb = cv2.imread(rgb_file)
     # Creating plot
     fig, axes = plt.subplots(1, 3)
     axes[2].imshow(rgb)
