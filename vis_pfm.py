@@ -170,7 +170,8 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
             frames.append(np_img)
             if len(frames) >= 10:
                 break    
-    
+
+    os.mkdir("./tmp")
     for i, frame in enumerate(frames):
         img = Image.fromarray(frame, 'RGB')
         img.save(f"./tmp/rgb_{i:04}.png")
