@@ -175,12 +175,10 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.avi"):
     fourcc = cv2.VideoWriter_fourcc(*'DIVX')
     writer = cv2.VideoWriter(v_name, fourcc, fps, (w, h))
 
-    for _i, frame in enumerate(frames):
-        print(frames[_i].shape)
+    for frame in frames:
         writer.write(frame)
 
     cv2.destroyAllWindows()
-    writer.close()
     writer.release() 
     
     
