@@ -149,7 +149,7 @@ def flow_img(file="test.pfm"):
 def make_flow_mp4(load_dir="~/Downloads/driving", fps=10, v_name="test.mp4"):
     
     frames = []
-    PFMs = os.path.join([load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/left"])
+    PFMs = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/left")
     for of_f in PFMs:
         if of_f.endsWith(".pfm"):
             np_img = flow_img(of_f)
