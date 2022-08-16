@@ -85,6 +85,12 @@ def img_from_fig(fig, dpi=180):
     
 def flow_img(file="test.pfm"):
     
+    rgb = cv2.imread(file.replace("", "."))
+    
+    # Creating plot
+    fig, axes = plt.subplots(1, 3)
+    axes[2].imshow(rgb)
+    
     flow, _ = readPFM(file)
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
@@ -120,8 +126,6 @@ def flow_img(file="test.pfm"):
     # Defining color
     color = np.sqrt(u**2 + v**2).flatten()
 
-    # Creating plot
-    fig, axes = plt.subplots(1, 3)
     axes[1].quiver(X, Y, u, v, color)
     # trying to make top-left pt 0,0
     axes[1].gca().invert_yaxis()
@@ -151,7 +155,6 @@ def make_flow_mp4(load_dir, fps, v_name):
     """
     
     PFMs = os.path.join([load_dir, "optical_flow/15mm_focallength/scene_forwards/fast/left"])
-    RGBs = os.path.join([load_dir, "frames_finalpass_webp/15mm_focallength/scene_forwards/fast/left"])
  
     frames = []
     for of_f in PFMs:
