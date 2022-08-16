@@ -99,7 +99,7 @@ def flow_img(file="test.pfm"):
     rgb = cv2.resize(rgb, dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
     # Creating plot
-    fig, axes = plt.subplots(1, 3, figsize=(25, 6))
+    fig, axes = plt.subplots(1, 3, figsize=(35, 6))
     axes[0].imshow(rgb)
     
     flow, _ = readPFM(file)
