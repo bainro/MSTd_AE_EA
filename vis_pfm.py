@@ -89,8 +89,11 @@ def flow_img(file="test.pfm"):
     rgb_file = rgb_file.replace("OpticalFlowIntoFuture_", "")
     rgb_file = rgb_file.replace("_L.pfm", ".webp")
     rgb = cv2.imread(rgb_file)
-    print(rgb_file)
-    print(type(rgb))
+    h, w = rgb.shape[:2]
+    new_l = round(w/2 - h/2)
+    new_r = round(w/2 + h/2)
+    rgb = rgb[:,new_l:new_r,:]
+    
     # Creating plot
     fig, axes = plt.subplots(1, 3)
     axes[0].imshow(rgb)
