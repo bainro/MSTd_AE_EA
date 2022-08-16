@@ -139,5 +139,29 @@ def vis_quiver_flow(file="test.pfm"):
     # show plot
     plt.show()
     
+def make_flow_mp4(load_dir, fps, v_name):
+    """
+    load_dir: where the .PFMs and .WEBPs are saved
+    fps: Desired frames per second
+    v_name: what to name the new video
+    """
+    
+    img_files = os.path.list_dir(load_dir)
+    frames = []
+    for fin img_files:
+        if f.endswith(".png"):
+            tmp_f = os.path.join([img_dir, f])
+            frames.append(cv2.imread(tmp_f))
+
+    w, h = frames[0].size
+    fourcc = cv.VideoWriter_fourcc('m', 'p', '4', 'v')
+    writer = cv.VideoWriter(file_path, fourcc, fps, (w, h))
+
+    for frame in frames:
+        writer.write(frame)
+
+    writer.release() 
+    
+    
 if __name__ == "__main__":
-    vis_quiver_flow()
+    make_flow_mp4()
