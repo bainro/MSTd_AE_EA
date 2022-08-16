@@ -167,7 +167,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
         if of_f.endswith(".pfm"):
             np_img = flow_img(os.path.join(PFM_dir, of_f))
             frames.append(np_img)
-            if len(frames) >= 100:
+            if len(frames) >= 10:
                 break    
             
     w, h, _c = frames[0].shape
