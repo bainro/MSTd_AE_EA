@@ -188,7 +188,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
     # os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec mpeg4 -y {v_name} -b:v 2M")
-    os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -c:v libx264 crf 51 -y {v_name}")
+    os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -c:v libx264 -crf 51 -y {v_name}")
     
 if __name__ == "__main__":
     make_flow_mp4()
