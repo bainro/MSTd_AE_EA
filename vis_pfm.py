@@ -177,8 +177,8 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
             np_img = np_img[175:-175,:,:]
             frames.append(np_img)
             # useful for debugging
-            # if len(frames) >= 10:
-                # break    
+            if len(frames) >= 10:
+                break    
 
     os.makedirs("./tmp", exist_ok=True)
     for i, frame in enumerate(frames):
