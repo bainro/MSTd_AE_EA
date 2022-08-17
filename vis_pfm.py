@@ -102,6 +102,7 @@ def flow_img(file="test.pfm", show=False):
     
     # Creating plot
     fig, axes = plt.subplots(1, 3, figsize=(16, 5.2))
+    axes[0].set_title("RGB")
     axes[0].imshow(rgb)
     
     flow, _ = readPFM(file)
@@ -120,6 +121,7 @@ def flow_img(file="test.pfm", show=False):
     a = np.log(a + 1)
     axes[1].set_xticks([])
     axes[1].set_yticks([])
+    axes[1].set_title("L2 Norm Optical Flow")
     axes[1].imshow(a)
     
     h, w = flow.shape[:2]
@@ -141,6 +143,9 @@ def flow_img(file="test.pfm", show=False):
     # reapply the neg's, which indicate direction of flow
     u[og_u < 0] = u[og_u < 0] * -1
     v[og_v < 0] = v[og_v < 0] * -1
+    # arrows were flipped across both axes
+    u *= -1
+    v *= -1
     
     x = np.arange(0, u.shape[0], 1)
     y = np.arange(0, u.shape[1], 1)
@@ -150,6 +155,7 @@ def flow_img(file="test.pfm", show=False):
     color = np.sqrt(u**2 + v**2).flatten()
 
     axes[2].axis("off")
+    axes[2].set_title("Optical Flow as Vector Field")
     axes[2].quiver(X, Y, u, v, color)
     # trying to make top-left pt 0,0
     axes[2].invert_yaxis()
@@ -169,8 +175,8 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
             np_img = flow_img(os.path.join(PFM_dir, of_f))
             frames.append(np_img)
             # useful for debugging
-            # if len(frames) >= 10:
-                # break    
+            if len(frames) >= 10:
+                break    
 
     os.makedirs("./tmp", exist_ok=True)
     for i, frame in enumerate(frames):
