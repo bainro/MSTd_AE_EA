@@ -102,7 +102,7 @@ def flow_img(file="test.pfm", show=False):
     
     # Creating plot
     fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
-    axes[0].set_title("RGB", y=1.05)
+    axes[0].set_title("RGB", y=1.025)
     axes[0].imshow(rgb)
     
     flow, _ = readPFM(file)
@@ -121,7 +121,7 @@ def flow_img(file="test.pfm", show=False):
     a = np.log(a + 1)
     axes[1].set_xticks([])
     axes[1].set_yticks([])
-    axes[1].set_title("L2 Norm Optical Flow", y=1.0)
+    axes[1].set_title("L2 Norm Optical Flow", y=1.02)
     axes[1].imshow(a)
     
     h, w = flow.shape[:2]
