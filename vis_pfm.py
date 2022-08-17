@@ -174,7 +174,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
         if of_f.endswith(".pfm"):
             np_img = flow_img(os.path.join(PFM_dir, of_f))
             # trim white borders along left and right side
-            np_img = np_img[175:-175,:,:]
+            np_img = np_img[10:-10,175:-175,:]
             frames.append(np_img)
             # useful for debugging
             if len(frames) >= 10:
