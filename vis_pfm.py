@@ -121,7 +121,7 @@ def flow_img(file="test.pfm", show=False):
     a = np.log(a + 1)
     axes[1].set_xticks([])
     axes[1].set_yticks([])
-    axes[1].set_title("L2 Norm Optical Flow", y=1.02)
+    axes[1].set_title("L2 Norm Optical Flow", y=1.025)
     axes[1].imshow(a)
     
     h, w = flow.shape[:2]
@@ -175,8 +175,8 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
             np_img = flow_img(os.path.join(PFM_dir, of_f))
             frames.append(np_img)
             # useful for debugging
-            if len(frames) >= 10:
-                break    
+            # if len(frames) >= 10:
+                # break    
 
     os.makedirs("./tmp", exist_ok=True)
     for i, frame in enumerate(frames):
