@@ -166,7 +166,7 @@ def flow_img(file="test.pfm", show=False):
     return img_from_fig(fig)
     
 def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
-    
+    '''
     frames = []
     PFM_dir = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/slow/into_future/left")
     PFMs = os.listdir(PFM_dir)
@@ -184,9 +184,11 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     for i, frame in enumerate(frames):
         img = Image.fromarray(frame, 'RGB')
         img.save(f"./tmp/rgb_{i:04}.png")
+    '''
     
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
-    os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec mpeg4 -y {v_name} -b:v 2M")
+    # os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec mpeg4 -y {v_name} -b:v 2M")
+    os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -c:v libx264 crf 51 -y {v_name}")
     
 if __name__ == "__main__":
     make_flow_mp4()
