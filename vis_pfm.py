@@ -101,7 +101,7 @@ def flow_img(file="test.pfm", show=False):
     rgb = cv2.resize(rgb, dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
     # Creating plot
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5.2))
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
     axes[0].set_title("RGB")
     axes[0].imshow(rgb)
     
