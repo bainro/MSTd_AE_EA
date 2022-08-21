@@ -4,6 +4,7 @@ import os
 import re
 import csv 
 import cv2
+import math
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -189,18 +190,19 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
     
 def dir_response(x, y, θ_pref):
-    # eq 3: d(x, y; θ_pref) = exp(σ_theta * (cos(θ(x,y) − θ_pref) − 1)) 
-    pass
+    σ_theta = 3.0
+    angle_x_y = θ(x,y) # @TODO fix!!!
+    return np.exp(σ_theta * (math.cos(angle_x_y − θ_pref) − 1)) 
 
 def speed_response(x, y, ρ_pref):
-    # eq 4: s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2) 
-    pass
+    σ = 1.16
+    s0 = 0.33
+    # should be L2 norm?
+    speed_x_y = ρ(x,y) # @TODO fix!!! 
+    return np.exp(−np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     
 def make_flow_csv(load_dir="./driving"):
     flow_dims = (150, 150)
-    sigma = 1.16
-    s0 = 0.33
-    σ_theta = 3.0
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
     # units: degrees / sec
@@ -229,12 +231,15 @@ def make_flow_csv(load_dir="./driving"):
             # reduce image resolution
             u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+            u = u.flatten()
+            v = v.flatten()
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
-            # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
             for θ_pref in θ_prefs:
-                pass
-            for ρ_pref in ρ_prefs:
-                pass
+                for ρ_pref in ρ_prefs:
+                    for x, y in zip(u, v):
+                        # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
+                        R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
+                        trial.append(R_MT)
             rows.append(trial)
     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
