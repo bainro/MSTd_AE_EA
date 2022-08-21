@@ -47,7 +47,7 @@ public:
 		int nMT = gridDim * gridDim * nNeuronPerPixel; 
 
 		// MST group dimensions 
-		int nMSTDim = 8; 
+		int nMSTDim = 12; 
 		Grid3D MSTDim(nMSTDim, nMSTDim, 1);
 		int nMST = nMSTDim * nMSTDim; 
 		
@@ -79,7 +79,7 @@ public:
 		// training and testing parameters
 		int totalSimTrial = 3200;
 		int numTrain = 2800;
-		int numTest = totalSimTrial - numTrain;
+		int numTest = 400;
 		int trial;
 		// arrays to store randomized test and train indices
 		int trainTrials[numTrain];
