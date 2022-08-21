@@ -187,5 +187,14 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
     
+def make_flow_csv():
+    # read all 800 flow files from:
+    #   ./driving/optical_flow/15mm_focallength/scene_forwards/slow/into_future/left
+    # then read the "right" ones, then same loop for scene_backwards (all vectors will just be inverted?)
+    #   should end up with 3.2k data instances / files!
+    # will then save into csv wh/ each line is all MT neurons (so 150x150x40 ?) for a "trial"
+    pass
+    
 if __name__ == "__main__":
-    make_flow_mp4()
+    # make_flow_mp4()
+    make_flow_csv()
