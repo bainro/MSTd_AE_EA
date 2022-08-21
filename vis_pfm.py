@@ -194,9 +194,9 @@ def make_flow_csv():
     #   should end up with 3.2k data instances / files!
     # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
     # [2] R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-    # [3] d(x, y; θ_pref) = exp(σ_theta(cos(θ(x,y) − θ_pref) − 1)) 
+    # [3] d(x, y; θ_pref) = exp(σ_theta * (cos(θ(x,y) − θ_pref) − 1)) 
     # [4] s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2)
-    # from paper: sigma = 1.16; s0 = 0.33; σ_theta = 3 (?); 
+    # from paper: sigma = 1.16; s0 = 0.33; σ_theta = 3.0; 
     # look @ Fig1B & Fig1C to figure out the _pref parameters
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     pass
