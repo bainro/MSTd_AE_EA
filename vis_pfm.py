@@ -192,7 +192,11 @@ def make_flow_csv():
     #   ./driving/optical_flow/15mm_focallength/scene_forwards/slow/into_future/left
     # then read the "right" ones, then same loop for scene_backwards (all vectors will just be inverted?)
     #   should end up with 3.2k data instances / files!
-    # will then save into csv wh/ each line is all MT neurons (so 150x150x40 ?) for a "trial"
+    # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
+    # [2] R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
+    # [3] d(x, y; θ_pref) = exp(σ_theta( cos(θ(x,y) − θ_pref) −1)) 
+    # [4] s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2)
+    # will then save into csv wh/ each line is all MT neurons for a "trial"
     pass
     
 if __name__ == "__main__":
