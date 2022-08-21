@@ -187,20 +187,34 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
     
-def make_flow_csv():
-    # read all 800 flow files from:
-    #   ./driving/optical_flow/15mm_focallength/scene_forwards/slow/into_future/left
-    # then read the "right" ones, then same loop for scene_backwards (all vectors will just be inverted?)
-    #   should end up with 3.2k data instances / files!
-    # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
-    # [2] R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-    # [3] d(x, y; θ_pref) = exp(σ_theta * (cos(θ(x,y) − θ_pref) − 1)) 
-    # [4] s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2)
-    # from paper: sigma = 1.16; s0 = 0.33; σ_theta = 3.0; 
-    # θ_pref: [0, 45, 90, 135, 180, 225, 270, 315] deg
-    # ρ_pref: [0.5, 4.375, 8.25, 12.125, 16] deg/sec
+def make_flow_csv(load_dir="./driving"):
+    sigma = 1.16
+    s0 = 0.33
+    σ_theta = 3.0
+    # units: degrees
+    θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
+    # units: degrees / sec
+    ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
+    
+    # left & right cameras in both forward & backwards time directions (~3.2k files)
+    left_forward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/slow/into_future/left")
+    PFMs = os.listdir(left_forward)
+    right_forward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/slow/into_future/right")
+    PFMs += os.listdir(right_forward)
+    left_backward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left")
+    PFMs += os.listdir(left_backward)
+    right_backward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right")
+    PFMs += os.listdir(right_backward)
+    for of_f in sorted(PFMs):
+        if of_f.endswith(".pfm"):
+            print("lol")
+    
+            # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
+            # [2] R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
+            # [3] d(x, y; θ_pref) = exp(σ_theta * (cos(θ(x,y) − θ_pref) − 1)) 
+            # [4] s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2) 
+    
     # will then save into csv wh/ each line is all MT neurons for a "trial"
-    pass
     
 if __name__ == "__main__":
     # make_flow_mp4()
