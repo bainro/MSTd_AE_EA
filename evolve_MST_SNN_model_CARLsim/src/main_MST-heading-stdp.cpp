@@ -73,7 +73,7 @@ public:
 		float poissBaseRate = 20.0f;
 		float targetMaxFR = 250.0f;
 
-		string dataFile = "V-8dir-5speed.csv";
+		string dataFile = "driving-8dir-5speed.csv";
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
