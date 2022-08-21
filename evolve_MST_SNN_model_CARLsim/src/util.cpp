@@ -143,29 +143,6 @@ float calcPopCorrCoef(float* x,float* y, int length)
 	return res;
 }
 
-void calcCorrCoef(float** X, float** Y, int numRow, int numCol, float* corrCoef) {
-    float sub=-1.0e-20;// number to avoide division with zero
-    float meanX, meanY, sumXX, sumYY, sumXY;
-
-    for (unsigned int i = 0; i < numCol; i ++) {
-        meanX = meanY = 0.0;
-        for (unsigned int j = 0; j < numRow; j ++) {
-            meanX += X[j][i];
-            meanY += Y[j][i];
-        }
-        meanX /= numRow;
-        meanY /= numRow;
-
-        sumXX = sumYY = sumXY = 0.0;
-        for (unsigned int j = 0; j < numRow; j ++) {
-            sumXX += (X[j][i] - meanX) * (X[j][i] - meanX);
-            sumYY += (Y[j][i] - meanY) * (Y[j][i] - meanY);
-            sumXY += (X[j][i] - meanX) * (Y[j][i] - meanY);
-        }
-        corrCoef[i] = sumXY / (sqrt(sumXX * sumYY) + sub);
-    }
-}
-
 float calcCorr(float** X, float** Y, int numRow, int numCol) {
     /*  correlation of two 2D matrices */
     float corrCoef;
