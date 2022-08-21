@@ -188,7 +188,16 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
     
+def dir_response(x, y, θ_pref):
+    # eq 3: d(x, y; θ_pref) = exp(σ_theta * (cos(θ(x,y) − θ_pref) − 1)) 
+    pass
+
+def speed_response(x, y, ρ_pref):
+    # eq 4: s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2) 
+    pass
+    
 def make_flow_csv(load_dir="./driving"):
+    flow_dims = (150, 150)
     sigma = 1.16
     s0 = 0.33
     σ_theta = 3.0
@@ -206,16 +215,33 @@ def make_flow_csv(load_dir="./driving"):
     PFMs += os.listdir(left_backward)
     right_backward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right")
     PFMs += os.listdir(right_backward)
+    rows = []
     for of_f in sorted(PFMs):
         if of_f.endswith(".pfm"):
-            print("lol")
-    
+            trial = []
+            flow, _ = readPFM(file)
+            flow = flow[:,:,:2]
+            # crop to 1:1 aspect ratio
+            h, w = flow.shape[:2]
+            new_l = round(w/2 - h/2)
+            new_r = round(w/2 + h/2)
+            flow = flow[:,new_l:new_r,:]
+            # reduce image resolution
+            u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
+            v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
-            # [2] R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-            # [3] d(x, y; θ_pref) = exp(σ_theta * (cos(θ(x,y) − θ_pref) − 1)) 
-            # [4] s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2) 
+            # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
+            for θ_pref in θ_prefs:
+                pass
+            for ρ_pref in ρ_prefs:
+                pass
+            rows.append(trial)
     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
+    with open("./driving-8dir-5speed.csv", 'w') as csv_f: 
+        csv_w = csv.writer(csv_f) 
+        # csv_w.writerow(fields)  
+        csv_w.writerows(rows)
     
 if __name__ == "__main__":
     # make_flow_mp4()
