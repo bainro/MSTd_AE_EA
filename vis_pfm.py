@@ -197,7 +197,8 @@ def make_flow_csv():
     # [3] d(x, y; θ_pref) = exp(σ_theta * (cos(θ(x,y) − θ_pref) − 1)) 
     # [4] s(x, y; ρ_pref) = exp(−log(ρ(x,y) + s0 / ρ_pref + s0) ** 2 / 2σ2)
     # from paper: sigma = 1.16; s0 = 0.33; σ_theta = 3.0; 
-    # look @ Fig1B & Fig1C to figure out the _pref parameters
+    # θ_pref: [0, 45, 90, 135, 180, 225, 270, 315] deg
+    # ρ_pref: [0.5, 4.375, 8.25, 12.125, 16] deg/sec
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     pass
     
