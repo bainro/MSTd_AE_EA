@@ -254,6 +254,7 @@ def make_flow_csv(load_dir="./driving"):
     with open("./driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
         # csv_w.writerow(fields)  
+        # @TODO still need to normalize!
         csv_w.writerows(rows)
     
 if __name__ == "__main__":
