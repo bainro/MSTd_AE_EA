@@ -191,14 +191,14 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     
 def dir_response(x, y, θ_pref):
     σ_theta = 3.0
-    angle_x_y = θ(x,y) # @TODO fix!!!
+    # matching here: tinyurl.com/jk7kahzd
+    angle_x_y = math.atan2(y, x)
     return np.exp(σ_theta * (math.cos(angle_x_y − θ_pref) − 1)) 
 
 def speed_response(x, y, ρ_pref):
     σ = 1.16
     s0 = 0.33
-    # should be L2 norm?
-    speed_x_y = ρ(x,y) # @TODO fix!!! 
+    speed_x_y = np.sqrt(x**2 + y**2)
     return np.exp(−np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     
 def make_flow_csv(load_dir="./driving"):
