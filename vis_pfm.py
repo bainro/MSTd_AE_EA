@@ -261,7 +261,7 @@ def make_flow_csv(load_dir="./driving"):
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                     R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
                     trial.append(R_MT)
-            assert len(trial) == n_trial_eles, "number of trial elements wrong!"
+            assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
             rows.append(trial)
     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
