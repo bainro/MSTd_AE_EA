@@ -194,7 +194,7 @@ def dir_response(x, y, θ_pref):
     # matching here: tinyurl.com/jk7kahzd
     angle_x_y = math.atan2(y, x)
     result = np.exp(σ_theta * (math.cos(angle_x_y − θ_pref) − 1)) 
-    assert result >= 0 and result <= 1, "speed_response() result out of range!"
+    assert result >= 0 and result <= 1, "dir_response() result out of range!"
     return result
 
 def speed_response(x, y, ρ_pref):
