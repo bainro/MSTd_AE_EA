@@ -232,10 +232,10 @@ def make_flow_csv(load_dir="./driving"):
     right_backward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right")
     PFMs += os.listdir(right_backward)
     rows = []
-    for of_f in sorted(PFMs):
-        if of_f.endswith(".pfm"):
+    for of_file in sorted(PFMs):
+        if of_file.endswith(".pfm"):
             trial = []
-            flow, _ = readPFM(file)
+            flow, _ = readPFM(of_file)
             flow = flow[:,:,:2]
             # crop to 1:1 aspect ratio
             h, w = flow.shape[:2]
