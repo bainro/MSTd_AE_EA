@@ -193,7 +193,7 @@ def dir_response(x, y, θ_pref):
     σ_theta = 3.0
     # matching here: tinyurl.com/jk7kahzd
     angle_x_y = math.atan2(y, x)
-    result = np.exp(σ_theta * (math.cos(angle_x_y - θ_pref) − 1)) 
+    result = np.exp(σ_theta * (math.cos(angle_x_y - θ_pref) - 1)) 
     assert result >= 0 and result <= 1, "dir_response() result out of range!"
     return result
 
