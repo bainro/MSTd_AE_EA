@@ -251,8 +251,8 @@ def make_flow_csv(load_dir="./driving"):
             # reduce image resolution
             u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-            u = u.flatten()
-            v = v.flatten()
+            x = u.flatten()
+            y = v.flatten()
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
             # for x, y in zip(u, v):
             for θ_pref in θ_prefs:
