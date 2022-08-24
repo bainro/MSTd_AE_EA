@@ -193,7 +193,9 @@ def dir_response(x, y, θ_pref):
     σ_theta = 3.0
     # matching here: tinyurl.com/jk7kahzd
     angle_x_y = math.atan2(y, x)
-    return np.exp(σ_theta * (math.cos(angle_x_y − θ_pref) − 1)) 
+    result = np.exp(σ_theta * (math.cos(angle_x_y − θ_pref) − 1)) 
+    assert result >= 0 and result <= 1, "speed_response() result out of range!"
+    return result
 
 def speed_response(x, y, ρ_pref):
     σ = 1.16
@@ -207,14 +209,15 @@ def speed_response(x, y, ρ_pref):
     x *= FPS
     y *= FPS
     speed_x_y = np.sqrt(x**2 + y**2)
-    # @TODO figure out what gainIO & betaIO values were used:
-    # https://github.com/bainro/MSTd_AE_EA/blob/main/matlab_scripts/GenerateInputStim/ModelMT.m#L25
-    return np.exp(−np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
+    result = np.exp(−np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
+    assert result >= 0 and result <= 1, "speed_response() result out of range!"
+    return result
     
 def make_flow_csv(load_dir="./driving"):
     flow_dims = (150, 150)
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
+    # @TODO is this even the correct xtick values???
     # units: degrees / sec
     ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
     
@@ -247,6 +250,8 @@ def make_flow_csv(load_dir="./driving"):
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
                     for x, y in zip(u, v):
+                        # @TODO figure out what gainIO & betaIO values were used:
+                        # https://github.com/bainro/MSTd_AE_EA/blob/main/matlab_scripts/GenerateInputStim/ModelMT.m#L25
                         # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                         R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
                         trial.append(R_MT)
