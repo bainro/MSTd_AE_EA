@@ -222,16 +222,18 @@ def make_flow_csv(load_dir="./driving"):
     # units: degrees / sec
     ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
     
-    # left & right cameras in both forward & backwards time directions (~3.2k files)
-    left_forward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/slow/into_future/left")
-    PFMs = os.listdir(left_forward)
-    right_forward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/slow/into_future/right")
-    PFMs += os.listdir(right_forward)
-    left_backward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left")
-    PFMs += os.listdir(left_backward)
-    right_backward = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right")
-    PFMs += os.listdir(right_backward)
     rows = []
+    PFMs = []
+    # left & right cameras in both forward & backwards time directions (~3.2k files)
+    PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/left",
+                "optical_flow/15mm_focallength/scene_forwards/slow/into_future/right",
+                "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left",
+                "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right"]
+    for dir in PFM_dirs:
+        full_path = os.path.join(load_dir, dir)
+        for pfm_file in os.listdir(full_path):
+            PFMs.append(os.path.join(full_path, pfm_file))
+    
     for of_file in sorted(PFMs):
         if of_file.endswith(".pfm"):
             trial = []
