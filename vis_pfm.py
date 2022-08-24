@@ -6,6 +6,7 @@ import csv
 import cv2
 import math
 import numpy as np
+from tqdm import tqdm
 from PIL import Image
 import matplotlib.pyplot as plt
 
@@ -234,7 +235,7 @@ def make_flow_csv(load_dir="./driving"):
         for pfm_file in os.listdir(full_path):
             PFMs.append(os.path.join(full_path, pfm_file))
     
-    for of_file in sorted(PFMs):
+    for of_file in tqdm(sorted(PFMs)):
         if of_file.endswith(".pfm"):
             trial = []
             flow, _ = readPFM(of_file)
