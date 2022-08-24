@@ -250,8 +250,6 @@ def make_flow_csv(load_dir="./driving"):
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
                     for x, y in zip(u, v):
-                        # @TODO figure out what gainIO & betaIO values were used:
-                        # https://github.com/bainro/MSTd_AE_EA/blob/main/matlab_scripts/GenerateInputStim/ModelMT.m#L25
                         # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                         R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
                         trial.append(R_MT)
