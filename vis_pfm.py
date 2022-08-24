@@ -195,7 +195,7 @@ def dir_response(x, y, θ_pref):
     # matching here: tinyurl.com/jk7kahzd
     angle_x_y = math.atan2(y, x)
     result = np.exp(σ_theta * (math.cos(angle_x_y - θ_pref) - 1)) 
-    assert result >= 0 and result <= 1, "dir_response() result out of range!"
+    # assert result >= 0 and result <= 1, "dir_response() result out of range!"
     return result
 
 def speed_response(x, y, ρ_pref):
@@ -211,7 +211,7 @@ def speed_response(x, y, ρ_pref):
     y *= FPS
     speed_x_y = np.sqrt(x**2 + y**2)
     result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
-    assert result >= 0 and result <= 1, "speed_response() result out of range!"
+    # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
     
 def make_flow_csv(load_dir="./driving"):
@@ -254,12 +254,12 @@ def make_flow_csv(load_dir="./driving"):
             u = u.flatten()
             v = v.flatten()
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
-            for x, y in zip(u, v):
-                for θ_pref in θ_prefs:
-                    for ρ_pref in ρ_prefs:
-                        # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                        R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
-                        trial.append(R_MT)
+            # for x, y in zip(u, v):
+            for θ_pref in θ_prefs:
+                for ρ_pref in ρ_prefs:
+                    # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
+                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
+                    trial.append(R_MT)
             assert len(trial) == n_trial_eles, "number of trial elements wrong!"
             rows.append(trial)
     
