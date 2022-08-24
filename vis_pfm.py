@@ -238,8 +238,6 @@ def make_flow_csv(load_dir="./driving"):
         full_path = os.path.join(load_dir, dir)
         for pfm_file in os.listdir(full_path):
             PFMs.append(os.path.join(full_path, pfm_file))
-        # @TODO: remove, as this is a quick way to test how only 800 training flows does
-        break
     
     for of_file in tqdm(sorted(PFMs)):
         if of_file.endswith(".pfm"):
