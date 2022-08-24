@@ -222,6 +222,9 @@ def make_flow_csv(load_dir="./driving"):
     # https://github.com/bainro/MSTd_AE_EA/blob/main/matlab_scripts/GenerateInputStim/generateInputStim.m#L9
     # units: degrees / sec
     ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
+    flow_dims = list(flow_dims)
+    n_trial_eles = flow_dims[0] * flow_dims[1] * len(θ_prefs) * len(ρ_prefs)
+    flow_dims = tuple(flow_dims)
     
     rows = []
     PFMs = []
@@ -257,6 +260,7 @@ def make_flow_csv(load_dir="./driving"):
                         # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                         R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
                         trial.append(R_MT)
+            assert len(trial) == n_trial_eles, "# of trial elements wrong!"
             rows.append(trial)
     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
