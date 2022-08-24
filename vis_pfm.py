@@ -210,6 +210,7 @@ def speed_response(x, y, ρ_pref):
     x *= FPS
     y *= FPS
     speed_x_y = np.sqrt(x**2 + y**2)
+    print(speed_x_y)
     result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
