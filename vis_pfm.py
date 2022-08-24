@@ -254,13 +254,13 @@ def make_flow_csv(load_dir="./driving"):
             u = u.flatten()
             v = v.flatten()
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
-            for θ_pref in θ_prefs:
-                for ρ_pref in ρ_prefs:
-                    for x, y in zip(u, v):
+            for x, y in zip(u, v):
+                for θ_pref in θ_prefs:
+                    for ρ_pref in ρ_prefs:
                         # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                         R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
                         trial.append(R_MT)
-            assert len(trial) == n_trial_eles, "# of trial elements wrong!"
+            assert len(trial) == n_trial_eles, "number of trial elements wrong!"
             rows.append(trial)
     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
