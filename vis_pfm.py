@@ -207,7 +207,7 @@ def speed_response(x, y, ρ_pref):
     x *= FPS
     y *= FPS
     speed_x_y = np.sqrt(x**2 + y**2)
-    # @TODO ensure negative is applied correctly!
+    # @TODO figure out what gainIO & betaIO values were used:
     # https://github.com/bainro/MSTd_AE_EA/blob/main/matlab_scripts/GenerateInputStim/ModelMT.m#L25
     return np.exp(−np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     
