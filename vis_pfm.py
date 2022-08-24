@@ -6,7 +6,6 @@ import csv
 import cv2
 import math
 import numpy as np
-from tqdm import tqdm
 from PIL import Image
 import matplotlib.pyplot as plt
 
@@ -235,19 +234,20 @@ def make_flow_csv(load_dir="./driving"):
                 "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left",
                 "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right"]
     for dir in PFM_dirs:
+        full_path = os.path.join(load_dir, dir)
+        for pfm_file in os.listdir(full_path):
+            PFMs.append(os.path.join(full_path, pfm_file))
+    
+    for i, of_file in enumerate(sorted(PFMs)):
         '''
         @TODO: remove as this is a temporary test snippet.
         Putting all 3.2k flow files into a single csv is intractable.
         So going to do just the first 200 to test Kexin's pre-existing csv pipeline,
         before overhauling the C++ to load .npy files instead of a single csv file.
         '''
-        if len(PFMs) > 200:
+        if i > 200:
             break
-        full_path = os.path.join(load_dir, dir)
-        for pfm_file in os.listdir(full_path):
-            PFMs.append(os.path.join(full_path, pfm_file))
-    
-    for of_file in tqdm(sorted(PFMs)):
+        # not sure necessary, but for my own sanity
         if of_file.endswith(".pfm"):
             trial = []
             flow, _ = readPFM(of_file)
