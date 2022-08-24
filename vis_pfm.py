@@ -203,13 +203,13 @@ def speed_response(x, y, ρ_pref):
     s0 = 0.33
     # convert from pixels/frame to deg/frame
     deg_per_px = 52.7 / 150
-    x *= deg_per_px
-    y *= deg_per_px
+    _x = x * deg_per_px
+    _y = y * deg_per_px
     # convert from deg/frame to deg/sec
     FPS = 10
-    x *= FPS
-    y *= FPS
-    speed_x_y = np.sqrt(x**2 + y**2)
+    _x *= FPS
+    _y *= FPS
+    speed_x_y = np.sqrt(_x**2 + _y**2)
     print(speed_x_y)
     result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
