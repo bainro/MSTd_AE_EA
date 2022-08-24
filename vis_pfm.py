@@ -235,6 +235,14 @@ def make_flow_csv(load_dir="./driving"):
                 "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left",
                 "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right"]
     for dir in PFM_dirs:
+        '''
+        @TODO: remove as this is a temporary test snippet.
+        Putting all 3.2k flow files into a single csv is intractable.
+        So going to do just the first 200 to test Kexin's pre-existing csv pipeline,
+        before overhauling the C++ to load .npy files instead of a single csv file.
+        '''
+        if len(PFMs) > 200:
+            break
         full_path = os.path.join(load_dir, dir)
         for pfm_file in os.listdir(full_path):
             PFMs.append(os.path.join(full_path, pfm_file))
