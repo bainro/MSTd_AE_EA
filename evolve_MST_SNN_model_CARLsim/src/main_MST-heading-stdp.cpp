@@ -77,9 +77,9 @@ public:
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
-		int totalSimTrial = 600;
-		int numTrain = 510;
-		int numTest = 90;
+		int totalSimTrial = 100;
+		int numTrain = 85;
+		int numTest = 15;
 		int trial;
 		// arrays to store randomized test and train indices
 		int trainTrials[numTrain];
