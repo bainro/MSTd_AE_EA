@@ -5,6 +5,7 @@ import re
 import csv 
 import cv2
 import math
+import random
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -218,6 +219,8 @@ def speed_response(x, y, ρ_pref):
     return result
     
 def make_flow_csv(load_dir="./driving"):
+    # ensures deterministic (thus repeatable) shuffling
+    random.seed(42)
     flow_dims = (150, 150)
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
@@ -239,7 +242,8 @@ def make_flow_csv(load_dir="./driving"):
         for pfm_file in os.listdir(full_path):
             PFMs.append(os.path.join(full_path, pfm_file))
     
-    for i, of_file in enumerate(sorted(PFMs)):
+    random.shuffle(PFMs)
+    for i, of_file in enumerate(PFMs):
         '''
         @TODO: remove as this is a temporary test snippet.
         Putting all 3.2k flow files into a single csv is intractable.
