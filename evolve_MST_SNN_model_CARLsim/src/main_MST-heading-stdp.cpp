@@ -124,14 +124,18 @@ public:
 	    for (int i = 0; i < numIndi; i ++) {
 	        popCorrCoef[i] = new float[numTest];
 	    }
+		
+		cout << 1 << endl;
 
 		// fitness scores for the two measurements
 		float popFitness[numIndi];
 
 		SpikeMonitor* SpikeMonMST[numIndi];
 		ConnectionMonitor* CMMtToMst[numIndi];
+		cout << 2 << endl;
 		
 		MTData = loadData(MTDataFile, nMT, totalSimTrial); // Load MT response 
+		cout << 3 << endl;
 		
 		// ---------------- CONFIG STATE ------------------- 
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
