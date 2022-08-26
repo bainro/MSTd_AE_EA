@@ -249,7 +249,8 @@ def make_flow_csv(load_dir="./driving"):
         So going to do just the first 200 to test Kexin's pre-existing csv pipeline,
         before overhauling the C++ to load .npy files instead of a single csv file.
         '''
-        if i > 400:
+        # @TODO turn back up to ~400 once done dbg
+        if i > 100:
             break
         # not sure necessary, but for my own sanity
         if of_file.endswith(".pfm"):
@@ -266,9 +267,8 @@ def make_flow_csv(load_dir="./driving"):
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             x = u.flatten()
             y = v.flatten()
-            print()
+            print(x.max(), y.max())
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
-            # for x, y in zip(u, v):
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
