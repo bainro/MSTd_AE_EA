@@ -202,7 +202,10 @@ def speed_response(x, y, ρ_pref):
     σ = 1.16
     s0 = 0.33
     # convert from pixels/frame to deg/frame
-    deg_per_px = 52.7 / 150
+    # original height of 540px is hardcoded
+    # the FOV of 52.7 was obtained from the paper stating they used a simulated 
+    # 15mm focal length on a 32mm sensor body. Plugged those values in here: tinyurl.com/226v4hej 
+    deg_per_px = 52.7 / 540
     _x = x * deg_per_px
     _y = y * deg_per_px
     # convert from deg/frame to deg/sec
@@ -210,7 +213,7 @@ def speed_response(x, y, ρ_pref):
     _x *= FPS
     _y *= FPS
     speed_x_y = np.sqrt(_x**2 + _y**2)
-    # print(speed_x_y)
+    print(speed_x_y)
     result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
@@ -246,7 +249,7 @@ def make_flow_csv(load_dir="./driving"):
         So going to do just the first 200 to test Kexin's pre-existing csv pipeline,
         before overhauling the C++ to load .npy files instead of a single csv file.
         '''
-        if i > 200:
+        if i > 400:
             break
         # not sure necessary, but for my own sanity
         if of_file.endswith(".pfm"):
