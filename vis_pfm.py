@@ -213,7 +213,7 @@ def speed_response(x, y, ρ_pref):
     _x *= FPS
     _y *= FPS
     speed_x_y = np.sqrt(_x**2 + _y**2)
-    print(speed_x_y)
+    # print(speed_x_y)
     result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
@@ -222,7 +222,7 @@ def make_flow_csv(load_dir="./driving"):
     flow_dims = (150, 150)
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
-    # @TODO is this even the correct xtick values??? Look here:
+    # @TODO is this even the correct xtick values? What did Nover 2005 use? Look here:
     # https://github.com/bainro/MSTd_AE_EA/blob/main/matlab_scripts/GenerateInputStim/generateInputStim.m#L9
     # units: degrees / sec
     ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
@@ -266,6 +266,7 @@ def make_flow_csv(load_dir="./driving"):
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             x = u.flatten()
             y = v.flatten()
+            print()
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
             # for x, y in zip(u, v):
             for θ_pref in θ_prefs:
