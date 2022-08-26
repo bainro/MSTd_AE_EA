@@ -201,10 +201,9 @@ def dir_response(x, y, θ_pref):
 def speed_response(x, y, ρ_pref):
     σ = 1.16
     s0 = 0.33
-    # convert from pixels/frame to deg/frame
-    # original height of 540px is hardcoded
-    # the FOV of 52.7 was obtained from the paper stating they used a simulated 
-    # 15mm focal length on a 32mm sensor body. Plugged those values in here: tinyurl.com/226v4hej 
+    # convert from pixels/frame to deg/frame. The original height of 540px is hardcoded
+    # the FOV of 52.7 was obtained from the paper stating they used a simulated 15mm 
+    # focal length on a 32mm sensor body. Plugged values in here: tinyurl.com/226v4hej 
     deg_per_px = 52.7 / 540
     _x = x * deg_per_px
     _y = y * deg_per_px
@@ -213,7 +212,6 @@ def speed_response(x, y, ρ_pref):
     _x *= FPS
     _y *= FPS
     speed_x_y = np.sqrt(_x**2 + _y**2)
-    # print(speed_x_y)
     result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
@@ -250,7 +248,7 @@ def make_flow_csv(load_dir="./driving"):
         before overhauling the C++ to load .npy files instead of a single csv file.
         '''
         # @TODO turn back up to ~400 once done dbg
-        if i > 100:
+        if i > 400:
             break
         # not sure necessary, but for my own sanity
         if of_file.endswith(".pfm"):
@@ -267,7 +265,6 @@ def make_flow_csv(load_dir="./driving"):
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             x = u.flatten()
             y = v.flatten()
-            print(x.max(), y.max())
             # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
