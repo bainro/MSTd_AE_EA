@@ -246,8 +246,7 @@ def make_flow_csv(load_dir="./driving"):
         So going to do just the first 200 to test Kexin's pre-existing csv pipeline,
         before overhauling the C++ to load .npy files instead of a single csv file.
         '''
-        # @TODO turn back up to ~400 once done dbg
-        if i > 400:
+        if i > 600:
             break
         # not sure necessary, but for my own sanity
         if of_file.endswith(".pfm"):
