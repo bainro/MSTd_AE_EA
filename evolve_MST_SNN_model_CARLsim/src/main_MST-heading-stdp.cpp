@@ -170,7 +170,7 @@ public:
 		}
 
 		// ---------------- SETUP STATE -------------------		
-		PoissonRate* const poissRate = new PoissonRate(nMT, true);
+		PoissonRate* const poissRate = new PoissonRate(nMT) // , true); // FOR RUNNING ON GPU!
 
 		// naming for monitors
 		string spk_name_prefix = "spk_MST_";
