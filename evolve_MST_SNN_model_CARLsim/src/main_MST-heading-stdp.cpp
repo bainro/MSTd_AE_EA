@@ -141,8 +141,8 @@ public:
 		for (unsigned int i = 0; i < numIndi; i++) {
 			
 			// creat neuron groups
-			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON, 0, CPU_CORES; // GPU_CORES);
-			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON, 0, CPU_CORES; // GPU_CORES);
+			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON, 0, CPU_CORES); // GPU_CORES);
+			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON, 0, CPU_CORES); // GPU_CORES);
 
 			network->setNeuronParameters(gMST[i], REG_IZH[0], REG_IZH[1], REG_IZH[2], REG_IZH[3]);
 			network->setNeuronParameters(gInh[i], FAST_IZH[0], FAST_IZH[1], FAST_IZH[2], FAST_IZH[3]);
