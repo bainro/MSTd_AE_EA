@@ -41,7 +41,7 @@ public:
 		string result_dir_root = "./results/";
 
 		// MT group dimensions 
-		int gridDim = 150; // dimension of flow fields
+		int gridDim = 15; // dimension of flow fields
 		int nNeuronPerPixel = 40;
 		Grid3D MTDim(gridDim, gridDim, nNeuronPerPixel); 
 		int nMT = gridDim * gridDim * nNeuronPerPixel; 
@@ -214,19 +214,23 @@ public:
 		if (!loadSimulation) {
 			/*** TRAINING - run network with MT activities on training trials ***/
 			for (unsigned int tr = 0; tr < numTrain; tr++) {
+				cout << tr << " " << 1 << endl;
 				trial = trainTrials[tr];
 
 				// set spike rates for the input group
 				for (unsigned int neur = 0; neur < nMT; neur ++) {
 					poissRateVector.push_back(MTData[neur][trial]*poissBaseRate);
 				}
+				cout << tr << " " << 2 << endl;
 				poissRate->setRates(poissRateVector);
 				poissRateVector.clear();
 				network->setSpikeRate(gMT, poissRate);
-
+				cout << tr << " " << 3 << endl;
+				
 				// run network with stimulus
 				network->runNetwork(runTimeSec, runTimeMs);
-
+				cout << tr << " " << 4 << endl;
+				
 				if (writeRes) {
 					if (tr % 10 == 0) {
 						for (unsigned int i = 0; i < numIndi; i++) {
@@ -238,7 +242,9 @@ public:
 				// run network for same amount of time with no stimulus
 				poissRate->setRates(0.0f);
 				network->setSpikeRate(gMT, poissRate);
+				cout << tr << " " << 5 << endl;
 				network->runNetwork(runTimeSec, runTimeMs);
+				cout << tr << " " << 6 << endl;
 			}
 		}
 
@@ -384,4 +390,3 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-
