@@ -89,7 +89,7 @@ def img_from_fig(fig, dpi=180):
     return img
     
 def flow_img(file="test.pfm", show=False):
-    flow_dims = (150, 150)
+    flow_dims = (15, 15)
     
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
     rgb_file = rgb_file.replace("into_future/", "")
@@ -221,7 +221,7 @@ def speed_response(x, y, ρ_pref):
 def make_flow_csv(load_dir="./driving"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
-    flow_dims = (150, 150)
+    flow_dims = (15, 15)
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
     # units: degrees / sec
@@ -267,7 +267,7 @@ def make_flow_csv(load_dir="./driving"):
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             x = u.flatten()
             y = v.flatten()
-            # pass the data thru equation 2 to get R_MT (ie responses of all 150x150x40 MT neurons)
+            # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
