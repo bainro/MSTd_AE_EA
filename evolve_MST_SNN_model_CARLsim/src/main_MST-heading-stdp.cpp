@@ -41,7 +41,7 @@ public:
 		string result_dir_root = "./results/";
 
 		// MT group dimensions 
-		int gridDim = 15; // dimension of flow fields
+		int gridDim = 50; // dimension of flow fields
 		int nNeuronPerPixel = 40;
 		Grid3D MTDim(gridDim, gridDim, nNeuronPerPixel); 
 		int nMT = gridDim * gridDim * nNeuronPerPixel; 
@@ -214,6 +214,7 @@ public:
 		if (!loadSimulation) {
 			/*** TRAINING - run network with MT activities on training trials ***/
 			for (unsigned int tr = 0; tr < numTrain; tr++) {
+				cout << tr << endl;;
 				trial = trainTrials[tr];
 
 				// set spike rates for the input group
