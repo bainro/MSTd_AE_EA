@@ -41,7 +41,7 @@ public:
 		string result_dir_root = "./results/";
 
 		// MT group dimensions 
-		int gridDim = 150; // dimension of flow fields
+		int gridDim = 15; // dimension of flow fields
 		int nNeuronPerPixel = 40;
 		Grid3D MTDim(gridDim, gridDim, nNeuronPerPixel); 
 		int nMT = gridDim * gridDim * nNeuronPerPixel; 
