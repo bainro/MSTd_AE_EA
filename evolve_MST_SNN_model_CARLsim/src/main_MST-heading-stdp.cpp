@@ -232,7 +232,6 @@ public:
 				cout << tr << " " << 4 << endl;
 				
 				if (writeRes) {
-					cout << tr << " " << 4.5 << endl;
 					if (tr % 10 == 0) {
 						for (unsigned int i = 0; i < numIndi; i++) {
 							weights[i] = CMMtToMst[i]->takeSnapshot();	
