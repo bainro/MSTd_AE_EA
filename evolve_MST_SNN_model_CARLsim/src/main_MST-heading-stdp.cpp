@@ -214,21 +214,25 @@ public:
 		if (!loadSimulation) {
 			/*** TRAINING - run network with MT activities on training trials ***/
 			for (unsigned int tr = 0; tr < numTrain; tr++) {
-				cout << tr << endl;
+				cout << tr << " " << 1 << endl;
 				trial = trainTrials[tr];
 
 				// set spike rates for the input group
 				for (unsigned int neur = 0; neur < nMT; neur ++) {
 					poissRateVector.push_back(MTData[neur][trial]*poissBaseRate);
 				}
+				cout << tr << " " << 2 << endl;
 				poissRate->setRates(poissRateVector);
 				poissRateVector.clear();
 				network->setSpikeRate(gMT, poissRate);
-
+				cout << tr << " " << 3 << endl;
+				
 				// run network with stimulus
 				network->runNetwork(runTimeSec, runTimeMs);
-
+				cout << tr << " " << 4 << endl;
+				
 				if (writeRes) {
+					cout << tr << " " << 4.5 << endl;
 					if (tr % 10 == 0) {
 						for (unsigned int i = 0; i < numIndi; i++) {
 							weights[i] = CMMtToMst[i]->takeSnapshot();	
@@ -239,7 +243,9 @@ public:
 				// run network for same amount of time with no stimulus
 				poissRate->setRates(0.0f);
 				network->setSpikeRate(gMT, poissRate);
+				cout << tr << " " << 5 << endl;
 				network->runNetwork(runTimeSec, runTimeMs);
+				cout << tr << " " << 6 << endl;
 			}
 		}
 
