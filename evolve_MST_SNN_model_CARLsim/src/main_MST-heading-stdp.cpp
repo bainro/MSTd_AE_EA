@@ -214,6 +214,7 @@ public:
 		if (!loadSimulation) {
 			/*** TRAINING - run network with MT activities on training trials ***/
 			for (unsigned int tr = 0; tr < numTrain; tr++) {
+				cout << tr << endl;
 				trial = trainTrials[tr];
 
 				// set spike rates for the input group
