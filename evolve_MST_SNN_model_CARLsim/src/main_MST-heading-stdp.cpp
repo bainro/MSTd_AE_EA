@@ -137,7 +137,7 @@ public:
 		// ---------------- CONFIG STATE ------------------- 
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
 		
-		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON, 1, GPU_CORES); //input
+		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON, 0, GPU_CORES); //input
 		for (unsigned int i = 0; i < numIndi; i++) {
 			
 			// creat neuron groups
@@ -381,7 +381,7 @@ public:
 
 int main(int argc, char* argv[]) {
 	
-	const SimMode simMode = CPU_MODE; // GPU_MODE;
+	const SimMode simMode = GPU_MODE; // CPU_MODE;
   	const LoggerMode verbosity = SILENT; // DEVELOPER;
   	const MSTHeadingExperiment experiment(simMode, verbosity);
 	const PTI pti(argc, argv, cout, cin);
