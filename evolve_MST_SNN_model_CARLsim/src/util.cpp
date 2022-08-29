@@ -117,7 +117,7 @@ void shuffleTrials(int numTrials, int numTrain, int numTest, int *trainTrials, i
     }
 }
 
-float calcPopCorrCoef(float* x,float* y, int length)
+float calcPopCorrCoef(float* x, float* y, int length)
 {
     // tiny number to avoid division by zero
     const float TINY=1.0e-20;
