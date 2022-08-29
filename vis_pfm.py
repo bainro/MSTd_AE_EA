@@ -214,7 +214,10 @@ def speed_response(x, y, ρ_pref):
     _x *= FPS
     _y *= FPS
     speed_x_y = np.sqrt(_x**2 + _y**2)
-    result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
+    # @TODO revert back to this one as it is true to Nover 2005!
+    # result = np.exp(-np.log10(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
+    # @TODO remove this one! It's for testing purposes to skip another EA search
+    result = np.exp(-np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
     
@@ -250,9 +253,9 @@ def make_flow_csv(load_dir="./driving"):
         So going to do just the first 200 to test Kexin's pre-existing csv pipeline,
         before overhauling the C++ to load .npy files instead of a single csv file.
         '''
-        if i > 100:
-            break
-        # not sure necessary, but for my own sanity
+        # if i > 100:
+            # break
+        # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
             trial = []
             flow, _ = readPFM(of_file)
