@@ -4,7 +4,6 @@
 #include <vector>
 #include <iostream>
 #include <ctime>
-#include <cassert>
 
 #include "util.h"
 #include "helper.h"
@@ -47,7 +46,7 @@ public:
 		int nMT = gridDim * gridDim * nNeuronPerPixel; 
 
 		// MST group dimensions 
-		int nMSTDim = 12; 
+		int nMSTDim = 8; 
 		Grid3D MSTDim(nMSTDim, nMSTDim, 1);
 		int nMST = nMSTDim * nMSTDim; 
 		
@@ -77,9 +76,11 @@ public:
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
-		int totalSimTrial = 1280; // 3200
-		int numTrain = 1120;      // 2720
-		int numTest = 160;        // 480
+		int totalSimTrial = 1280;
+		int numTrial = 1280;
+		// int numTrain = int(numTrial * 0.5);
+		int numTrain = 1120;
+		int numTest = numTrial - numTrain;
 		int trial;
 		// arrays to store randomized test and train indices
 		int trainTrials[numTrain];
@@ -92,7 +93,6 @@ public:
 		//array to store sorted MT for all test trials
 		float** testMTMatrix;
 		testMTMatrix = new float*[numTest];
-		
 	    for (int i = 0; i < numTest; i ++) {
 	        testMTMatrix[i] = new float[nMT];
 	    }
@@ -125,24 +125,25 @@ public:
 	        popCorrCoef[i] = new float[numTest];
 	    }
 
+
 		// fitness scores for the two measurements
 		float popFitness[numIndi];
 
 		SpikeMonitor* SpikeMonMST[numIndi];
 		ConnectionMonitor* CMMtToMst[numIndi];
-		
+
 		cout << "loading data!" << endl;
 		MTData = loadData(MTDataFile, nMT, totalSimTrial); // Load MT response 
-		
+		cout << "data loaded!" << endl;
+
 		// ---------------- CONFIG STATE ------------------- 
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
-		
-		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON, 0, GPU_CORES); // 1, GPU_CORES); //input
+
+		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON); //input
 		for (unsigned int i = 0; i < numIndi; i++) {
-			
 			// creat neuron groups
-			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON, 0, GPU_CORES); // GPU_CORES
-			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON, 0, GPU_CORES); // GPU_CORES
+			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON);
+			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON);
 
 			network->setNeuronParameters(gMST[i], REG_IZH[0], REG_IZH[1], REG_IZH[2], REG_IZH[3]);
 			network->setNeuronParameters(gInh[i], FAST_IZH[0], FAST_IZH[1], FAST_IZH[2], FAST_IZH[3]);
@@ -169,8 +170,10 @@ public:
 			network->setHomeoBaseFiringRate(gInh[i], parameters.getParameter(i,13), 0);
 		}
 
-		// ---------------- SETUP STATE -------------------		
-		PoissonRate* const poissRate = new PoissonRate(nMT, false); // true for on GPU
+		// ---------------- SETUP STATE -------------------
+		// network->setupNetwork();
+		
+		PoissonRate* const poissRate = new PoissonRate(nMT);
 
 		// naming for monitors
 		string spk_name_prefix = "spk_MST_";
@@ -185,9 +188,13 @@ public:
 		if (loadSimulation) {
 			FILE* fId = NULL;
 			fId = fopen(sim_name.c_str(), "rb");
+
 			network->loadSimulation(fId);
-		} 
-		network->setupNetwork();	
+
+			network->setupNetwork();	
+		} else {
+			network->setupNetwork();	
+		}
 
 		for (int i = 0; i < numIndi; i++) {
 			stringstream name_id_ss;
@@ -214,23 +221,20 @@ public:
 		if (!loadSimulation) {
 			/*** TRAINING - run network with MT activities on training trials ***/
 			for (unsigned int tr = 0; tr < numTrain; tr++) {
-				cout << tr << " " << 1 << endl;
+				cout << tr << endl;
 				trial = trainTrials[tr];
 
 				// set spike rates for the input group
 				for (unsigned int neur = 0; neur < nMT; neur ++) {
 					poissRateVector.push_back(MTData[neur][trial]*poissBaseRate);
 				}
-				cout << tr << " " << 2 << endl;
 				poissRate->setRates(poissRateVector);
 				poissRateVector.clear();
 				network->setSpikeRate(gMT, poissRate);
-				cout << tr << " " << 3 << endl;
-				
+
 				// run network with stimulus
 				network->runNetwork(runTimeSec, runTimeMs);
-				cout << tr << " " << 4 << endl;
-				
+
 				if (writeRes) {
 					if (tr % 10 == 0) {
 						for (unsigned int i = 0; i < numIndi; i++) {
@@ -242,9 +246,7 @@ public:
 				// run network for same amount of time with no stimulus
 				poissRate->setRates(0.0f);
 				network->setSpikeRate(gMT, poissRate);
-				cout << tr << " " << 5 << endl;
 				network->runNetwork(runTimeSec, runTimeMs);
-				cout << tr << " " << 6 << endl;
 			}
 		}
 
@@ -353,6 +355,7 @@ public:
 			}
 			// if max mean FR greater than target max FR, subtract max mean from target
 			// add penalty to fitness
+			cout << "maxFR: " << maxFR << endl;
 			if (maxFR > targetMaxFR) {
 				popFitness[i] -= ((maxFR - targetMaxFR) / 1000);
 			}
@@ -380,13 +383,15 @@ public:
 
 
 int main(int argc, char* argv[]) {
-	
-	const SimMode simMode = GPU_MODE; // GPU_MODE;
-  	const LoggerMode verbosity = SILENT; // DEVELOPER;
+	const SimMode simMode = GPU_MODE;
+  	const LoggerMode verbosity = SILENT;
+
   	const MSTHeadingExperiment experiment(simMode, verbosity);
+
 	const PTI pti(argc, argv, cout, cin);
-	
+
 	pti.runExperiment(experiment);
 
 	return 0;
 }
+
