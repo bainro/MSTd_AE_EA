@@ -77,7 +77,7 @@ public:
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
-		int totalSimTrial = 320;
+		int totalSimTrial = 3200;
 		int numTrain = 2720;
 		int numTest = 480;
 		int trial;
