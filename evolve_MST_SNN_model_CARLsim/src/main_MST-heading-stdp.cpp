@@ -382,7 +382,7 @@ public:
 int main(int argc, char* argv[]) {
 	
 	const SimMode simMode = GPU_MODE; // GPU_MODE;
-  	const LoggerMode verbosity = DEVELOPER; // SILENT;
+  	const LoggerMode verbosity = SILENT; // DEVELOPER;
   	const MSTHeadingExperiment experiment(simMode, verbosity);
 	const PTI pti(argc, argv, cout, cin);
 	
