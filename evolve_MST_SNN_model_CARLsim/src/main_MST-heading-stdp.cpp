@@ -47,7 +47,7 @@ public:
 		int nMT = gridDim * gridDim * nNeuronPerPixel; 
 
 		// MST group dimensions 
-		int nMSTDim = 12; 
+		int nMSTDim = 4; 
 		Grid3D MSTDim(nMSTDim, nMSTDim, 1);
 		int nMST = nMSTDim * nMSTDim; 
 		
