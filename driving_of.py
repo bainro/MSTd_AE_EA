@@ -1,4 +1,4 @@
-# script to visualize optic flow from driving dataset: tinyurl.com/3ufzcdaa
+# script for optic flow from driving dataset: tinyurl.com/3ufzcdaa
 import io
 import os
 import re
