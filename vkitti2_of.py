@@ -9,9 +9,9 @@ import random
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
-from driving_of import img_from_fig, 
+from driving_of (import img_from_fig, 
                        speed_response, 
-                       dir_response
+                       dir_response)
 
 
 def read_OF_png(file):
