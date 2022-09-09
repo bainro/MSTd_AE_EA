@@ -17,15 +17,17 @@ from driving_of import img_from_fig,
 def read_OF_png(file):
     pass
 
-def flow_img(file="test.pfm", show=False):
+def flow_img(file="test.png", show=False):
     flow_dims = (15, 15)
     
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
-    rgb_file = rgb_file.replace("into_future/", "")
-    rgb_file = rgb_file.replace("OpticalFlowIntoFuture_", "")
     rgb_file = rgb_file.replace("_L.pfm", ".webp")
     bgr = cv2.imread(rgb_file)
     rgb = bgr[:,:,::-1]
+    # for dbg
+    print("ch0 sum: ", rgb[:,:,0].sum())
+    print("ch1 sum: ", rgb[:,:,1].sum())
+    print("ch2 sum: ", rgb[:,:,2].sum())
     h, w = rgb.shape[:2]
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
