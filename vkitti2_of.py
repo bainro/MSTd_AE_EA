@@ -15,7 +15,20 @@ from driving_of import img_from_fig,
 
 
 def read_OF_png(file):
-    pass
+    # Convert from .png to (h, w, 2) (flow_x, flow_y) float32 array
+    # read png to bgr in 16 bit unsigned short
+
+    bgr = cv2.imread(flow_fn, cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)
+    h, w, _c = bgr.shape
+    assert bgr.dtype == np.uint16 and _c == 3
+    # b == invalid flow flag == 0 for sky or other invalid flow
+    invalid = bgr[…, 0] == 0
+    # g,r == flow_y,x normalized by height,width and scaled to [0;2**16 – 1]
+    out_flow = 2.0 / (2**16 – 1.0) * bgr[…, 2:0:-1].astype(‘f4’) – 1
+    out_flow[…, 0] *= w – 1
+    out_flow[…, 1] *= h – 1
+    out_flow[invalid] = 0 # or another value (e.g., np.nan)
+    return out_flow
 
 def flow_img(file="test.png", show=False):
     flow_dims = (15, 15)
@@ -29,6 +42,7 @@ def flow_img(file="test.png", show=False):
     print("ch1 sum: ", rgb[:,:,1].sum())
     print("ch2 sum: ", rgb[:,:,2].sum())
     h, w = rgb.shape[:2]
+    # crop in the sides to achieve a 1:1 aspect ratio
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     rgb = rgb[:,new_l:new_r,:]
