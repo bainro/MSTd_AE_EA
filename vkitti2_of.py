@@ -119,6 +119,7 @@ def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
     OF_dir = os.path.join(load_dir, "Scene01/sunset/frames/forwardFlow/Camera_0")
     OFs = os.listdir(OF_dir)
     for of_f in sorted(OFs):
+        print(":) ", of_f)
         if of_f.endswith(".png"):
             np_img = flow_img(os.path.join(OF_dir, of_f))
             # trim white borders along left and right side
