@@ -24,7 +24,7 @@ def read_OF_png(file):
     # b == invalid flow flag == 0 for sky or other invalid flow
     invalid = bgr[…, 0] == 0
     # g,r == flow_y,x normalized by height,width and scaled to [0;2**16 – 1]
-    out_flow = 2.0 / (2**16 – 1.0) * bgr[…, 2:0:-1].astype(‘f4’) – 1
+    out_flow = 2.0 / (2**16 – 1.0) * bgr[..., 2:0:-1].astype(‘f4’) – 1
     out_flow[…, 0] *= w – 1
     out_flow[…, 1] *= h – 1
     out_flow[invalid] = 0 # or another value (e.g., np.nan)
@@ -33,8 +33,9 @@ def read_OF_png(file):
 def flow_img(file="test.png", show=False):
     flow_dims = (15, 15)
     
-    rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
-    rgb_file = rgb_file.replace("_L.pfm", ".webp")
+    rgb_file = file.replace("forwardFlow", "rgb")
+    rgb_file = rgb_file.replace("flow", "rgb")
+    rgb_file = rgb_file.replace(".png", ".jpg")
     bgr = cv2.imread(rgb_file)
     rgb = bgr[:,:,::-1]
     # for dbg
