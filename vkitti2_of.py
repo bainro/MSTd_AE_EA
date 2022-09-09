@@ -17,8 +17,6 @@ def read_OF_png(file):
     # read png to bgr in 16 bit unsigned short
 
     bgr = cv2.imread(file, cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)
-    print(bgr)
-    print(file)
     h, w, _c = bgr.shape
     assert bgr.dtype == np.uint16 and _c == 3
     # b == invalid flow flag == 0 for sky or other invalid flow
@@ -117,10 +115,8 @@ def flow_img(file="test.png", show=False):
 def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
     frames = [] 
     OF_dir = os.path.join(load_dir, "Scene01/sunset/frames/forwardFlow/Camera_0")
-    print(OF_dir, OF_dir)
     OFs = os.listdir(OF_dir)
     for of_f in sorted(OFs):
-        print(":) ", of_f)
         if of_f.endswith(".png"):
             np_img = flow_img(os.path.join(OF_dir, of_f))
             # trim white borders along left and right side
