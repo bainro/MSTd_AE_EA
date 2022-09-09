@@ -9,11 +9,12 @@ import random
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+from driving_of import img_from_fig
 
 
 def read_OF_png(file):
     pass
-    
+
 def flow_img(file="test.pfm", show=False):
     flow_dims = (15, 15)
     
