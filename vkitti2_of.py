@@ -45,7 +45,7 @@ def flow_img(file="test.pfm", show=False):
     axes[0].set_title("RGB", y=1.025)
     axes[0].imshow(rgb)
     
-    flow, _ = readPFM(file)
+    flow = read_OF_png(file)
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
     
@@ -193,7 +193,7 @@ def make_flow_csv(load_dir="./driving"):
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
             trial = []
-            flow, _ = readPFM(of_file)
+            flow = read_OF_png(of_file)
             flow = flow[:,:,:2]
             # crop to 1:1 aspect ratio
             h, w = flow.shape[:2]
