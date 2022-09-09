@@ -118,8 +118,6 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
-    
-# def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8)
 
 def make_flow_csv(load_dir="./driving"):
     # ensures deterministic (thus repeatable) shuffling
@@ -174,7 +172,8 @@ def make_flow_csv(load_dir="./driving"):
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
+                    # @TODO these values are incorrect!
+                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8)
                     trial += R_MT.tolist()
             assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
             rows.append(trial)
