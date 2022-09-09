@@ -36,10 +36,6 @@ def flow_img(file="test.png", show=False):
     rgb_file = rgb_file.replace(".png", ".jpg")
     bgr = cv2.imread(rgb_file)
     rgb = bgr[:,:,::-1]
-    # for dbg
-    print("ch0 sum: ", rgb[:,:,0].sum())
-    print("ch1 sum: ", rgb[:,:,1].sum())
-    print("ch2 sum: ", rgb[:,:,2].sum())
     h, w = rgb.shape[:2]
     # crop in the sides to achieve a 1:1 aspect ratio
     new_l = round(w/2 - h/2)
@@ -53,6 +49,10 @@ def flow_img(file="test.png", show=False):
     axes[0].imshow(rgb)
     
     flow = read_OF_png(file)
+    # for dbg
+    print("ch0 sum: ", flow[:,:,0].sum())
+    print("ch1 sum: ", flow[:,:,1].sum())
+    print("ch2 sum: ", flow[:,:,2].sum())
     # optical flow is 2D, the z-dim is 0s anyway :)
     flow = flow[:,:,:2]
     
