@@ -16,7 +16,7 @@ def read_OF_png(file):
     # Convert from .png to (h, w, 2) (flow_x, flow_y) float32 array
     # read png to bgr in 16 bit unsigned short
 
-    bgr = cv2.imread(flow_fn, cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)
+    bgr = cv2.imread(file, cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)
     h, w, _c = bgr.shape
     assert bgr.dtype == np.uint16 and _c == 3
     # b == invalid flow flag == 0 for sky or other invalid flow
