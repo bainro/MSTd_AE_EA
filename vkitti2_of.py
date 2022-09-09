@@ -117,6 +117,7 @@ def flow_img(file="test.png", show=False):
 def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
     frames = [] 
     OF_dir = os.path.join(load_dir, "Scene01/sunset/frames/forwardFlow/Camera_0")
+    print(OF_dir, OF_dir)
     OFs = os.listdir(OF_dir)
     for of_f in sorted(OFs):
         print(":) ", of_f)
