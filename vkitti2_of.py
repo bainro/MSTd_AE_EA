@@ -29,7 +29,7 @@ def read_OF_png(file):
     return out_flow
 
 def flow_img(file="test.png", show=False):
-    flow_dims = (15, 15)
+    flow_dims = (150, 150)
     
     rgb_file = file.replace("forwardFlow", "rgb")
     rgb_file = rgb_file.replace("flow", "rgb")
