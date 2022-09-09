@@ -97,27 +97,27 @@ def flow_img(file="test.pfm", show=False):
     
     return img_from_fig(fig)
     
-def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
-    frames = []
-    PFM_dir = os.path.join(load_dir, "optical_flow/15mm_focallength/scene_forwards/slow/into_future/left")
-    PFMs = os.listdir(PFM_dir)
-    for of_f in sorted(PFMs):
-        if of_f.endswith(".pfm"):
-            np_img = flow_img(os.path.join(PFM_dir, of_f))
+def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
+    frames = [] 
+    OF_dir = os.path.join(load_dir, "Scene01/sunset/frames/forwardFlow/Camera_0")
+    OFs = os.listdir(OF_dir)
+    for of_f in sorted(OFs):
+        if of_f.endswith(".png"):
+            np_img = flow_img(os.path.join(OF_dir, of_f))
             # trim white borders along left and right side
-            np_img = np_img[10:-10,175:-175,:]
+            # np_img = np_img[10:-10,175:-175,:]
             frames.append(np_img)
             # useful for debugging
-            # if len(frames) >= 10:
-                # break    
+            if len(frames) >= 10:
+                break    
 
-    os.makedirs("./tmp", exist_ok=True)
+    os.makedirs("./tmp/vkitti2", exist_ok=True)
     for i, frame in enumerate(frames):
         img = Image.fromarray(frame, 'RGB')
-        img.save(f"./tmp/rgb_{i:04}.png")
+        img.save(f"./tmp/vkitti2/rgb_{i:04}.png")
     
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
-    os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
+    os.system(f"ffmpeg -r {fps} -i ./tmp/vkitti2/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
 
 def make_flow_csv(load_dir="./driving"):
     # ensures deterministic (thus repeatable) shuffling
