@@ -14,17 +14,6 @@ import matplotlib.pyplot as plt
 def read_OF_png(file):
     pass
     
-def img_from_fig(fig, dpi=180):
-    # returns an image as numpy array from figure
-    buf = io.BytesIO()
-    fig.savefig(buf, format="png", dpi=dpi)
-    buf.seek(0)
-    img_arr = np.frombuffer(buf.getvalue(), dtype=np.uint8)
-    buf.close()
-    img = cv2.imdecode(img_arr, 1)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    return img
-    
 def flow_img(file="test.pfm", show=False):
     flow_dims = (15, 15)
     
