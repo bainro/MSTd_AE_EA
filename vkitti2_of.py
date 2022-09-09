@@ -49,13 +49,6 @@ def flow_img(file="test.png", show=False):
     axes[0].imshow(rgb)
     
     flow = read_OF_png(file)
-    # for dbg
-    print("ch0 sum: ", flow[:,:,0].sum())
-    print("ch1 sum: ", flow[:,:,1].sum())
-    print("ch2 sum: ", flow[:,:,2].sum())
-    # optical flow is 2D, the z-dim is 0s anyway :)
-    flow = flow[:,:,:2]
-    
     h, w = flow.shape[:2]
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
