@@ -170,22 +170,20 @@ def dir_response(x, y, θ_pref):
     # assert result >= 0 and result <= 1, "dir_response() result out of range!"
     return result
 
-def speed_response(x, y, ρ_pref):
+def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8):
     σ = 1.16
     s0 = 0.33
     # convert from pixels/frame to deg/frame. The original height of 540px is hardcoded
     # the FOV of 52.7 was obtained from the paper stating they used a simulated 15mm 
     # focal length on a 32mm sensor body. Plugged values in here: tinyurl.com/226v4hej 
-    deg_per_px = 52.7 / 540
+    deg_per_px = FOV / orig_h
     _x = x * deg_per_px
     _y = y * deg_per_px
     # convert from deg/frame to deg/sec
-    # was 10, trying to reduce max OF so as to not end up in long, saturated tail
-    FPS = 8
     _x *= FPS
     _y *= FPS
     speed_x_y = np.sqrt(_x**2 + _y**2)
-    # Nover 2005 paper seems to have meant natural log for the modeling eq's but log10 for axis...
+    # Nover 2005 paper seems to have meant natural log for the modeling eq's but log10 for axis?
     result = np.exp(-np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
