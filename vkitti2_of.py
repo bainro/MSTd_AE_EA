@@ -9,7 +9,9 @@ import random
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
-from driving_of import img_from_fig
+from driving_of import img_from_fig, 
+                       speed_response, 
+                       dir_response
 
 
 def read_OF_png(file):
@@ -117,35 +119,8 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
     
-def dir_response(x, y, θ_pref):
-    σ_theta = 3.0
-    # matching here: tinyurl.com/jk7kahzd
-    angle_x_y = np.arctan2(y, x)
-    # angle_x_y = math.atan2(y, x)
-    result = np.exp(σ_theta * (np.cos(angle_x_y - θ_pref) - 1)) 
-    # assert result >= 0 and result <= 1, "dir_response() result out of range!"
-    return result
+# def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8)
 
-def speed_response(x, y, ρ_pref):
-    σ = 1.16
-    s0 = 0.33
-    # convert from pixels/frame to deg/frame. The original height of 540px is hardcoded
-    # the FOV of 52.7 was obtained from the paper stating they used a simulated 15mm 
-    # focal length on a 32mm sensor body. Plugged values in here: tinyurl.com/226v4hej 
-    deg_per_px = 52.7 / 540
-    _x = x * deg_per_px
-    _y = y * deg_per_px
-    # convert from deg/frame to deg/sec
-    # was 10, trying to reduce max OF so as to not end up in long, saturated tail
-    FPS = 8
-    _x *= FPS
-    _y *= FPS
-    speed_x_y = np.sqrt(_x**2 + _y**2)
-    # Nover 2005 paper seems to have meant natural log for the modeling eq's but log10 for axis...
-    result = np.exp(-np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
-    # assert result >= 0 and result <= 1, "speed_response() result out of range!"
-    return result
-    
 def make_flow_csv(load_dir="./driving"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
