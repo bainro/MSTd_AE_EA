@@ -50,6 +50,9 @@ def flow_img(file="test.png", show=False):
     
     flow = read_OF_png(file)
     h, w = flow.shape[:2]
+    print("file: ", file)
+    print("h.sum: ", h.sum())
+    print("w.sum: ", w.sum())
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
