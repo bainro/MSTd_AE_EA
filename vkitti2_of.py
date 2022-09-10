@@ -112,9 +112,19 @@ def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
     frames = [] 
     OF_dir = os.path.join(load_dir, "Scene01/sunset/frames/forwardFlow/Camera_0")
     OFs = os.listdir(OF_dir)
+    # dumb if ever long term use, but good shortcut
+    flow_min = 1e6
+    flow_max = -1e6
+    for of_f in sorted(OFs):
+        flow = read_OF_png(os.path.join(OF_dir, of_f))
+        if flow.min() < flow_min:
+            flow_min = flow.min()
+        if flow.max() > flow_max:
+            flow_max = flow.max()
     for of_f in sorted(OFs):
         if of_f.endswith(".png"):
-            np_img = flow_img(os.path.join(OF_dir, of_f))
+            f = os.path.join(OF_dir, of_f)
+            np_img = flow_img(f, flow_min, flow_max)
             # trim white borders along left and right side
             # np_img = np_img[10:-10,175:-175,:]
             frames.append(np_img)
