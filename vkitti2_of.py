@@ -28,7 +28,7 @@ def read_OF_png(file):
     out_flow[invalid] = 0 # or another value (e.g., np.nan)
     return out_flow
 
-def flow_img(file="test.png", f_min, f_max, show=False):
+def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     flow_dims = (150, 150)
     
     rgb_file = file.replace("forwardFlow", "rgb")
