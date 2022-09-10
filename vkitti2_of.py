@@ -28,7 +28,7 @@ def read_OF_png(file):
     out_flow[invalid] = 0 # or another value (e.g., np.nan)
     return out_flow
 
-def flow_img(file="test.png", show=False):
+def flow_img(file="test.png", f_min, f_max, show=False):
     flow_dims = (150, 150)
     
     rgb_file = file.replace("forwardFlow", "rgb")
@@ -49,6 +49,8 @@ def flow_img(file="test.png", show=False):
     axes[0].imshow(rgb)
     
     flow = read_OF_png(file)
+    # normalize the flow so that colors are consistent
+    flow = (flow + f_min) / (f_max + f_min)
     h, w = flow.shape[:2]
     print("file: ", file)
     print("ch1.sum: ", flow[...,0].sum())
