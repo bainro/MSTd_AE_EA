@@ -50,7 +50,7 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     
     flow = read_OF_png(file)
     # normalize the flow so that colors are consistent
-    flow = (flow + f_min) / (f_max + f_min)
+    # flow = (flow + f_min) / (f_max + f_min)
     h, w = flow.shape[:2]
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
@@ -59,12 +59,16 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
-    a = np.sqrt((u ** 2) * (v ** 2))
+    a = np.sqrt((u ** 2) + (v ** 2))
     a = np.log(a + 1)
+    if f_max > -1 * f_min:
+        vmax = np.sqrt((f_max ** 2) + (f_max ** 2)) + 1
+    else:
+        vmax = np.sqrt((f_min ** 2) + (f_min ** 2)) + 1
     axes[1].set_xticks([])
     axes[1].set_yticks([])
     axes[1].set_title("L2 Norm Optical Flow", y=1.025)
-    axes[1].imshow(a, vmin=0, vmax=1)
+    axes[1].imshow(a, vmin=0, vmax=vmax)
     
     h, w = flow.shape[:2]
     new_l = round(w/2 - h/2)
