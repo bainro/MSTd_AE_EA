@@ -62,9 +62,11 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     a = np.sqrt((u ** 2) + (v ** 2))
     a = np.log(a + 1)
     if f_max > -1 * f_min:
-        vmax = np.sqrt((f_max ** 2) + (f_max ** 2)) + 1
+        vmax = np.sqrt((f_max ** 2) + (f_max ** 2)) 
     else:
-        vmax = np.sqrt((f_min ** 2) + (f_min ** 2)) + 1
+        vmax = np.sqrt((f_min ** 2) + (f_min ** 2))
+    vmax = np.log(vmax + 1)
+    
     axes[1].set_xticks([])
     axes[1].set_yticks([])
     axes[1].set_title("L2 Norm Optical Flow", y=1.025)
