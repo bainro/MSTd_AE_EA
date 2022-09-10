@@ -100,11 +100,11 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     X, Y = np.meshgrid(x, y)
 
     # Defining color
-    color = np.sqrt(u**2 + v**2).flatten()
+    # color = np.sqrt(u**2 + v**2).flatten()
 
     axes[2].axis("off")
     axes[2].set_title("Optical Flow as Vector Field")
-    axes[2].quiver(X, Y, u, v, color)
+    axes[2].quiver(X, Y, u, v, vmin=0, vmax=vmax) # color)
     # trying to make top-left pt 0,0
     axes[2].invert_yaxis()
 
