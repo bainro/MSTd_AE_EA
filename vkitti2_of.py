@@ -52,9 +52,6 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     # normalize the flow so that colors are consistent
     flow = (flow + f_min) / (f_max + f_min)
     h, w = flow.shape[:2]
-    print("file: ", file)
-    print("ch1.sum: ", flow[...,0].sum())
-    print("ch2.sum: ", flow[...,1].sum())
     new_l = round(w/2 - h/2)
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
