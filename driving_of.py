@@ -91,7 +91,7 @@ def flow_img(file="test.pfm", show=False):
     u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
     
-    a = np.sqrt((u ** 2) * (v ** 2))
+    a = np.sqrt((u ** 2) + (v ** 2))
     a = np.log(a + 1)
     axes[1].set_xticks([])
     axes[1].set_yticks([])
