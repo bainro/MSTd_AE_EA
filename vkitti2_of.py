@@ -104,9 +104,10 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
 
     axes[2].axis("off")
     axes[2].set_title("Optical Flow as Vector Field")
-    axes[2].quiver(X, Y, u, v, vmin=0, vmax=vmax) # color)
+    axes[2].quiver(X, Y, u, v) #, vmin=0, vmax=vmax) # color)
     # trying to make top-left pt 0,0
     axes[2].invert_yaxis()
+    fig.clim(0, vmax)
 
     if show:
         plt.show()
