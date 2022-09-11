@@ -122,8 +122,8 @@ def flow_img(file="test.pfm", show=False):
     # reapply the neg's, which indicate direction of flow
     u[og_u < 0] = u[og_u < 0] * -1
     v[og_v < 0] = v[og_v < 0] * -1
-    # arrows were flipped across both axes
-    u *= -1
+    # arrows were flipped across one axis?
+    # u *= -1
     v *= -1
     
     x = np.arange(0, u.shape[0], 1)
