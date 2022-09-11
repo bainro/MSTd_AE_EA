@@ -28,7 +28,7 @@ def read_OF_png(file):
     out_flow[invalid] = 0 # or another value (e.g., np.nan)
     return out_flow
 
-def flow_img(file="test.png", f_min=None, f_max=None, show=False):
+def flow_img(file="test.png", show=False):
     flow_dims = (150, 150)
     
     rgb_file = file.replace("forwardFlow", "rgb")
@@ -61,17 +61,14 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     
     a = np.sqrt((u ** 2) + (v ** 2))
     a = np.log(a + 1)
-    if f_max > -1 * f_min:
-        vmax = np.sqrt((f_max ** 2) + (f_max ** 2)) 
-    else:
-        vmax = np.sqrt((f_min ** 2) + (f_min ** 2))
-    vmax = np.log(vmax + 1)
     cmap = plt.cm.get_cmap('viridis')
     
     axes[1].set_xticks([])
     axes[1].set_yticks([])
     axes[1].set_title("L2 Norm Optical Flow", y=1.025)
-    print(a.max())
+    # not a perfectly general solution, but just for visualizations
+    vmax = 4.2
+    assert vmax > a.max(), "Error, vmax set too small!"
     axes[1].imshow(a, vmin=0, vmax=vmax, cmap=cmap)
     
     h, w = flow.shape[:2]
@@ -122,21 +119,13 @@ def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
     frames = [] 
     OF_dir = os.path.join(load_dir, "Scene01/sunset/frames/forwardFlow/Camera_0")
     OFs = os.listdir(OF_dir)
-    # dumb if ever long term use, but good shortcut
-    flow_min = 1e6
-    flow_max = -1e6
-    for of_f in sorted(OFs):
-        flow = read_OF_png(os.path.join(OF_dir, of_f))
-        if flow.min() < flow_min:
-            flow_min = flow.min()
-        if flow.max() > flow_max:
-            flow_max = flow.max()
     for _i, of_f in enumerate(sorted(OFs)):
         if of_f.endswith(".png"):
             # for dbg only!!!
-            if _i < 300: continue;
+            # if _i < 300: 
+                # continue;
             f = os.path.join(OF_dir, of_f)
-            np_img = flow_img(f, flow_min, flow_max)
+            np_img = flow_img(f)
             # trim white borders along left and right side
             # np_img = np_img[10:-10,175:-175,:]
             frames.append(np_img)
