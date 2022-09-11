@@ -71,7 +71,7 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     axes[1].set_xticks([])
     axes[1].set_yticks([])
     axes[1].set_title("L2 Norm Optical Flow", y=1.025)
-    print(vmax);exit()
+    print(a.max())
     axes[1].imshow(a, vmin=0, vmax=vmax, cmap=cmap)
     
     h, w = flow.shape[:2]
