@@ -103,7 +103,7 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     # color = np.sqrt(u**2 + v**2).flatten()
     color = np.zeros(u.shape).flatten()
     
-    scale = 20
+    scale = 40
 
     axes[2].axis("off")
     axes[2].set_title("Optical Flow as Vector Field")
