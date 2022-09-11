@@ -130,7 +130,7 @@ def flow_img(file="test.pfm", show=False):
     X, Y = np.meshgrid(x, y)
 
     # Defining color as only black
-    color = np.zeros(u.shape()).flatten()
+    color = np.zeros(u.shape).flatten()
     scale = 100
     
     axes[2].axis("off")
