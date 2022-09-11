@@ -104,7 +104,6 @@ def flow_img(file="test.png", show=False):
     color = np.zeros(u.shape).flatten()
     
     scale = 100
-
     axes[2].axis("off")
     axes[2].set_title("Optical Flow as Vector Field")
     axes[2].quiver(X, Y, u, v, color, scale=scale)
