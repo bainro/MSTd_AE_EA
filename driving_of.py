@@ -258,5 +258,5 @@ def make_flow_csv(load_dir="./driving"):
         csv_w.writerows(rows)
     
 if __name__ == "__main__":
-    # make_flow_mp4()
-    make_flow_csv()
+    make_flow_mp4()
+    # make_flow_csv()
