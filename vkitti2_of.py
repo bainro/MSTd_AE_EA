@@ -67,7 +67,7 @@ def flow_img(file="test.png", show=False):
     axes[1].set_yticks([])
     axes[1].set_title("L2 Norm Optical Flow", y=1.025)
     # not a perfectly general solution, but just for visualizations
-    vmax = 4.3
+    vmax = 4.4
     assert vmax > a.max(), f"Error, vmax set too small! a.max(): {a.max()}"
     axes[1].imshow(a, vmin=0, vmax=vmax, cmap=cmap)
     
