@@ -68,7 +68,8 @@ def flow_img(file="test.png", show=False):
     axes[1].set_title("L2 Norm Optical Flow", y=1.025)
     # not a perfectly general solution, but just for visualizations
     vmax = 5.0
-    assert vmax > a.max(), f"Error, vmax set too small! a.max(): {a.max()}"
+    if vmax > a.max():
+        print(f"Warning. vmax < a.max(): {a.max()}")
     axes[1].imshow(a, vmin=0, vmax=vmax, cmap=cmap)
     
     h, w = flow.shape[:2]
