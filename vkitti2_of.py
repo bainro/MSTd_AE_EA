@@ -103,7 +103,7 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     # color = np.sqrt(u**2 + v**2).flatten()
     color = np.zeros(u.shape).flatten()
     
-    scale = 80
+    scale = 100
 
     axes[2].axis("off")
     axes[2].set_title("Optical Flow as Vector Field")
@@ -137,7 +137,7 @@ def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
             # np_img = np_img[10:-10,175:-175,:]
             frames.append(np_img)
             # useful for debugging
-            if len(frames) >= 30:
+            if len(frames) >= 130:
                 break    
 
     tmp_dir = "./tmp/vkitti2"
