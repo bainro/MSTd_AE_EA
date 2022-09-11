@@ -100,7 +100,7 @@ def flow_img(file="test.pfm", show=False):
     vmax = 1.4
     if vmax < a.max():
         print(f"Warning. vmax < a.max(): {a.max()}")
-    axes[1].imshow(a, vmin=0, vmax=vmax, cmap=cmap)
+    axes[1].imshow(a, vmin=0, vmax=vmax)
     
     h, w = flow.shape[:2]
     new_l = round(w/2 - h/2)
