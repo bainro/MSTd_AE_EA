@@ -129,8 +129,10 @@ def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
             flow_min = flow.min()
         if flow.max() > flow_max:
             flow_max = flow.max()
-    for of_f in sorted(OFs):
+    for _i, of_f in enumerate(sorted(OFs)):
         if of_f.endswith(".png"):
+            # for dbg only!!!
+            if _i < 100: continue;
             f = os.path.join(OF_dir, of_f)
             np_img = flow_img(f, flow_min, flow_max)
             # trim white borders along left and right side
