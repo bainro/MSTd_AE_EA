@@ -102,10 +102,12 @@ def flow_img(file="test.png", f_min=None, f_max=None, show=False):
     # Defining color
     # color = np.sqrt(u**2 + v**2).flatten()
     color = np.zeros(u.shape).flatten()
+    
+    scale = 10
 
     axes[2].axis("off")
     axes[2].set_title("Optical Flow as Vector Field")
-    axes[2].quiver(X, Y, u, v, color)
+    axes[2].quiver(X, Y, u, v, color, scale=scale)
     # trying to make top-left pt 0,0
     axes[2].invert_yaxis()
 
@@ -135,18 +137,21 @@ def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
             # np_img = np_img[10:-10,175:-175,:]
             frames.append(np_img)
             # useful for debugging
-            # if len(frames) >= 30:
-                # break    
+            if len(frames) >= 30:
+                break    
 
-    os.makedirs("./tmp/vkitti2", exist_ok=True)
+    tmp_dir = "./tmp/vkitti2"
+    os.system('rm -rf ' + tmp_dir)
+    os.makedirs(tmp_dir, exist_ok=True)
+    
     for i, frame in enumerate(frames):
         img = Image.fromarray(frame, 'RGB')
-        img.save(f"./tmp/vkitti2/rgb_{i:04}.png")
+        img.save(f"{tmp_dir}/rgb_{i:04}.png")
     
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
-    os.system(f"ffmpeg -r {fps} -i ./tmp/vkitti2/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
+    os.system(f"ffmpeg -r {fps} -i {tmp_dir}/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
 
-def make_flow_csv(load_dir="./driving"):
+def make_flow_csv(load_dir="./vkitti2"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
     flow_dims = (15, 15)
