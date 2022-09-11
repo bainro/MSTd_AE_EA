@@ -60,7 +60,7 @@ def img_from_fig(fig, dpi=180):
     return img
     
 def flow_img(file="test.pfm", show=False):
-    flow_dims = (15, 15)
+    flow_dims = (150, 150)
     
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
     rgb_file = rgb_file.replace("into_future/", "")
