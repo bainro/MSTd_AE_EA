@@ -96,7 +96,11 @@ def flow_img(file="test.pfm", show=False):
     axes[1].set_xticks([])
     axes[1].set_yticks([])
     axes[1].set_title("L2 Norm Optical Flow", y=1.025)
-    axes[1].imshow(a)
+    # not a perfectly general solution, but just for visualizations
+    vmax = 1.4
+    if vmax < a.max():
+        print(f"Warning. vmax < a.max(): {a.max()}")
+    axes[1].imshow(a, vmin=0, vmax=vmax, cmap=cmap)
     
     h, w = flow.shape[:2]
     new_l = round(w/2 - h/2)
