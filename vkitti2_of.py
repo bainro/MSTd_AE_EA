@@ -212,4 +212,3 @@ def make_flow_csv(load_dir="./vkitti2"):
     
 if __name__ == "__main__":
     make_flow_mp4()
-    # make_flow_csv()
