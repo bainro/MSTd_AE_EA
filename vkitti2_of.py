@@ -144,6 +144,7 @@ def make_flow_mp4(load_dir="./vkitti2", fps=10, v_name="test.mp4"):
     # tried cv2.videoWriter first but would just not work on my ubunut machine :(
     os.system(f"ffmpeg -r {fps} -i {tmp_dir}/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
 
+# @TODO make work, have not touched since copying from driving dataset script
 def make_flow_csv(load_dir="./vkitti2"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
