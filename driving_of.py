@@ -218,7 +218,7 @@ def make_flow_csv(load_dir="./driving"):
         for pfm_file in os.listdir(full_path):
             PFMs.append(os.path.join(full_path, pfm_file))
     
-    random.shuffle(PFMs)
+    # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         '''
         @TODO: remove as this is a temporary test snippet.
@@ -259,5 +259,5 @@ def make_flow_csv(load_dir="./driving"):
         csv_w.writerows(rows)
     
 if __name__ == "__main__":
-    make_flow_mp4()
-    # make_flow_csv()
+    # make_flow_mp4()
+    make_flow_csv()
