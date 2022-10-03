@@ -268,4 +268,5 @@ def make_flow_csv(load_dir="./driving"):
     
 if __name__ == "__main__":
     # make_flow_mp4()
-    make_flow_csv()
+    # make_flow_csv()
+    csv_stats("driving-8dir-5speed.csv")
