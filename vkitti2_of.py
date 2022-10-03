@@ -171,12 +171,6 @@ def make_flow_csv(load_dir="./vkitti2"):
     
     random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
-        '''
-        @TODO: remove as this is a temporary test snippet.
-        Putting all 3.2k flow files into a single csv is intractable.
-        So going to do just the first 200 to test Kexin's pre-existing csv pipeline,
-        before overhauling the C++ to load .npy files instead of a single csv file.
-        '''
         # if i > 100:
             # break
         # not sure if necessary, but for my own sanity
