@@ -20,7 +20,7 @@ def csv_stats(filename):
     print(f"avg value: {np.mean(of_data)}")
     print(f"max value: {np.max(of_data)}")
     print(f"min value: {np.min(of_data)}")
-    print(f"value stdev: {np.stdev(of_data)}")
+    print(f"value stdev: {np.std(of_data)}")
 
 def readPFM(file):
     file = open(file, 'rb')
