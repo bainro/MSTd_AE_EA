@@ -11,7 +11,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 
-def cvs_stats(filename):
+def csv_stats(filename):
     with open(filename, 'r') as f:
         reader = csv.reader(f)
         for i, row in enumerate(reader):
