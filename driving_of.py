@@ -13,14 +13,14 @@ from numpy import genfromtxt
 
 
 def csv_stats(filename):
-    #with open(filename, 'r') as f:
-    #    reader = csv.reader(f)
+    print(f"csv_stats({filename})")    
     of_data = genfromtxt(filename, delimiter=',')
     print(f"shape: {of_data.shape}")
     print(f"avg value: {np.mean(of_data)}")
     print(f"max value: {np.max(of_data)}")
     print(f"min value: {np.min(of_data)}")
     print(f"value stdev: {np.std(of_data)}")
+    print("====================")
 
 def readPFM(file):
     file = open(file, 'rb')
@@ -273,3 +273,4 @@ if __name__ == "__main__":
     # make_flow_mp4()
     # make_flow_csv()
     csv_stats("driving-8dir-5speed.csv")
+    csv_stats("V-8dir-5speed.csv")
