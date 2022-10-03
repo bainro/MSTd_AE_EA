@@ -9,15 +9,14 @@ import random
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+from numpy import genfromtxt
 
 
 def csv_stats(filename):
-    with open(filename, 'r') as f:
-        reader = csv.reader(f)
-        for i, row in enumerate(reader):
-            print(len(row))
-        print(i)
-            
+    #with open(filename, 'r') as f:
+    #    reader = csv.reader(f)
+    my_data = genfromtxt('my_file.csv', delimiter=',')
+    print(my_data.shape)
 
 def readPFM(file):
     file = open(file, 'rb')
