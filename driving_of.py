@@ -15,8 +15,12 @@ from numpy import genfromtxt
 def csv_stats(filename):
     #with open(filename, 'r') as f:
     #    reader = csv.reader(f)
-    my_data = genfromtxt(filename, delimiter=',')
-    print(my_data.shape)
+    of_data = genfromtxt(filename, delimiter=',')
+    print(f"shape: {of_data.shape}")
+    print(f"avg value: {np.mean(of_data)}")
+    print(f"max value: {np.max(of_data)}")
+    print(f"min value: {np.min(of_data)}")
+    print(f"value stdev: {np.stdev(of_data)}")
 
 def readPFM(file):
     file = open(file, 'rb')
