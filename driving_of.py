@@ -15,7 +15,7 @@ from numpy import genfromtxt
 def csv_stats(filename):
     #with open(filename, 'r') as f:
     #    reader = csv.reader(f)
-    my_data = genfromtxt('my_file.csv', delimiter=',')
+    my_data = genfromtxt(filename, delimiter=',')
     print(my_data.shape)
 
 def readPFM(file):
