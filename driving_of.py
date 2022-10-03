@@ -14,9 +14,9 @@ import matplotlib.pyplot as plt
 def cvs_stats(filename):
     with open(filename, 'r') as f:
         reader = csv.reader(f)
-            for i, row in enumerate(reader):
-                print(len(row))
-            print(i)
+        for i, row in enumerate(reader):
+            print(len(row))
+        print(i)
             
 
 def readPFM(file):
