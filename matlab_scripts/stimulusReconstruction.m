@@ -24,12 +24,12 @@ weightFile = [dir, 'conn_MT_MST_', indiForAnalysis, '.dat'];
 SRFile = [dir 'MST-fr.csv'];
 %% Read input
 V = csvread(VFile);
-%% only required for driving_OF csv!
-V = transpose(V)
 %% Read test trial indices
 numTest = 160;
 
 trialsAll = dlmread([dir, 'trials.csv'], ',');
+%% only required for driving_OF csv!
+trialsAll = transpose(trialsAll)
 if (size(trialsAll,1) > 1)
     trials = trialsAll(str2num(indiForAnalysis)+1, 1:numTest);
 else
