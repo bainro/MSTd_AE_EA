@@ -6,8 +6,8 @@ addpath ('./util')
 %% Analysis setup
 indiForAnalysis = '0';
 
-plotWeights = 0;
-plotResults = 0;
+plotWeights = 1;
+plotResults = 1;
 dimPx=[15 15];
 
 MSTpixel = 10;
