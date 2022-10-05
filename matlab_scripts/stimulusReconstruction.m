@@ -20,7 +20,7 @@ nMT = prod(dimPx)*numSpeeds*numDirs;
 dimPx=[15 15];
 
 dir = '';
-VFile = 'V-8dir-5speed.csv';
+VFile = 'driving-8dir-5speed.csv';
 weightFile = [dir, 'conn_MT_MST_', indiForAnalysis, '.dat'];
 SRFile = [dir 'MST-fr.csv'];
 %% Read input
