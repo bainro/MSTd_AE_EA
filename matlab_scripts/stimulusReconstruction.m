@@ -1,7 +1,7 @@
 clear variables
 close all
 
-addpath ('~/CARLsim5/tools/offline_analysis_toolbox/')
+addpath ('/home/kexin/dev_CARLsim5/tools/offline_analysis_toolbox/')
 addpath ('./util')
 %% Analysis setup
 indiForAnalysis = '4';
