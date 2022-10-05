@@ -4,7 +4,7 @@ close all
 addpath ('/home/kexin/dev_CARLsim5/tools/offline_analysis_toolbox/')
 addpath ('./util')
 %% Analysis setup
-indiForAnalysis = '4';
+indiForAnalysis = '0';
 
 plotWeights = 0;
 plotResults = 0;
