@@ -10,7 +10,7 @@ plotWeights = 0;
 plotResults = 0;
 dimPx=[15 15];
 
-MSTpixel = 8;
+MSTpixel = 10;
 nMST = MSTpixel * MSTpixel;
 numSpeeds = 5;
 vecSpeeds = 2.^(linspace(log2(0.5), log2(16), numSpeeds));
