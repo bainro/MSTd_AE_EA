@@ -8,6 +8,7 @@ indiForAnalysis = '4';
 
 plotWeights = 0;
 plotResults = 0;
+dimPx=[15 15];
 
 MSTpixel = 8;
 nMST = MSTpixel * MSTpixel;
@@ -16,8 +17,6 @@ vecSpeeds = 2.^(linspace(log2(0.5), log2(16), numSpeeds));
 numDirs = 8;
 vecDirs = (0:numDirs-1)/numDirs*2*pi;
 nMT = prod(dimPx)*numSpeeds*numDirs;
-
-dimPx=[15 15];
 
 dir = '';
 VFile = 'driving-8dir-5speed.csv';
