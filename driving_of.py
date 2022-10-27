@@ -71,7 +71,7 @@ def img_from_fig(fig, dpi=180):
     return img
     
 def flow_img(file="test.pfm", show=False):
-    flow_dims = (150, 150)
+    flow_dims = (15, 15) # (150, 150)
     
     rgb_file = file.replace("optical_flow", "frames_finalpass_webp")
     rgb_file = rgb_file.replace("into_future/", "")
@@ -119,9 +119,10 @@ def flow_img(file="test.pfm", show=False):
     new_r = round(w/2 + h/2)
     flow = flow[:,new_l:new_r,:]
     
+    # Used this for dims of 150x150, but turned off for 15x15
     # every 5th element (well, in 1D) so arrow density is not absurd
-    u = u[::5, ::5]
-    v = v[::5, ::5]
+    #u = u[::5, ::5]
+    #v = v[::5, ::5]
     
     og_u = np.copy(u)
     og_v = np.copy(v)
