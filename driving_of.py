@@ -220,7 +220,7 @@ def make_flow_csv(load_dir="./driving"):
     n_trial_eles = flow_dims[0] * flow_dims[1] * len(θ_prefs) * len(ρ_prefs)
     flow_dims = tuple(flow_dims)
     
-    rows = np.zeros((n_trial_eles, len(PFMs))
+    rows = np.zeros((len(PFMs), n_trial_eles))
     PFMs = []
     # left & right cameras in both forward & backwards time directions (~3.2k files)
     PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/left",
@@ -258,7 +258,7 @@ def make_flow_csv(load_dir="./driving"):
                     R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
                     trial += R_MT.tolist()
             assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
-            rows.append(np.array(trial))
+            rows[i, :] = np.array(trial)
     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("./driving-8dir-5speed.csv", 'w') as csv_f: 
