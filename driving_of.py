@@ -256,6 +256,7 @@ def make_flow_csv(load_dir="./driving"):
                 for ρ_pref in ρ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                     R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
+                    import pdb; pdb.set_trace();
                     trial += R_MT.tolist()
             assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
             rows.append(trial)
