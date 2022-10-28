@@ -145,7 +145,7 @@ def flow_img(file="test.pfm", show=False):
 
     # Defining color as only black
     color = np.zeros(u.shape).flatten()
-    scale = 220
+    scale = 60
     
     axes[2].axis("off")
     axes[2].set_title("Optical Flow as Vector Field")
