@@ -266,7 +266,7 @@ def make_flow_csv(load_dir="./driving"):
         csv_w.writerows(rows)
     
 if __name__ == "__main__":
-    make_flow_mp4("~/driving_data")
+    make_flow_mp4(os.environ['HOME'] + "/driving_data")
     # make_flow_csv()
     # csv_stats("driving-8dir-5speed.csv")
     # csv_stats("V-8dir-5speed.csv")
