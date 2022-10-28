@@ -215,7 +215,9 @@ def make_flow_csv(load_dir="./driving"):
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
     # units: degrees / sec
-    ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
+    # ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
+    # From here: https://tinyurl.com/4a55rshy
+    ρ_prefs = [0.5, 1.1892, 2.8284, 6.7272, 16.0]
     flow_dims = list(flow_dims)
     n_trial_eles = flow_dims[0] * flow_dims[1] * len(θ_prefs) * len(ρ_prefs)
     flow_dims = tuple(flow_dims)
