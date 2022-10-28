@@ -220,7 +220,7 @@ def make_flow_csv(load_dir="./driving"):
     n_trial_eles = flow_dims[0] * flow_dims[1] * len(θ_prefs) * len(ρ_prefs)
     flow_dims = tuple(flow_dims)
     
-    rows = np.array([])
+    rows = np.zeros((n_trial_eles, len(PFMs))
     PFMs = []
     # left & right cameras in both forward & backwards time directions (~3.2k files)
     PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/left",
