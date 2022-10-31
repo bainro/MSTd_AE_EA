@@ -194,9 +194,9 @@ def dir_response(x, y, θ_pref):
 def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8):
     σ = 1.16
     s0 = 0.33
-    # convert from pixels/frame to deg/frame. The original height of 540px is hardcoded
     # the FOV of 52.7 was obtained from the paper stating they used a simulated 15mm 
     # focal length on a 32mm sensor body. Plugged values in here: tinyurl.com/226v4hej 
+    # convert from pixels/frame to deg/frame.
     deg_per_px = FOV / orig_h
     _x = x * deg_per_px
     _y = y * deg_per_px
@@ -212,7 +212,10 @@ def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8):
 def make_flow_csv(load_dir="./driving"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
+    # height x width
     flow_dims = (15, 15)
+    # double check that format is HxW elsewhere in the code if this fails!
+    assert flow_dims[0] == flow_dims[1]
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
     # units: degrees / sec
@@ -253,12 +256,15 @@ def make_flow_csv(load_dir="./driving"):
             u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             x = u.flatten()
-            y = v.flatten()
+            y = v.flatten() 
+            # had to flip for movie, might need to for csv too.
+            # not certain yet whether x needs to be flipped too.
+            y *= -1
             # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
+                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref, orig_h=flow_dims[0])
                     trial += R_MT.tolist()
             assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
             rows[i, :] = np.array(trial)
