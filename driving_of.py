@@ -259,7 +259,7 @@ def make_flow_csv(load_dir="./driving"):
             y = v.flatten() 
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
-            # y *= -1
+            y *= -1
             # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
