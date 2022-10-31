@@ -145,6 +145,7 @@ def flow_img(file="test.pfm", show=False):
 
     # Defining color as only black
     color = np.zeros(u.shape).flatten()
+    # will need to change for different resolutions
     scale = 60
     
     axes[2].axis("off")
