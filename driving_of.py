@@ -214,8 +214,6 @@ def make_flow_csv(load_dir="./driving"):
     random.seed(42)
     # height x width
     flow_dims = (15, 15)
-    # double check that format is HxW elsewhere in the code if this fails!
-    assert flow_dims[0] == flow_dims[1]
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
     # units: degrees / sec
@@ -260,6 +258,8 @@ def make_flow_csv(load_dir="./driving"):
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
             y *= -1
+            # double check that format is HxW elsewhere in the code if this fails!
+            assert flow_dims[0] == flow_dims[1]
             # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
             for θ_pref in θ_prefs:
                 for ρ_pref in ρ_prefs:
