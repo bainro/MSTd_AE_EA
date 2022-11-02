@@ -25,7 +25,7 @@ SRFile = [dir 'MST-fr.csv'];
 %% Read input
 V = csvread(VFile);
 %% only required for driving_OF csv!
-V = transpose(V)
+V = transpose(V);
 %% Read test trial indices
 numTest = 50;
 
