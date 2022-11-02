@@ -98,7 +98,7 @@ for i=1:numel(idx)
 	cla
 	quiver(xMesh(1:px:end,1:px:end), yMesh(1:px:end,1:px:end), ...
 		qx(1:px:end,1:px:end,i), qy(1:px:end,1:px:end,i), ...
-		'linewidth', 1.5, )%'MaxHeadSize', 1)
+		'linewidth', 1.5)% ,'MaxHeadSize', 1)
 	% 		title(['Basis Vector ' num2str(idx(i))])
 	axis equal
 	axis([0 dimPx(1)+1 0 dimPx(2)+1])
