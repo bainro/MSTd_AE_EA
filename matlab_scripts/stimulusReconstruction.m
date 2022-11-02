@@ -10,7 +10,7 @@ plotWeights = 1;
 plotResults = 1;
 dimPx=[15 15];
 
-MSTpixel = 10;
+MSTpixel = 4;
 nMST = MSTpixel * MSTpixel;
 numSpeeds = 5;
 vecSpeeds = 2.^(linspace(log2(0.5), log2(16), numSpeeds));
@@ -27,7 +27,7 @@ V = csvread(VFile);
 %% only required for driving_OF csv!
 V = transpose(V)
 %% Read test trial indices
-numTest = 160;
+numTest = 50;
 
 trialsAll = dlmread([dir, 'trials.csv'], ',');
 if (size(trialsAll,1) > 1)
