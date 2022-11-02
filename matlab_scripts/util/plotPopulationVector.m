@@ -8,7 +8,7 @@ if nargin<6,skipSmall=false;end
 
 numDirs = numel(vecDirs);
 numSpeeds = numel(vecSpeeds);
-px = ceil(min(dimPx)/5);
+px = min(dimPx); %ceil(min(dimPx)/5);
 
 assert(size(wts,1) == prod(dimPx)*numel(vecDirs)*numel(vecSpeeds))
 
