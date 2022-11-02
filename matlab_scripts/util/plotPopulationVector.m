@@ -28,18 +28,32 @@ for i=1:numel(idx)
 			dirDenom = 0;
 			speedNum = 0;
 			speedDenom = 0;
-			for s=1:numSpeeds
-				ss = vecSpeeds(s);
-				for d=1:numDirs				
-					% population vector for direction
-					dd = vecDirs(d);
-					dirNumX = dirNumX + W(r,c,d,s)*cos(dd);
-					dirNumY = dirNumY + W(r,c,d,s)*sin(dd);
-					dirDenom = dirDenom + W(r,c,d,s);
+% 			for s=1:numSpeeds
+% 				ss = vecSpeeds(s);
+% 				for d=1:numDirs				
+% 					% population vector for direction
+% 					dd = vecDirs(d);
+% 					dirNumX = dirNumX + W(r,c,d,s)*cos(dd);
+% 					dirNumY = dirNumY + W(r,c,d,s)*sin(dd);
+% 					dirDenom = dirDenom + W(r,c,d,s);
+					
+% 					% population vector for speed
+% 					speedNum = speedNum + W(r,c,d,s)*ss;
+% 					speedDenom = speedDenom + W(r,c,d,s);
+% 				end
+% 			end
+			for d=1:numDirs				
+				% population vector for direction
+				dd = vecDirs(d);
+				for s=1:numSpeeds
+					ss = vecSpeeds(s);	
+					dirNumX = dirNumX + W(r,c,s,d)*cos(dd);
+					dirNumY = dirNumY + W(r,c,s,d)*sin(dd);
+					dirDenom = dirDenom + W(r,c,s,d);
 					
 					% population vector for speed
-					speedNum = speedNum + W(r,c,d,s)*ss;
-					speedDenom = speedDenom + W(r,c,d,s);
+					speedNum = speedNum + W(r,c,s,d)*ss;
+					speedDenom = speedDenom + W(r,c,s,d);
 				end
 			end
 			len(r,c) = dirNumX^2 + dirNumY^2;
