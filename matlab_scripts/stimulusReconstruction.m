@@ -67,6 +67,9 @@ for trialInd = 1:numTest
     %% plot MST activity
     if plotResults
         maxD = max(max(spkData));
+	if maxD == 0
+	    maxD = 1
+	end
         h2 = figure(2);
         c = gray;
         c = flipud(c);
