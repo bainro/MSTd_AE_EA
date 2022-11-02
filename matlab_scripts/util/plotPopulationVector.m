@@ -19,7 +19,8 @@ qy = zeros(dimPx(1), dimPx(2), numel(idx));
 
 for i=1:numel(idx)
 	% process each pixel, estimate direction and speed
-	W = reshape(wts(:,idx(i)),dimPx(1),dimPx(2),numDirs,numSpeeds);
+	% W = reshape(wts(:,idx(i)),dimPx(1),dimPx(2),numDirs,numSpeeds);
+	W = reshape(wts(:,idx(i)),dimPx(1),dimPx(2),numSpeeds,numDirs);
 	len = zeros(dimPx);
 	for r=1:dimPx(1)
 		for c=1:dimPx(2)
