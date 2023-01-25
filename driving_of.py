@@ -234,12 +234,17 @@ def make_flow_csv(load_dir=os.environ['HOME'] + "/driving_data"):
         for pfm_file in os.listdir(full_path):
             PFMs.append(os.path.join(full_path, pfm_file))
     
-    rows = np.zeros((len(PFMs), n_trial_eles))
+    # @TODO remove, only for debugging!
+    dbg_n_trails = 2
+    rows = np.zeros(dbg_n_trails, n_trial_eles))
+    # rows = np.zeros((len(PFMs), n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
-        print(of_file)
-        if i > 1:
+        # @TODO remove, only for debugging!
+        if i > dbg_n_trails - 1:
             break
+        print(of_file)
+        
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
             trial = []
