@@ -15,9 +15,7 @@ nMST = MSTpixel * MSTpixel;
 numSpeeds = 5;
 vecSpeeds = 2.^(linspace(log2(0.5), log2(16), numSpeeds));
 numDirs = 8;
-% @TODO note change!
-% vecDirs = (0:numDirs-1)/numDirs*2*pi;
-vecDirs = [0.5 1.1892 2.8284 6.7272 16.0];
+vecDirs = (0:numDirs-1)/numDirs*2*pi;
 nMT = prod(dimPx)*numSpeeds*numDirs;
 
 dir = '';
