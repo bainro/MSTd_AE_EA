@@ -274,7 +274,7 @@ def make_flow_csv(load_dir="./driving"):
             assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
             rows[i, :] = np.array(trial)
     
-    print("Trials sum: " + np.sum(rows))
+    print("Trials sum: " + str(np.sum(rows)))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("./driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
