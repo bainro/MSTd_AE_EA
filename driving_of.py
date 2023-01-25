@@ -258,19 +258,22 @@ def make_flow_csv(load_dir="./driving"):
             # reduce image resolution
             u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-            x = u.flatten()
-            y = v.flatten() 
+             
+                
             # @TODO remove; only for debugging
             print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
-            u = np.arange(0, x.shape[0], 1)
-            v = np.arange(0, x.shape[1], 1)
-            X, Y = np.meshgrid(u, v)
+            x = np.arange(0, u.shape[0], 1)
+            y = np.arange(0, u.shape[1], 1)
+            X, Y = np.meshgrid(x, y)
             axes[2].set_title("dbg reconstruction")
-            axes[2].quiver(X, Y, x, y)
+            axes[2].quiver(X, Y, u, v)
             # trying to make top-left pt 0,0
             # axes[2].invert_yaxis()
             plt.show()
             
+            
+            x = u.flatten()
+            y = v.flatten()
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
             y *= -1
