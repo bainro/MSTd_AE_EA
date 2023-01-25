@@ -236,7 +236,7 @@ def make_flow_csv(load_dir=os.environ['HOME'] + "/driving_data"):
     
     # @TODO remove, only for debugging!
     dbg_n_trails = 2
-    rows = np.zeros(dbg_n_trails, n_trial_eles))
+    rows = np.zeros(dbg_n_trails, n_trial_eles)
     # rows = np.zeros((len(PFMs), n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
