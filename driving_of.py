@@ -258,7 +258,9 @@ def make_flow_csv(load_dir="./driving"):
             # reduce image resolution
             u = cv2.resize(flow[:,:,0], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
-             
+            # had to flip for movie, might need to for csv too.
+            # not certain yet whether x needs to be flipped too.
+            y *= -1
                 
             # @TODO remove; only for debugging
             fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
@@ -275,9 +277,6 @@ def make_flow_csv(load_dir="./driving"):
             x = u.flatten()
             y = v.flatten()
             print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
-            # had to flip for movie, might need to for csv too.
-            # not certain yet whether x needs to be flipped too.
-            y *= -1
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
             # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
