@@ -261,7 +261,7 @@ def make_flow_csv(load_dir="./driving"):
             x = u.flatten()
             y = v.flatten() 
             # @TODO remove; only for debugging
-            print("sum of og flow for trial #" + i + ": " + str(np.sum(np.abs(x) + np.abs(y))))
+            print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
             y *= -1
