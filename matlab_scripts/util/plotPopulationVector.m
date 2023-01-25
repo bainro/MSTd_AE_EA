@@ -48,11 +48,11 @@ for i=1:numel(idx)
 				dd = vecDirs(d);
 				for s=1:numSpeeds
 					ss = vecSpeeds(s);	
-					% dirNumX = dirNumX + W(r,c,s,d)*cos(dd);
-					% dirNumY = dirNumY + W(r,c,s,d)*sin(dd);
+					dirNumX = dirNumX + W(r,c,s,d)*cos(dd);
+					dirNumY = dirNumY + W(r,c,s,d)*sin(dd);
 					% @TODO: change back! screwing around & finding out!
-					dirNumX = dirNumX + W(r,c,s,d)*sin(dd);
-					dirNumY = dirNumY + W(r,c,s,d)*cos(dd);
+					% dirNumX = dirNumX + W(r,c,s,d)*sin(dd);
+					% dirNumY = dirNumY + W(r,c,s,d)*cos(dd);
 					dirDenom = dirDenom + W(r,c,s,d);
 					
 					% population vector for speed
