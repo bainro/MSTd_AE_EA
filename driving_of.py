@@ -289,7 +289,8 @@ def make_flow_csv(load_dir="./driving"):
             rows[i, :] = np.array(trial)
     
     # print("rows.shape: " + str(rows.shape))
-    # print("Trials sum: " + str(np.sum(rows)))
+    print("Trial #1's sum: " + str(np.sum(rows[0])))
+    print("Trial #2's sum: " + str(np.sum(rows[1])))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("./driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
