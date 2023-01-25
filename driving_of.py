@@ -208,7 +208,7 @@ def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8):
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
     
-def make_flow_csv(load_dir="./driving"):
+def make_flow_csv(load_dir="~/driving"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
     # height x width
