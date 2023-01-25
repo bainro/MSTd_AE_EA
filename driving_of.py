@@ -260,7 +260,8 @@ def make_flow_csv(load_dir="./driving"):
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             x = u.flatten()
             y = v.flatten() 
-            import pdb; pdb.set_trace()
+            # @TODO remove; only for debugging
+            print("sum of og flow for trial #" + i + ": " + str(np.sum(np.abs(x) + np.abs(y))))
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
             y *= -1
