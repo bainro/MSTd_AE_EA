@@ -208,7 +208,7 @@ def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8):
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
     
-def make_flow_csv(load_dir=os.environ['HOME'] + "/driving_data"):
+def make_flow_csv(load_dir="./driving"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
     # height x width
@@ -283,6 +283,6 @@ def make_flow_csv(load_dir=os.environ['HOME'] + "/driving_data"):
     
 if __name__ == "__main__":
     # make_flow_mp4(os.environ['HOME'] + "/driving_data")
-    # make_flow_csv()
+    make_flow_csv(os.environ['HOME'] + "/driving_data")
     csv_stats("driving-8dir-5speed.csv")
     csv_stats("V-8dir-5speed.csv")
