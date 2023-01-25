@@ -270,7 +270,7 @@ def make_flow_csv(load_dir="./driving"):
             axes[2].set_title("dbg reconstruction")
             axes[2].quiver(X, Y, u, v)
             # trying to make top-left pt 0,0
-            # axes[2].invert_yaxis()
+            axes[2].invert_yaxis()
             plt.show()
             
             
