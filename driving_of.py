@@ -237,6 +237,7 @@ def make_flow_csv(load_dir="./driving"):
     rows = np.zeros((len(PFMs), n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
+        print(of_file)
         if i > 1:
             break
         # not sure if necessary, but for my own sanity
