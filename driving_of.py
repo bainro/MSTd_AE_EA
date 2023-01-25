@@ -204,7 +204,7 @@ def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8):
     _y *= FPS
     speed_x_y = np.sqrt(_x**2 + _y**2)
     # Nover 2005 paper seems to have meant natural log for the modeling eq's but log10 for axis?
-    result = np.exp(-np.log(speed_x_y + s0 / ρ_pref + s0) ** 2 / 2*σ**2) 
+    result = np.exp(-np.log((speed_x_y + s0) / (ρ_pref + s0)) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
     
