@@ -260,7 +260,7 @@ def make_flow_csv(load_dir="./driving"):
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
-            y *= -1
+            v *= -1
                 
             # @TODO remove; only for debugging
             fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
