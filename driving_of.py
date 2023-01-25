@@ -237,8 +237,8 @@ def make_flow_csv(load_dir="./driving"):
     rows = np.zeros((len(PFMs), n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
-        # if i > 100:
-            # break
+        if i > 1:
+            break
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
             trial = []
@@ -277,6 +277,6 @@ def make_flow_csv(load_dir="./driving"):
     
 if __name__ == "__main__":
     # make_flow_mp4(os.environ['HOME'] + "/driving_data")
-    # make_flow_csv()
+    make_flow_csv()
     csv_stats("driving-8dir-5speed.csv")
     csv_stats("V-8dir-5speed.csv")
