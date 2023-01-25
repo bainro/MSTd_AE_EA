@@ -262,6 +262,15 @@ def make_flow_csv(load_dir="./driving"):
             y = v.flatten() 
             # @TODO remove; only for debugging
             print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
+            u = np.arange(0, x.shape[0], 1)
+            v = np.arange(0, x.shape[1], 1)
+            X, Y = np.meshgrid(u, v)
+            axes[2].set_title("dbg reconstruction")
+            axes[2].quiver(X, Y, x, y)
+            # trying to make top-left pt 0,0
+            # axes[2].invert_yaxis()
+            plt.show()
+            
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
             y *= -1
