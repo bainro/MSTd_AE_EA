@@ -260,6 +260,7 @@ def make_flow_csv(load_dir="./driving"):
             v = cv2.resize(flow[:,:,1], dsize=flow_dims, interpolation=cv2.INTER_CUBIC)
             x = u.flatten()
             y = v.flatten() 
+            import pdb; pdb.set_trace()
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
             y *= -1
