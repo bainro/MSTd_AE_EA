@@ -1,5 +1,4 @@
-clear variables
-close all
+clear; close all; clc;
 
 addpath ('/home/kexin/dev_CARLsim5/tools/offline_analysis_toolbox/')
 addpath ('./util')
