@@ -216,7 +216,6 @@ def make_flow_csv(load_dir="./driving"):
     # units: degrees
     θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
     # units: degrees / sec
-    # ρ_prefs = [0.5, 4.375, 8.25, 12.125, 16]
     # From here: https://tinyurl.com/4a55rshy
     ρ_prefs = [0.5, 1.1892, 2.8284, 6.7272, 16.0]
     flow_dims = list(flow_dims)
@@ -235,15 +234,14 @@ def make_flow_csv(load_dir="./driving"):
             PFMs.append(os.path.join(full_path, pfm_file))
     
     # @TODO remove, only for debugging!
-    dbg_n_trails = 2
-    rows = np.zeros((dbg_n_trails, n_trial_eles))
-    # rows = np.zeros((len(PFMs), n_trial_eles))
+    # dbg_n_trails = 2
+    # rows = np.zeros((dbg_n_trails, n_trial_eles))
+    rows = np.zeros((len(PFMs), n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         # @TODO remove, only for debugging!
-        if i > dbg_n_trails - 1:
-            break
-        print(of_file)
+        # if i > dbg_n_trails - 1:
+           # break
         
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
@@ -263,6 +261,7 @@ def make_flow_csv(load_dir="./driving"):
             v *= -1
                 
             # @TODO remove; only for debugging
+            '''
             fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
             x = np.arange(0, u.shape[0], 1)
             y = np.arange(0, u.shape[1], 1)
@@ -272,7 +271,7 @@ def make_flow_csv(load_dir="./driving"):
             # trying to make top-left pt 0,0
             axes[2].invert_yaxis()
             plt.show()
-            
+            '''          
             
             x = u.flatten()
             y = v.flatten()
