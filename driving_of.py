@@ -285,12 +285,12 @@ def make_flow_csv(load_dir="./driving"):
                     R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref, orig_h=flow_dims[0])
                     trial += R_MT.tolist()
                     # @TODO REMOVE! Debug only
-                    if i == dbg_n_trails - 1:
-                        import pdb; pdb.set_trace()
+                    # if i == dbg_n_trails - 1:
+                        # import pdb; pdb.set_trace()
             assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
             rows[i, :] = np.array(trial)
     
-    # print("rows.shape: " + str(rows.shape))
+    print("rows.shape: " + str(rows.shape))
     print("Trial #1's sum: " + str(np.sum(rows[0])))
     print("Trial #2's sum: " + str(np.sum(rows[1])))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
