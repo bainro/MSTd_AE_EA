@@ -190,19 +190,10 @@ def dir_response(x, y, θ_pref):
     # assert result >= 0 and result <= 1, "dir_response() result out of range!"
     return result
 
-def speed_response(x, y, ρ_pref, FOV=52.7, orig_h=540, FPS=8):
+def speed_response(x, y, ρ_pref):
     σ = 1.16
     s0 = 0.33
-    # the FOV of 52.7 was obtained from the paper stating they used a simulated 15mm 
-    # focal length on a 32mm sensor body. Plugged values in here: tinyurl.com/226v4hej 
-    # convert from pixels/frame to deg/frame.
-    deg_per_px = FOV / orig_h
-    _x = x * deg_per_px
-    _y = y * deg_per_px
-    # convert from deg/frame to deg/sec
-    _x *= FPS
-    _y *= FPS
-    speed_x_y = np.sqrt(_x**2 + _y**2)
+    speed_x_y = np.sqrt(x**2 + y**2)
     # Nover 2005 paper seems to have meant natural log for the modeling eq's but log10 for axis?
     result = np.exp(-np.log((speed_x_y + s0) / (ρ_pref + s0)) ** 2 / 2*σ**2) 
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
@@ -213,11 +204,9 @@ def make_flow_csv(load_dir="./driving"):
     random.seed(42)
     # height x width
     flow_dims = (15, 15)
-    # units: degrees
-    θ_prefs = [0, 45, 90, 135, 180, 225, 270, 315]
-    # units: degrees / sec
-    # From here: https://tinyurl.com/4a55rshy
-    ρ_prefs = [0.5, 1.1892, 2.8284, 6.7272, 16.0]
+    # units: degrees# units: degrees
+    θ_prefs = [0, 0.7854, 1.5708, 2.3562, 3.1416, 3.9270, 4.7124, 5.4978]
+    ρ_prefs = [0.0087, 0.0208, 0.0494, 0.1174, 0.2793]
     flow_dims = list(flow_dims)
     n_trial_eles = flow_dims[0] * flow_dims[1] * len(θ_prefs) * len(ρ_prefs)
     flow_dims = tuple(flow_dims)
@@ -279,10 +268,10 @@ def make_flow_csv(load_dir="./driving"):
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
             # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
-            for θ_pref in θ_prefs:
-                for ρ_pref in ρ_prefs:
+            for ρ_pref in ρ_prefs:
+                for θ_pref in θ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref, orig_h=flow_dims[0])
+                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
                     trial += R_MT.tolist()
                     # @TODO REMOVE! Debug only
                     # if i == dbg_n_trails - 1:
@@ -302,6 +291,6 @@ def make_flow_csv(load_dir="./driving"):
     
 if __name__ == "__main__":
     # make_flow_mp4(os.environ['HOME'] + "/driving_data")
-    make_flow_csv(os.environ['HOME'] + "/driving_data")
+    make_flow_csv(os.environ['HOME'] + "/home/rbain/driving_data")
     # csv_stats("driving-8dir-5speed.csv")
     # csv_stats("V-8dir-5speed.csv")
