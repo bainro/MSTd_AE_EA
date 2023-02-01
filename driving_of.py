@@ -183,7 +183,6 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
     
 def dir_response(x, y, θ_pref):
-    y = y * -1
     σ_theta = 3.0
     # matching here: tinyurl.com/jk7kahzd
     angle_x_y = np.arctan2(y, x)
@@ -195,8 +194,10 @@ def speed_response(x, y, ρ_pref):
     σ = 1.16
     s0 = 0.33
     speed_x_y = np.sqrt(x**2 + y**2)
+    
     # Nover 2005 paper seems to have meant natural log for the modeling eq's but log10 for axis?
-    result = np.exp(-np.log((speed_x_y + s0) / (ρ_pref + s0)) ** 2 / 2*σ**2) 
+    # result = np.exp(-np.log((speed_x_y + s0) / (ρ_pref + s0)) ** 2 / 2*σ**2) 
+    result = np.exp(-np.log((speed_x_y+s0) / (ρ_pref+s0))**2 / 2*σ**2)
     # assert result >= 0 and result <= 1, "speed_response() result out of range!"
     return result
     
@@ -205,7 +206,7 @@ def make_flow_csv(load_dir="./driving"):
     random.seed(42)
     # height x width
     flow_dims = (15, 15)
-    # units: degrees# units: degrees
+    # units: degrees
     θ_prefs = [0, 0.7854, 1.5708, 2.3562, 3.1416, 3.9270, 4.7124, 5.4978]
     ρ_prefs = [0.0087, 0.0208, 0.0494, 0.1174, 0.2793]
     flow_dims = list(flow_dims)
@@ -224,14 +225,14 @@ def make_flow_csv(load_dir="./driving"):
             PFMs.append(os.path.join(full_path, pfm_file))
     
     # @TODO remove, only for debugging!
-    dbg_n_trails = 2
-    rows = np.zeros((dbg_n_trails, n_trial_eles))
-    # rows = np.zeros((len(PFMs), n_trial_eles))
+    # dbg_n_trails = 2
+    # rows = np.zeros((dbg_n_trails, n_trial_eles))
+    rows = np.zeros((len(PFMs), n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         # @TODO remove, only for debugging!
         # if i > dbg_n_trails - 1:
-        #     break
+            # break
         
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
@@ -263,22 +264,24 @@ def make_flow_csv(load_dir="./driving"):
             plt.show()
             '''          
             
-            x = u.flatten()
-            y = v.flatten()
-            print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
+            x = np.flip(u, 0).flatten()
+            y = np.flip(v, 0).flatten()
+            # print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
             # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
             for ρ_pref in ρ_prefs:
                 for θ_pref in θ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                    trial.extend(dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref))
-            assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
+                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)	
+                    trial += R_MT.tolist()	
+                    # @TODO REMOVE! Debug only	
+                    # if i == dbg_n_trails - 1:	
+                        # import pdb; pdb.set_trace()	
+            assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
             rows[i, :] = np.array(trial)
     
-    print("rows.shape: " + str(rows.shape))
-    print("Trial #1's sum: " + str(np.sum(rows[0])))
-    print("Trial #2's sum: " + str(np.sum(rows[1])))
+    # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("./driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
@@ -288,6 +291,6 @@ def make_flow_csv(load_dir="./driving"):
     
 if __name__ == "__main__":
     # make_flow_mp4(os.environ['HOME'] + "/driving_data")
-    make_flow_csv("/home/rbain/driving_data")
-    # csv_stats("driving-8dir-5speed.csv")
-    # csv_stats("V-8dir-5speed.csv")
+    make_flow_csv('/home/rbain/driving_data')
+    csv_stats("driving-8dir-5speed.csv")
+    csv_stats("V-8dir-5speed.csv")
