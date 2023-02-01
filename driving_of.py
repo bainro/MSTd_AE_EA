@@ -272,11 +272,7 @@ def make_flow_csv(load_dir="./driving"):
             for ρ_pref in ρ_prefs:
                 for θ_pref in θ_prefs:
                     # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)
-                    trial += R_MT.tolist()
-                    # @TODO REMOVE! Debug only
-                    # if i == dbg_n_trails - 1:
-                        # import pdb; pdb.set_trace()
+                    trial.extend(dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref))
             assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"
             rows[i, :] = np.array(trial)
     
