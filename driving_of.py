@@ -183,6 +183,7 @@ def make_flow_mp4(load_dir="./driving", fps=10, v_name="test.mp4"):
     os.system(f"ffmpeg -r {fps} -i ./tmp/rgb_%04d.png -vcodec libx264 -crf 26 -pix_fmt yuv420p -y {v_name}")
     
 def dir_response(x, y, θ_pref):
+    y = y * -1
     σ_theta = 3.0
     # matching here: tinyurl.com/jk7kahzd
     angle_x_y = np.arctan2(y, x)
