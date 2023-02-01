@@ -230,8 +230,8 @@ def make_flow_csv(load_dir="./driving"):
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         # @TODO remove, only for debugging!
-        if i > dbg_n_trails - 1:
-            break
+        # if i > dbg_n_trails - 1:
+        #     break
         
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
@@ -251,7 +251,7 @@ def make_flow_csv(load_dir="./driving"):
             v *= -1
                 
             # @TODO remove; only for debugging
-            #'''
+            '''
             fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
             x = np.arange(0, u.shape[0], 1)
             y = np.arange(0, u.shape[1], 1)
@@ -261,7 +261,7 @@ def make_flow_csv(load_dir="./driving"):
             # trying to make top-left pt 0,0
             axes[2].invert_yaxis()
             plt.show()
-            #'''          
+            '''          
             
             x = u.flatten()
             y = v.flatten()
