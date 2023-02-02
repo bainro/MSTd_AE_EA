@@ -12,7 +12,8 @@ dimPx=[15 15];
 MSTpixel = 4;
 nMST = MSTpixel * MSTpixel;
 numSpeeds = 5;
-vecSpeeds = 2.^(linspace(log2(0.5), log2(16), numSpeeds));
+% OLD VALUES: 2.^(linspace(log2(0.5), log2(16), numSpeeds));
+vecSpeeds = [0.0087 0.0208 0.0494 0.1174 0.2793];
 numDirs = 8;
 vecDirs = (0:numDirs-1)/numDirs*2*pi;
 nMT = prod(dimPx)*numSpeeds*numDirs;
@@ -26,7 +27,7 @@ SRFile = [dir 'MST-fr.csv'];
 V = csvread(VFile);
 
 %% Read test trial indices
-numTest = 1;
+numTest = 10;
 
 trialsAll = dlmread([dir, 'trials.csv'], ',');
 if (size(trialsAll,1) > 1)
@@ -64,42 +65,36 @@ for trialInd = 1:numTest
     trial = trials(trialInd);  
     spkData = reshape(spkDataRaw(trialInd,:), [MSTpixel MSTpixel]);
     sortedSpkData = spkData;
-    %% plot MST activity
-    if plotResults
-        maxD = max(max(spkData));
-	if maxD == 0
-	    maxD = 1
-	end
-        h2 = figure(2);
-        c = gray;
-        c = flipud(c);
-        colormap(c);
-        imagesc(sortedSpkData, [0 maxD])
-        axis image equal
-        title(['rate = [0, ' num2str(maxD) '] Hz'])
-        xlabel('nrX')
-        ylabel('nrY')
-        colorbar
-    end
+
     %% reconstruct MT
     recMT = transpose(sortedWts) * sortedSpkData(:);
     idxMT = 1; % plot one stimulus at a time
     recMTTest(trialInd,:) = recMT;
 
+    %% plot MST activity
     if plotResults
         figure(3);
         subplot(1,2,2)
         [qxMT,qyMT] = plotPopulationVector(recMT, idxMT, dimPx, vecDirs, ...
         vecSpeeds, skipSmall);
-    end
 
-    %% plot original stimulus
-    if plotResults
+        %% plot original stimulus
         subplot(1,2,1);
         [qxOrig, qyOrig] = plotPopulationVector(V, trial, dimPx, vecDirs, ...
             vecSpeeds, skipSmall);
         % display correlation between original and reconstructed input
         disp(['Trial ', num2str(trial), ': ', num2str(corr(recMT, V(:,trial)))])
+
+        h2 = figure(2);
+        c = gray;
+        c = flipud(c);
+        colormap(c);
+        imagesc(sortedSpkData, [0 1])
+        axis image equal
+        title(['rate = [0, ' num2str(1) '] Hz'])
+        xlabel('nrX')
+        ylabel('nrY')
+        colorbar
         pause();
     end
    
