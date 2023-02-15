@@ -9,7 +9,7 @@ plotWeights = 1;
 plotResults = 1;
 dimPx=[15 15];
 
-MSTpixel = 12;
+MSTpixel = 6;
 nMST = MSTpixel * MSTpixel;
 numSpeeds = 5;
 % OLD VALUES: 2.^(linspace(log2(0.5), log2(16), numSpeeds));
