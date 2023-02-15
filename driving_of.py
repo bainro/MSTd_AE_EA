@@ -13,16 +13,24 @@ import matplotlib.pyplot as plt
 from numpy import genfromtxt
 
 
-def csv_stats(filename):
-    print(f"csv_stats({filename})")    
-    of_data = genfromtxt(filename, delimiter=',')
-    print(f"shape: {of_data.shape}")
-    print(f"avg value: {np.mean(of_data)}")
-    print(f"max value: {np.max(of_data)}")
-    print(f"min value: {np.min(of_data)}")
-    print(f"value stdev: {np.std(of_data)}")
-    print("====================")
-
+def csv_stats(filenames):
+    for filename in filenames:
+        print(f"csv_stats({filename})")    
+        of_data = genfromtxt(filename, delimiter=',')
+        print(f"shape: {of_data.shape}")
+        print(f"avg value: {np.mean(of_data)}")
+        print(f"max value: {np.max(of_data)}")
+        print(f"min value: {np.min(of_data)}")
+        print(f"value stdev: {np.std(of_data)}")
+        print("====================")
+    if len(filenames) == 2:
+        # show histogram of values
+        fig, ax = plt.subplots() # figsize = (10, 7)
+        for filename in filenames:
+            of_data = genfromtxt(filename, delimiter=',')
+            ax.hist(of_data, bins=np.arange(0, 1, 0.2))
+        plt.show()
+        
 def readPFM(file):
     file = open(file, 'rb')
 
@@ -291,5 +299,4 @@ def make_flow_csv(load_dir="./driving"):
 if __name__ == "__main__":
     # make_flow_mp4(os.environ['HOME'] + "/driving_data")
     make_flow_csv('/home/rbain/driving_data')
-    csv_stats("driving-8dir-5speed.csv")
-    csv_stats("V-8dir-5speed.csv")
+    csv_stats(["driving-8dir-5speed.csv", "V-8dir-5speed.csv"])
