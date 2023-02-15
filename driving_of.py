@@ -30,7 +30,7 @@ def csv_stats(filenames):
         fig, ax = plt.subplots()
         for filename in filenames:
             of_data = genfromtxt(filename, delimiter=',')
-            of_sorted = np.sort(of_data)
+            of_sorted = np.sort(of_data.flatten())
             plt.plot(of_sorted)
         plt.show()
         
