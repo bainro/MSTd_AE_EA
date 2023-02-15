@@ -30,8 +30,8 @@ def csv_stats(filenames):
         fig, ax = plt.subplots()
         for filename in filenames:
             of_data = genfromtxt(filename, delimiter=',')
-            of_data_sorted = np.sort(of_data)
-            plt.plot(dx_sorted)
+            of_sorted = np.sort(of_data)
+            plt.plot(of_sorted)
         plt.show()
         
 def readPFM(file):
