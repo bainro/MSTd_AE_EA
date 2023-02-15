@@ -73,6 +73,7 @@ for trialInd = 1:numTest
 
     %% plot MST activity
     if plotResults
+    	maxD = max(max(spkData));
         figure(3);
         subplot(1,2,2)
         [qxMT,qyMT] = plotPopulationVector(recMT, idxMT, dimPx, vecDirs, ...
@@ -89,9 +90,9 @@ for trialInd = 1:numTest
         c = gray;
         c = flipud(c);
         colormap(c);
-        imagesc(sortedSpkData, [0 1])
+        imagesc(sortedSpkData, [0 maxD])
         axis image equal
-        title(['rate = [0, ' num2str(1) '] Hz'])
+        title(['rate = [0, ' maxD '] Hz'])
         xlabel('nrX')
         ylabel('nrY')
         colorbar
