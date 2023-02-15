@@ -14,6 +14,7 @@ from numpy import genfromtxt
 
 
 def csv_stats(filenames):
+    '''
     for filename in filenames:
         print(f"csv_stats({filename})")    
         of_data = genfromtxt(filename, delimiter=',')
@@ -23,12 +24,14 @@ def csv_stats(filenames):
         print(f"min value: {np.min(of_data)}")
         print(f"value stdev: {np.std(of_data)}")
         print("====================")
+    '''
     if len(filenames) == 2:
         # show histogram of values
-        fig, ax = plt.subplots() # figsize = (10, 7)
+        fig, ax = plt.subplots()
         for filename in filenames:
             of_data = genfromtxt(filename, delimiter=',')
-            ax.hist(of_data, bins=np.arange(0, 1, 0.2))
+            of_data_sorted = np.sort(of_data)
+            plt.plot(dx_sorted)
         plt.show()
         
 def readPFM(file):
