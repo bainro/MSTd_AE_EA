@@ -72,19 +72,26 @@ public:
 		short int inhToMst[numIndi];
 
 		// network run time
-		int runTimeSec = 0; //seconds
-		int runTimeMs = 500; //millisecond
+		int runTimeSec = 0; // seconds
+		int runTimeMs = 500; // millisecond
 
 		float poissBaseRate = 20.0f;
 		float targetMaxFR = 250.0f;
 
-		string dataFile = "driving.csv";//"V-8dir-5speed.csv";
+		string dataFile = "driving.csv"; // "V-8dir-5speed.csv";
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
-		int totalSimTrial = 3200;//1280
-		int numTrain = 2560;//1120
+		int totalSimTrial = 3200; // 3200
+		// training the final one to evaluate
+		int numTrain = 2560;
 		int numTest = totalSimTrial - numTrain;
+		// if evolving
+		if (numIndi > 1) {
+			numTrain = 128;
+			numTest = totalSimTrial - numTrain;
+		} 
+		
 		int trial;
 		// arrays to store randomized test and train indices
 		int trainTrials[numTrain];
