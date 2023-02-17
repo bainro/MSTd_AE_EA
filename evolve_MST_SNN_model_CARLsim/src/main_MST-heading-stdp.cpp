@@ -4,7 +4,6 @@
 #include <vector>
 #include <iostream>
 #include <ctime>
-#include <cassert>
 
 #include "util.h"
 #include "helper.h"
@@ -23,11 +22,17 @@ public:
 	MSTHeadingExperiment(const SimMode simMode, const LoggerMode verbosity): simMode(simMode), verbosity(verbosity) {}
 
 	void run(const ParameterInstances &parameters, std::ostream &outputStream) const {
+		/*
+		std::ofstream dbg;
+		string dbgFn = ("./results/dbg.txt");
+	    	dbg.open(dbgFn.c_str(), std::ofstream::out | std::ofstream::app);
+		dbg << "TEST!" << endl;
+		*/
 
 		const float REG_IZH[] = { 0.02f, 0.2f, -65.0f, 8.0f };
 		const float FAST_IZH[] = { 0.1f, 0.2f, -65.0f, 2.0f };
 
-		bool writeRes = false;
+		bool writeRes = true;
 		int numIndi = parameters.getNumInstances(); // number of network individuals
 		if (numIndi > 1) {
 			writeRes = false;
@@ -37,7 +42,7 @@ public:
 		float alpha; // homeostatic scaling factor
 		float T; // homeostatic time constant
 
-		string data_dir_root = "./input_data/";
+		string data_dir_root = "./";
 		string result_dir_root = "./results/";
 
 		// MT group dimensions 
@@ -47,7 +52,7 @@ public:
 		int nMT = gridDim * gridDim * nNeuronPerPixel; 
 
 		// MST group dimensions 
-		int nMSTDim = 4; 
+		int nMSTDim = 6; 
 		Grid3D MSTDim(nMSTDim, nMSTDim, 1);
 		int nMST = nMSTDim * nMSTDim; 
 		
@@ -73,13 +78,13 @@ public:
 		float poissBaseRate = 20.0f;
 		float targetMaxFR = 250.0f;
 
-		string dataFile = "V-8dir-5speed.csv";
+		string dataFile = "driving.csv";//"V-8dir-5speed.csv";
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
-		int totalSimTrial = 1280; // 3200
-		int numTrain = 1120;      // 2720
-		int numTest = 160;        // 480
+		int totalSimTrial = 3200;//1280
+		int numTrain = 2560;//1120
+		int numTest = totalSimTrial - numTrain;
 		int trial;
 		// arrays to store randomized test and train indices
 		int trainTrials[numTrain];
@@ -92,7 +97,6 @@ public:
 		//array to store sorted MT for all test trials
 		float** testMTMatrix;
 		testMTMatrix = new float*[numTest];
-		
 	    for (int i = 0; i < numTest; i ++) {
 	        testMTMatrix[i] = new float[nMT];
 	    }
@@ -125,24 +129,23 @@ public:
 	        popCorrCoef[i] = new float[numTest];
 	    }
 
+
 		// fitness scores for the two measurements
 		float popFitness[numIndi];
 
 		SpikeMonitor* SpikeMonMST[numIndi];
 		ConnectionMonitor* CMMtToMst[numIndi];
 		
-		cout << "loading data!" << endl;
 		MTData = loadData(MTDataFile, nMT, totalSimTrial); // Load MT response 
-		
+
 		// ---------------- CONFIG STATE ------------------- 
 		CARLsim* const network = new CARLsim("MST-heading", simMode, verbosity);
-		
-		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON, 0, GPU_CORES); // 1, GPU_CORES); //input
+
+		gMT = network->createSpikeGeneratorGroup("MT", MTDim, EXCITATORY_POISSON); //input
 		for (unsigned int i = 0; i < numIndi; i++) {
-			
 			// creat neuron groups
-			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON, 0, GPU_CORES); // GPU_CORES
-			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON, 0, GPU_CORES); // GPU_CORES
+			gMST[i] = network->createGroup("MST", MSTDim, EXCITATORY_NEURON);
+			gInh[i] = network->createGroup("inh", inhDim, INHIBITORY_NEURON);
 
 			network->setNeuronParameters(gMST[i], REG_IZH[0], REG_IZH[1], REG_IZH[2], REG_IZH[3]);
 			network->setNeuronParameters(gInh[i], FAST_IZH[0], FAST_IZH[1], FAST_IZH[2], FAST_IZH[3]);
@@ -155,9 +158,9 @@ public:
 			inhToMst[i] = network->connect(gInh[i], gMST[i], "random", RangeWeight(0.0f,parameters.getParameter(i,16), parameters.getParameter(i,16)), 0.1f, RangeDelay(1), -1, SYN_PLASTIC);
 
 			// set E-STDP to be STANDARD (without neuromodulatory influence) with an EXP_CURVE type.
-			network->setESTDP(gMT, gMST[i], true, STANDARD, ExpCurve(parameters.getParameter(i,0), parameters.getParameter(i,6), parameters.getParameter(i,3), parameters.getParameter(i,7)));
-			network->setESTDP(gMST[i], gInh[i], true, STANDARD, ExpCurve(parameters.getParameter(i,1), parameters.getParameter(i,8), parameters.getParameter(i,4), parameters.getParameter(i,9)));
-			network->setISTDP(gInh[i], gMST[i], true, STANDARD, ExpCurve(parameters.getParameter(i,5), parameters.getParameter(i,10), parameters.getParameter(i,2), parameters.getParameter(i,11)));
+			network->setESTDP(gMST[i], true, STANDARD, ExpCurve(parameters.getParameter(i,0), parameters.getParameter(i,6), parameters.getParameter(i,3), parameters.getParameter(i,7)));
+			network->setESTDP(gInh[i], true, STANDARD, ExpCurve(parameters.getParameter(i,1), parameters.getParameter(i,8), parameters.getParameter(i,4), parameters.getParameter(i,9)));
+			network->setISTDP(gMST[i], true, STANDARD, ExpCurve(parameters.getParameter(i,5), parameters.getParameter(i,10), parameters.getParameter(i,2), parameters.getParameter(i,11)));
 
 			// set homeostasis
 			alpha = parameters.getParameter(i,18);
@@ -169,8 +172,10 @@ public:
 			network->setHomeoBaseFiringRate(gInh[i], parameters.getParameter(i,13), 0);
 		}
 
-		// ---------------- SETUP STATE -------------------		
-		PoissonRate* const poissRate = new PoissonRate(nMT, false); // true for on GPU
+		// ---------------- SETUP STATE -------------------
+		// network->setupNetwork();
+		
+		PoissonRate* const poissRate = new PoissonRate(nMT);
 
 		// naming for monitors
 		string spk_name_prefix = "spk_MST_";
@@ -185,9 +190,13 @@ public:
 		if (loadSimulation) {
 			FILE* fId = NULL;
 			fId = fopen(sim_name.c_str(), "rb");
+
 			network->loadSimulation(fId);
-		} 
-		network->setupNetwork();	
+
+			network->setupNetwork();	
+		} else {
+			network->setupNetwork();	
+		}
 
 		for (int i = 0; i < numIndi; i++) {
 			stringstream name_id_ss;
@@ -214,23 +223,20 @@ public:
 		if (!loadSimulation) {
 			/*** TRAINING - run network with MT activities on training trials ***/
 			for (unsigned int tr = 0; tr < numTrain; tr++) {
-				cout << tr << " " << 1 << endl;
+				// dbg << tr << endl;
 				trial = trainTrials[tr];
 
 				// set spike rates for the input group
 				for (unsigned int neur = 0; neur < nMT; neur ++) {
 					poissRateVector.push_back(MTData[neur][trial]*poissBaseRate);
 				}
-				cout << tr << " " << 2 << endl;
 				poissRate->setRates(poissRateVector);
 				poissRateVector.clear();
 				network->setSpikeRate(gMT, poissRate);
-				cout << tr << " " << 3 << endl;
-				
+
 				// run network with stimulus
 				network->runNetwork(runTimeSec, runTimeMs);
-				cout << tr << " " << 4 << endl;
-				
+
 				if (writeRes) {
 					if (tr % 10 == 0) {
 						for (unsigned int i = 0; i < numIndi; i++) {
@@ -242,9 +248,7 @@ public:
 				// run network for same amount of time with no stimulus
 				poissRate->setRates(0.0f);
 				network->setSpikeRate(gMT, poissRate);
-				cout << tr << " " << 5 << endl;
 				network->runNetwork(runTimeSec, runTimeMs);
-				cout << tr << " " << 6 << endl;
 			}
 		}
 
@@ -380,13 +384,15 @@ public:
 
 
 int main(int argc, char* argv[]) {
-	
-	const SimMode simMode = GPU_MODE; // GPU_MODE;
-  	const LoggerMode verbosity = SILENT; // DEVELOPER;
+	const SimMode simMode = GPU_MODE;
+  	const LoggerMode verbosity = SILENT;
+
   	const MSTHeadingExperiment experiment(simMode, verbosity);
+
 	const PTI pti(argc, argv, cout, cin);
-	
+
 	pti.runExperiment(experiment);
 
 	return 0;
 }
+
