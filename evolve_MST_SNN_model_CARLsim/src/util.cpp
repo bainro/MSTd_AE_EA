@@ -37,7 +37,7 @@ float calcRMS(float** x,float** y, int numRow, int numCol) {
     }
 	
     numerator = sqrt(res);
-    denom = sqrt(numRow * numCol);
+    denom = sqrt(numRow * numCol); 
     res = numerator / denom;
     return res;
 }
