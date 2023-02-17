@@ -101,7 +101,7 @@ float** loadData(string file, int numRow, int numCol) {
 
 int randGenerator (int i) {return rand() % i;}
 
-void shuffleTrials(int numTrials, int numTrain, int numTest, int *trainTrials, int *testTrials) {
+void shuffleTrials(int numTrials, int numTrain, int *trainTrials) {
     vector<int> allTrials;
     for (unsigned int i = 0; i < numTrials; i++) {
         allTrials.push_back(i);
@@ -111,9 +111,6 @@ void shuffleTrials(int numTrials, int numTrain, int numTest, int *trainTrials, i
     
     for (unsigned int i = 0; i < numTrain; i++) {
         trainTrials[i] = allTrials[i];
-    }
-    for (unsigned int i = 0; i < numTest; i++) {
-        testTrials[i] = allTrials[i+numTrain];
     }
 }
 
