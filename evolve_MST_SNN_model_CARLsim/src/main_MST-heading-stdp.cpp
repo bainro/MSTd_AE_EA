@@ -224,7 +224,7 @@ public:
 
 		// ---------------- RUN STATE -------------------
 
-		shuffleTrials(totalSimTrial, numTrain, trainTrials); 
+		shuffleTrials(totalSimTrial-numTest, numTrain, trainTrials); 
 		// not shuffling testing split. It will make reconstruction easier later.
 		for (unsigned int i = 0; i < numTest; i++) {
 			testTrials[i] = totalSimTrail - 1 - i;
