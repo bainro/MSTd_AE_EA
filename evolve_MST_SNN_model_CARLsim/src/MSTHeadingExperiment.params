@@ -117,7 +117,7 @@ pop.subpop.0.species.segment.5.max-gene =		0.5
 ######## Gaussian Radius ############
 
 pop.subpop.0.species.segment.6.min-gene =		6
-pop.subpop.0.species.segment.6.max-gene =	    8
+pop.subpop.0.species.segment.6.max-gene =	    	14
 
 ######## alpha (STDP-H) ############
 
