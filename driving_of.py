@@ -161,7 +161,7 @@ def flow_img(file="test.pfm", show=False):
     vmax = 5.3
     if vmax < a.max():
         # warning instead of error as some outliers are tolerable to keep scale
-        print(f"Warning. vmax < a.max(): {a.max()}")
+        # print(f"Warning. vmax < a.max(): {a.max()}")
     axes[1].imshow(a, vmin=0, vmax=vmax)
     
     h, w = flow.shape[:2]
