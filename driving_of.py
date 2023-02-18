@@ -22,7 +22,7 @@ def csv_stats(filenames):
                 # remove the "[" and "]"
                 del row[0]; del row[-1]
                 # row = "".join(row)
-                row = "".join()
+                row = "".join([""])
                 row_as_list = row.split(", ")
                 row_as_list = [float(i) for i in row_as_list]
                 yield row_as_list
