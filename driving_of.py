@@ -16,7 +16,7 @@ from numpy import genfromtxt
 def csv_stats(filenames):
     
     def getData(filename):
-        with open(filename, "rb") as csv_f:
+        with open(filename, "r") as csv_f:
             csv_r = csv.reader(csv_f)
             for row in csv_r:
                 yield row
