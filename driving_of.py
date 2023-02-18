@@ -21,7 +21,7 @@ def csv_stats(filenames):
             for row in csv_r:
                 # remove the "[" and "]"
                 del row[0]; del row[-1]
-                row = "".join([row])
+                row = "".join(row)
                 row_as_list = row.split(", ")
                 print(row_as_list)
                 row_as_list = [float(i) for i in row_as_list]
