@@ -27,7 +27,7 @@ def csv_stats(filenames):
                 yield row_as_list
                 
     for filename in filenames:
-        print(f"csv_stats({filename})")    
+        #print(f"csv_stats({filename})")    
         min_v = 1000
         max_v = -1000
         running_total = 0       
@@ -44,10 +44,10 @@ def csv_stats(filenames):
             elif max(row) > max_v:
                 max_v = max(row)
         
-        print(f"shape: {num_rows} x {len(row)}")
-        print(f"avg value: {running_total / num_rows}")
-        print(min_v, max_v)
-        print("====================")
+        #print(f"shape: {num_rows} x {len(row)}")
+        #print(f"avg value: {running_total / num_rows}")
+        #print(min_v, max_v)
+        #print("====================")
         exit()
         
     '''
