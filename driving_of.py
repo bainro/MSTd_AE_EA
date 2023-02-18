@@ -257,7 +257,6 @@ def make_flow_csv(load_dir="./driving"):
         
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
-            trial = []
             flow, _ = readPFM(of_file)
             flow = flow[:,:,:2]
             # crop to 1:1 aspect ratio
@@ -293,6 +292,7 @@ def make_flow_csv(load_dir="./driving"):
             # subsampling input using j and k
             for j in range(n_p_o):
                 for k in range(n_p_o):
+                    trial = []
                     # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
                     for ρ_pref in ρ_prefs:
                         for θ_pref in θ_prefs:
