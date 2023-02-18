@@ -14,7 +14,22 @@ from numpy import genfromtxt
 
 
 def csv_stats(filenames):
-    #'''
+    
+    def getData(filename):
+        with open(filename, "rb") as csv_f:
+            csv_r = csv.reader(csv_f)
+            for row in csv_r:
+                yield row
+                
+    for filename in filenames:
+        min_v = 1000
+        max_v = -1000
+        running_total = 0       
+        for row in getData(filename):
+            print(row)
+            exit()
+        
+    '''
     for filename in filenames:
         print(f"csv_stats({filename})")    
         of_data = genfromtxt(filename, delimiter=',')
@@ -24,6 +39,7 @@ def csv_stats(filenames):
         print(f"min value: {np.min(of_data)}")
         print(f"value stdev: {np.std(of_data)}")
         print("====================")
+    '''
     '''
     if len(filenames) == 2:
         # show histogram of values
