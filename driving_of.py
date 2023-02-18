@@ -19,7 +19,11 @@ def csv_stats(filenames):
         with open(filename, "r") as csv_f:
             csv_r = csv.reader(csv_f)
             for row in csv_r:
-                yield row
+                # remove the "[" and "]"
+                del row[0], del row[-1]
+                row_as_list = row.split(", ")
+                row_as_list = [float(i) for i in row_as_list]
+                yield row_as_list
                 
     for filename in filenames:
         print(f"csv_stats({filename})")    
