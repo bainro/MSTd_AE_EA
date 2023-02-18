@@ -26,7 +26,7 @@ def csv_stats(filenames):
         max_v = -1000
         running_total = 0       
         for row in getData(filename):
-            print(row)
+            print(type(row))
             exit()
         
     '''
