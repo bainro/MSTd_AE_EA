@@ -215,12 +215,14 @@ def make_flow_csv(load_dir="./driving"):
     # ensures deterministic (thus repeatable) shuffling
     random.seed(42)
     # height x width
-    flow_dims = (15, 15)
+    flow_dims = (225, 225)
+    flow_dims = list(flow_dims)
     # units: degrees
     θ_prefs = [0, 0.7854, 1.5708, 2.3562, 3.1416, 3.9270, 4.7124, 5.4978]
     ρ_prefs = [0.0087, 0.0208, 0.0494, 0.1174, 0.2793]
-    flow_dims = list(flow_dims)
-    n_trial_eles = flow_dims[0] * flow_dims[1] * len(θ_prefs) * len(ρ_prefs)
+    
+    wind_len = 15
+    n_trial_eles = wind_len * wind_len * len(θ_prefs) * len(ρ_prefs)
     flow_dims = tuple(flow_dims)
     
     PFMs = []
@@ -237,7 +239,14 @@ def make_flow_csv(load_dir="./driving"):
     # @TODO remove, only for debugging!
     # dbg_n_trails = 2
     # rows = np.zeros((dbg_n_trails, n_trial_eles))
-    rows = np.zeros((len(PFMs), n_trial_eles))
+    
+    # conv windowed input overlap (width - stride)
+    overlap = 2
+    stride = wind_len - overlap
+    # ratio of new windowed inputs per old, whole input
+    n_p_o = (flow_dims[0] - overlap) ** 2
+    n_conv_windows = len(PFMs) * n_p_o
+    rows = np.zeros((n_conv_windows, n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         # @TODO remove, only for debugging!
