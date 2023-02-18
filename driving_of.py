@@ -24,7 +24,7 @@ def csv_stats(filenames):
                 row = "".join(row)
                 row_as_list = row.split(", ")
                 row_as_list = [float(i) for i in row_as_list]
-                yield row_as_list
+                yield (row_as_list)
                 
     for filename in filenames:
         #print(f"csv_stats({filename})")    
