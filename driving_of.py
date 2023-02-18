@@ -15,19 +15,31 @@ from numpy import genfromtxt
 
 def csv_stats(filenames):
     
-    def getData(filename):
+    def readCSV(filename):
         with open(filename, "r") as csv_f:
             csv_r = csv.reader(csv_f)
             for row in csv_r:
                 yield row
                 
     for filename in filenames:
+        print(f"csv_stats({filename})")    
         min_v = 1000
         max_v = -1000
         running_total = 0       
-        for row in getData(filename):
-            print(type(row))
-            exit()
+        num_rows = 0
+        for row in readCSV(filename):
+            num_rows = num_rows + 1
+            running_total = running_total + sum(row)
+            if min(row) < min_v:
+                min_v = min(row)
+            elif max(row) > max_v:
+                max_v = max(row)
+        
+        print(f"shape: {num_rows} x {len(row)}")
+        print(f"avg value: {running_total / num_rows}")
+        print(min_v, max_v)
+        print("====================")
+        exit()
         
     '''
     for filename in filenames:
