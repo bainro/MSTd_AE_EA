@@ -14,7 +14,7 @@ from numpy import genfromtxt
 
 
 def csv_stats(filenames):
-    '''
+    #'''
     for filename in filenames:
         print(f"csv_stats({filename})")    
         of_data = genfromtxt(filename, delimiter=',')
@@ -33,6 +33,7 @@ def csv_stats(filenames):
             of_sorted = np.sort(of_data.flatten())
             plt.plot(of_sorted)
         plt.show()
+    '''
         
 def readPFM(file):
     file = open(file, 'rb')
