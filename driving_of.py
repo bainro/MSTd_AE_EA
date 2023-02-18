@@ -20,7 +20,7 @@ def csv_stats(filenames):
             csv_r = csv.reader(csv_f)
             for row in csv_r:
                 # remove the "[" and "]"
-                del row[0], del row[-1]
+                del row[0]; del row[-1]
                 row_as_list = row.split(", ")
                 row_as_list = [float(i) for i in row_as_list]
                 yield row_as_list
