@@ -21,7 +21,7 @@ def csv_stats(filenames):
             for row in csv_r:
                 # remove the "[" and "]"
                 del row[0]; del row[-1]
-                row = "".join(row)
+                row = ", ".join(row)
                 print(row)
                 print(type(row))
                 print(len(row))
