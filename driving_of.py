@@ -34,10 +34,10 @@ def csv_stats(filenames):
         num_rows = 0
         for row in readCSV(filename):
             num_rows = num_rows + 1
-            print(type(running_total))
-            print(running_total) 
-            print(type(row[0]))
-            print(row)
+            # print(type(running_total))
+            # print(running_total) 
+            # print(type(row[0]))
+            # print(row)
             running_total = running_total + sum(row)
             if min(row) < min_v:
                 min_v = min(row)
