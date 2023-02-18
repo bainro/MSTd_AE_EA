@@ -22,6 +22,10 @@ def csv_stats(filenames):
                 # remove the "[" and "]"
                 del row[0]; del row[-1]
                 row = "".join(row)
+                print(row)
+                print(type(row))
+                print(len(row))
+                exit()
                 row_as_list = row.split(", ")
                 print(row_as_list)
                 print(type(row_as_list))
