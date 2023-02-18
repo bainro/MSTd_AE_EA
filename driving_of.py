@@ -28,6 +28,7 @@ def csv_stats(filenames):
                 
     for filename in filenames:
         #print(f"csv_stats({filename})")    
+        import pdb; pdb.set_trace()
         min_v = 1000
         max_v = -1000
         running_total = 0       
