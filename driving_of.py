@@ -227,8 +227,9 @@ def make_flow_csv(load_dir="./driving"):
     
     PFMs = []
     # left & right cameras in both forward & backwards time directions (~3.2k files)
-    PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/left",]
+    PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/right",]
     ''' # @TODO remove! for debug only! rows matrix was too big, giving OOM err
+    "optical_flow/15mm_focallength/scene_forwards/slow/into_future/left","
     "optical_flow/15mm_focallength/scene_forwards/slow/into_future/right",
     "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left",
     "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right"]
@@ -314,7 +315,7 @@ def make_flow_csv(load_dir="./driving"):
     
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
-    with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
+    with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'a') as csv_f: 
         csv_w = csv.writer(csv_f) 
         # csv_w.writerow(fields)  
         rows = rows.T
