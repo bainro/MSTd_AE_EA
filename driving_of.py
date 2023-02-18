@@ -31,7 +31,7 @@ def csv_stats(filenames):
             num_rows = num_rows + 1
             running_total = running_total + sum(row)
             if min(row) < min_v:
-                min_v = min(row)
+                min_v = min(row) 
             elif max(row) > max_v:
                 max_v = max(row)
         
