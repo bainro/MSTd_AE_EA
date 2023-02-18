@@ -21,8 +21,8 @@ def csv_stats(filenames):
             for row in csv_r:
                 # remove the "[" and "]"
                 del row[0]; del row[-1]
-                # row = "".join(row)
-                row = "".join(["1", ", ", "1", ", ", "2"])
+                row = "".join(row)
+                # row = "".join(["1", ", ", "1", ", ", "2"])
                 row_as_list = row.split(", ")
                 row_as_list = [float(i) for i in row_as_list]
                 yield row_as_list
