@@ -228,11 +228,11 @@ def make_flow_csv(load_dir="./driving"):
     PFMs = []
     # left & right cameras in both forward & backwards time directions (~3.2k files)
     PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/left",]
-                ''' # @TODO remove! for debug only! rows matrix was too big, giving OOM err
-                "optical_flow/15mm_focallength/scene_forwards/slow/into_future/right",
-                "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left",
-                "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right"]
-                '''
+    ''' # @TODO remove! for debug only! rows matrix was too big, giving OOM err
+    "optical_flow/15mm_focallength/scene_forwards/slow/into_future/right",
+    "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left",
+    "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right"]
+    '''
     for dir in PFM_dirs:
         full_path = os.path.join(load_dir, dir)
         for pfm_file in os.listdir(full_path):
