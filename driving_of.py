@@ -221,8 +221,8 @@ def make_flow_csv(load_dir="./driving"):
     θ_prefs = [0, 0.7854, 1.5708, 2.3562, 3.1416, 3.9270, 4.7124, 5.4978]
     ρ_prefs = [0.0087, 0.0208, 0.0494, 0.1174, 0.2793]
     
-    wind_len = 15
-    n_trial_eles = wind_len * wind_len * len(θ_prefs) * len(ρ_prefs)
+    win_len = 15
+    n_trial_eles = win_len * win_len * len(θ_prefs) * len(ρ_prefs)
     flow_dims = tuple(flow_dims)
     
     PFMs = []
@@ -244,9 +244,9 @@ def make_flow_csv(load_dir="./driving"):
     
     # conv windowed input overlap (width - stride)
     overlap = 2
-    stride = wind_len - overlap
+    stride = win_len - overlap
     # ratio of new windowed inputs per old, whole input
-    n_p_o = math.floor(flow_dims[0] / (wind_len - overlap)) 
+    n_p_o = math.floor(flow_dims[0] / (win_len - overlap)) 
     n_conv_windows = len(PFMs) * n_p_o ** 2
     rows = np.zeros((n_conv_windows, n_trial_eles))
     # random.shuffle(PFMs)
