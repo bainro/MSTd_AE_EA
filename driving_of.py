@@ -28,28 +28,24 @@ def csv_stats(filenames):
                 yield row_as_list
                 
     for filename in filenames:
-        #print(f"csv_stats({filename})")    
-        # import pdb; pdb.set_trace()
+        print(f"csv_stats({filename})")    
         min_v = 1000
         max_v = -1000
         running_total = 0       
         num_rows = 0
         for row in readCSV(filename):
             num_rows = num_rows + 1
-            # print(type(running_total))
-            # print(running_total) 
-            # print(type(row[0]))
-            # print(row)
+            print(type(row), type(row))
             running_total = running_total + sum(row)
             if min(row) < min_v:
                 min_v = min(row)
             elif max(row) > max_v:
                 max_v = max(row)
         
-        #print(f"shape: {num_rows} x {len(row)}")
-        #print(f"avg value: {running_total / num_rows}")
-        #print(min_v, max_v)
-        #print("====================")
+        print(f"shape: {num_rows} x {len(row)}")
+        print(f"avg value: {running_total / num_rows}")
+        print(min_v, max_v)
+        print("====================")
         exit()
         
     '''
