@@ -244,8 +244,8 @@ def make_flow_csv(load_dir="./driving"):
     overlap = 2
     stride = wind_len - overlap
     # ratio of new windowed inputs per old, whole input
-    n_p_o = (flow_dims[0] - overlap) ** 2
-    n_conv_windows = len(PFMs) * n_p_o
+    n_p_o = math.floor(flow_dims[0] / (wind_len - overlap)) 
+    n_conv_windows = len(PFMs) * n_p_o ** 2
     rows = np.zeros((n_conv_windows, n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
@@ -283,22 +283,32 @@ def make_flow_csv(load_dir="./driving"):
             plt.show()
             '''          
             
-            x = np.flip(u, 0).flatten()
-            y = np.flip(v, 0).flatten()
+            x = np.flip(u, 0)
+            y = np.flip(v, 0)
             # print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
-            # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
-            for ρ_pref in ρ_prefs:
-                for θ_pref in θ_prefs:
-                    # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                    R_MT = dir_response(x, y, θ_pref) * speed_response(x, y, ρ_pref)	
-                    trial += R_MT.tolist()	
-                    # @TODO REMOVE! Debug only	
-                    # if i == dbg_n_trails - 1:	
-                        # import pdb; pdb.set_trace()	
-            assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
-            rows[i, :] = np.array(trial)
+            # subsampling input using j and k
+            for j in range(n_p_o):
+                for k in range(n_p_o):
+                    # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
+                    for ρ_pref in ρ_prefs:
+                        for θ_pref in θ_prefs:
+                            _j = win_len * j
+                            _k = win_len * k
+                            _x = x[_j:(_j + win_len), _k:(_k + win_len)]
+                            _y = y[_j:(_j + win_len), _k:(_k + win_len)]
+                            _x = _x.flatten()
+                            _y = _y.flatten()
+                            # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
+                            R_MT = dir_response(_x, _y, θ_pref) * speed_response(_x, _y, ρ_pref)	
+                            trial += R_MT.tolist()	
+                            # @TODO REMOVE! Debug only	
+                            # if i == dbg_n_trails - 1:	
+                                # import pdb; pdb.set_trace()	
+                    assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
+                    r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
+                    rows[r_i, :] = np.array(trial)
     
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
