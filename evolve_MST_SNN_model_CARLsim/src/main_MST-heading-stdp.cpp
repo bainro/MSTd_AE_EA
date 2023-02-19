@@ -87,11 +87,9 @@ public:
 		int numTrain = 14000;
 		int numTest = totalSimTrial - numTrain;
 		// else evolving many at once
-		/*
 		if (numIndi > 1) {
 			numTrain = 128;
 		} 
-		*/
 		
 		int trial;
 		// arrays to store randomized test and train indices
