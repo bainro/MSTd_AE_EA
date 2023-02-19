@@ -281,7 +281,11 @@ def make_flow_csv(load_dir="./driving"):
     '''
     for dir in PFM_dirs:
         full_path = os.path.join(load_dir, dir)
-        for pfm_file in os.listdir(full_path):
+        # @TODO remove! for debug only!
+        num_flow_files = len(os.listdir(full_path))
+        for q, pfm_file in enumerate(os.listdir(full_path)):
+            if q > num_flow_files // 8:
+                break
             PFMs.append(os.path.join(full_path, pfm_file))
     
     # @TODO remove, only for debugging!
@@ -360,7 +364,7 @@ def make_flow_csv(load_dir="./driving"):
     
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
-    with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'a') as csv_f: 
+    with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
         # csv_w.writerow(fields)  
         rows = rows.T
