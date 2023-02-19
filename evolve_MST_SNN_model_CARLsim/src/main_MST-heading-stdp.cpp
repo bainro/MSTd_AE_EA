@@ -82,9 +82,9 @@ public:
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
-		int totalSimTrial = ;
+		int totalSimTrial = 14739;
 		// if training the final one to evaluate
-		int numTrain = 2560;
+		int numTrain = 14000;
 		int numTest = totalSimTrial - numTrain;
 		// else evolving many at once
 		if (numIndi > 1) {
