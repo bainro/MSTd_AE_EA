@@ -135,7 +135,6 @@ public:
 	        popCorrCoef[i] = new float[numTest];
 	    }
 
-
 		// fitness scores for the two measurements
 		float popFitness[numIndi];
 
