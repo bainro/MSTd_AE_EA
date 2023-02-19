@@ -310,7 +310,7 @@ dbg << "3" << endl;
 		}
 			
     	for (unsigned int tr = 0; tr < numTest; tr++) {
-
+		dbg << "Trial #: " << tr << endl;
     		// set spike rates for the input group
 			for (unsigned int neur = 0; neur < nMT; neur ++) {
 				poissRateVector.push_back(testMTMatrix[tr][neur]*poissBaseRate);
