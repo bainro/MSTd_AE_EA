@@ -22,12 +22,12 @@ public:
 	MSTHeadingExperiment(const SimMode simMode, const LoggerMode verbosity): simMode(simMode), verbosity(verbosity) {}
 
 	void run(const ParameterInstances &parameters, std::ostream &outputStream) const {
-		///*
+		/*
 		std::ofstream dbg;
 		string dbgFn = ("./results/dbg.txt");
 	    	dbg.open(dbgFn.c_str(), std::ofstream::out | std::ofstream::app);
 		dbg << "1" << endl;
-		//*/
+		*/
 
 		const float REG_IZH[] = { 0.02f, 0.2f, -65.0f, 8.0f };
 		const float FAST_IZH[] = { 0.1f, 0.2f, -65.0f, 2.0f };
@@ -95,8 +95,6 @@ public:
 		// arrays to store randomized test and train indices
 		int trainTrials[numTrain];
 		int testTrials[numTest];
-
-		dbg << "2" << endl;
 		
 		float** MTData; // array to store input MT FR
 		float sortedMTArray[nMT]; // vector to store sorted MT
@@ -123,7 +121,7 @@ public:
 	    for (int i = 0; i < numTest; i ++) {
 	        normRecMTAll[i] = new float[nMT];
 	    }
-dbg << "3" << endl;
+
 		vector<vector<float> > sumNeurFR(numIndi, vector<float>(nMST, 0.0f)); 
 		float maxFR; // FR threshold
 
@@ -234,7 +232,7 @@ dbg << "3" << endl;
 		if (!loadSimulation) {
 			/*** TRAINING - run network with MT activities on training trials ***/
 			for (unsigned int tr = 0; tr < numTrain; tr++) {
-				// dbg << tr << endl;
+				
 				trial = trainTrials[tr];
 
 				// set spike rates for the input group
@@ -310,7 +308,7 @@ dbg << "3" << endl;
 		}
 			
     	for (unsigned int tr = 0; tr < numTest; tr++) {
-		dbg << "Trial #: " << tr << endl;
+		
     		// set spike rates for the input group
 			for (unsigned int neur = 0; neur < nMT; neur ++) {
 				poissRateVector.push_back(testMTMatrix[tr][neur]*poissBaseRate);
