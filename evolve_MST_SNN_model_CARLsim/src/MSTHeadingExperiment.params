@@ -26,7 +26,7 @@ seed.15 =				                        time
 ##############################
 # Population Model
 ##############################
-generations =									30
+generations =									2
 quit-on-run-complete =			                false
 pop.subpop.0.size =			                    50
 breed =					                        ec.es.MuCommaLambdaBreeder
