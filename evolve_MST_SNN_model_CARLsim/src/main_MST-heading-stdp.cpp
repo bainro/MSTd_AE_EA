@@ -353,7 +353,8 @@ public:
 		
 		for (unsigned int i = 0; i < numIndi; i++) {
 
-			popFitness[i] = (1000. * 1000.) - calcRMS(recMTAll[i], testMTMatrix, numTest, nMT);
+			
+			popFitness[i] = 1000. - calcRMS(recMTAll[i], testMTMatrix, numTest, nMT);
 
 			maxFR = 0.0f;
 			for (unsigned int neur = 0; neur < nMST; neur ++) {
