@@ -14,4 +14,6 @@ int randGenerator (int i);
 
 void shuffleTrials(int numTrials, int numTrain, int *trainTrials);
 
+float calcRMS(float** x, float** y, int numRow, int numCol);
+  
 float calcCorr(float** X, float** Y, int numRow, int numCol);
