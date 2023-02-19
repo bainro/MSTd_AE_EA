@@ -12,6 +12,6 @@ float** loadData(string file, int numRow, int numCol);
 
 int randGenerator (int i);
 
-void shuffleTrials(int numTrials, int numTrain, int numTest, int *trainTrials, int *testTrials);
+void shuffleTrials(int numTrials, int numTrain, int *trainTrials);
 
 float calcCorr(float** X, float** Y, int numRow, int numCol);
