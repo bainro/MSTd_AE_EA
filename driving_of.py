@@ -14,7 +14,7 @@ from numpy import genfromtxt
 
 
 def csv_stats(filenames):
-    
+    """
     def readCSV(filename):
         with open(filename, "r") as csv_f:
             csv_r = csv.reader(csv_f)
@@ -54,9 +54,8 @@ def csv_stats(filenames):
         print(f"avg value: {running_total / num_rows}")
         print(min_v, max_v)
         print("====================")
-        exit()
+    """
         
-    '''
     for filename in filenames:
         print(f"csv_stats({filename})")    
         of_data = genfromtxt(filename, delimiter=',')
@@ -66,7 +65,7 @@ def csv_stats(filenames):
         print(f"min value: {np.min(of_data)}")
         print(f"value stdev: {np.std(of_data)}")
         print("====================")
-    '''
+
     '''
     if len(filenames) == 2:
         # show histogram of values
@@ -372,5 +371,5 @@ def make_flow_csv(load_dir="./driving"):
     
 if __name__ == "__main__":
     # make_flow_mp4(os.environ['HOME'] + "/driving_data")
-    # make_flow_csv('/home/rbain/driving_data')
+    make_flow_csv('/home/rbain/driving_data')
     csv_stats(["driving-8dir-5speed.csv", "V-8dir-5speed.csv"])
