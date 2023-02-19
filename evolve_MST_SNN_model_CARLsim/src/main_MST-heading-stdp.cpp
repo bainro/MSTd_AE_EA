@@ -82,7 +82,7 @@ public:
 		string MTDataFile = (data_dir_root + dataFile);
 
 		// training and testing parameters
-		int totalSimTrial = 3200; // 3200
+		int totalSimTrial = ;
 		// if training the final one to evaluate
 		int numTrain = 2560;
 		int numTest = totalSimTrial - numTrain;
