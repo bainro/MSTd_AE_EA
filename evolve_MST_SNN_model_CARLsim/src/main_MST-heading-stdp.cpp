@@ -354,7 +354,7 @@ public:
 		for (unsigned int i = 0; i < numIndi; i++) {
 
 			
-			popFitness[i] = 1000. - calcRMS(recMTAll[i], testMTMatrix, numTest, nMT);
+			popFitness[i] = calcCorr(recMTAll[i], testMTMatrix, numTest, nMT);
 
 			maxFR = 0.0f;
 			for (unsigned int neur = 0; neur < nMST; neur ++) {
@@ -365,9 +365,10 @@ public:
 					maxFR = sumNeurFR[i][neur];
 				}
 			}
-			// if max mean FR greater than target max FR, IT DIES :O
+			// if max mean FR greater than target max FR, subtract max mean from target
+			// add penalty to fitness
 			if (maxFR > targetMaxFR) {
-				popFitness[i] = 0;
+				popFitness[i] -= ((maxFR - targetMaxFR) / 1000);
 			}
 
 			fileFitness << "popFitness-" << i << ": " << popFitness[i] << endl;
