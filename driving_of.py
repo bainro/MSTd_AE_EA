@@ -296,6 +296,7 @@ def make_flow_csv(load_dir="./driving"):
     stride = win_len - overlap
     # ratio of new windowed inputs per old, whole input
     n_p_o = math.floor(flow_dims[0] / (win_len - overlap)) 
+    print(n_p_o)
     n_conv_windows = len(PFMs) * n_p_o ** 2
     rows = np.zeros((n_conv_windows, n_trial_eles))
     print("SMALL ROWS MATRIX FOR DBG!!!")
