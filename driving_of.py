@@ -305,7 +305,7 @@ def make_flow_csv(load_dir="./driving"):
         # @TODO remove, only for debugging!
         if i != 3:
             continue
-        else
+        else:
             print("SHUT ME UP! DBG")
         
         # not sure if necessary, but for my own sanity
