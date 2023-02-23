@@ -293,7 +293,7 @@ def make_flow_csv(load_dir="./driving"):
     rows = []
     hashes = []
     # random.shuffle(PFMs)
-    hash_fn = imagehash.phash
+    hash_fn = imagehash.dhash
     prev_hash = hash_fn(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     
     for i, of_file in enumerate(PFMs):
