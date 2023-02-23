@@ -360,7 +360,7 @@ def make_flow_csv(load_dir="./driving"):
                 for k in range(n_p_o):
                     ### @TODO remove! only for debugging
                     #'''
-                    if i == 3 and j == 0 and (k == 0 or k == 1):
+                    if j == 0 and (k == 0 or k == 1):
                         fig, axes = plt.subplots(1, 1)
                         x_ = np.arange(0, win_len, 1)
                         y_ = np.arange(0, win_len, 1)
