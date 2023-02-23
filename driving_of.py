@@ -341,7 +341,7 @@ def make_flow_csv(load_dir="./driving"):
                     cos_sim_tl = np.dot(sum_flow, tl_f) / (np.linalg.norm(sum_flow) * np.linalg.norm(tl_f))
                     cos_sim_tr = np.dot(sum_flow, tr_f) / (np.linalg.norm(sum_flow) * np.linalg.norm(tr_f))
                     # print(cos_sim_tl)
-                    if cos_sim_tl > .9 or cos_sim_tr > .9:
+                    if cos_sim_tl > .9 and cos_sim_tr > .9:
                         continue
                     _tmp = np.reshape(trial, (win_len * len(θ_prefs), win_len * len(ρ_prefs)))
                     _tmp = np.uint8(_tmp * 255)
