@@ -293,7 +293,8 @@ def make_flow_csv(load_dir="./driving"):
     rows = []
     hashes = []
     # random.shuffle(PFMs)
-    prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
+    hash_fn = imagehash.phash
+    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     
     for i, of_file in enumerate(PFMs):
         
@@ -330,7 +331,7 @@ def make_flow_csv(load_dir="./driving"):
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             if θ_pref == 0 and ρ_pref == 0.0087:
-                                hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
+                                hash = hash_fn(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
                                 hashes.append(hash)
                             _x = _x.flatten()
                             _y = _y.flatten()
@@ -344,7 +345,7 @@ def make_flow_csv(load_dir="./driving"):
     rows, hashes = zip(*sorted(zip(rows, hashes)))
     rows = list(rows)
     hashes = list(hashes)
-    prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
+    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
     for i, h in enumerate(hashes[::-1]):
