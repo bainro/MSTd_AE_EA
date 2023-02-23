@@ -341,6 +341,19 @@ def make_flow_csv(load_dir="./driving"):
             # subsampling input using j and k
             for j in range(n_p_o):
                 for k in range(n_p_o):
+                    ### @TODO remove! only for debugging
+                    #'''
+                    if i == 3:
+                        fig, axes = plt.subplots(1, 1)
+                        x_ = np.arange(0, win_len, 1)
+                        y_ = np.arange(0, win_len, 1)
+                        X, Y = np.meshgrid(x_, y_)
+                        axes.set_title("dbg windowed input")
+                        axes.quiver(X, Y, np.flip(x,0)[_j:(_j + win_len), _k:(_k + win_len)], np.flip(y,0)[_j:(_j + win_len), _k:(_k + win_len)])
+                        # trying to make top-left pt 0,0
+                        axes.invert_yaxis()
+                        plt.show()
+                    #'''
                     trial = []
                     # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
                     for ρ_pref in ρ_prefs:
@@ -349,19 +362,6 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
-                            ### @TODO remove! only for debugging
-                            #'''
-                            if i == 3:
-                                fig, axes = plt.subplots(1, 1)
-                                x_ = np.arange(0, win_len, 1)
-                                y_ = np.arange(0, win_len, 1)
-                                X, Y = np.meshgrid(x_, y_)
-                                axes.set_title("dbg windowed input")
-                                axes.quiver(X, Y, np.flip(x,0)[_j:(_j + win_len), _k:(_k + win_len)], np.flip(y,0)[_j:(_j + win_len), _k:(_k + win_len)])
-                                # trying to make top-left pt 0,0
-                                axes.invert_yaxis()
-                                plt.show()
-                            #'''
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
