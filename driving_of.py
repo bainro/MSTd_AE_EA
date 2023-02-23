@@ -281,8 +281,6 @@ def make_flow_csv(load_dir="./driving"):
     '''
     for dir in PFM_dirs:
         full_path = os.path.join(load_dir, dir)
-        # @TODO remove! for debug only!
-        num_flow_files = len(os.listdir(full_path))
         for q, pfm_file in enumerate(os.listdir(full_path)):
             if not (q % 80):
                 PFMs.append(os.path.join(full_path, pfm_file))
