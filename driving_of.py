@@ -321,7 +321,7 @@ def make_flow_csv(load_dir="./driving"):
             v *= -1
                 
             # @TODO remove; only for debugging
-            '''
+            #'''
             fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
             x = np.arange(0, u.shape[0], 1)
             y = np.arange(0, u.shape[1], 1)
@@ -331,7 +331,7 @@ def make_flow_csv(load_dir="./driving"):
             # trying to make top-left pt 0,0
             axes[2].invert_yaxis()
             plt.show()
-            '''          
+            #'''          
             
             x = np.flip(u, 0)
             y = np.flip(v, 0)
@@ -349,6 +349,18 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
+                            ### @TODO remove! only for debugging
+                            #'''
+                            fig, axes = plt.subplots(1, 3, figsize=(16, 5.0))
+                            x_ = np.arange(0, win_len, 1)
+                            y_ = np.arange(0, win_len, 1)
+                            X, Y = np.meshgrid(x_, y_)
+                            axes[2].set_title("dbg windowed input")
+                            axes[2].quiver(X, Y, np.flip(x,0)[_j:(_j + win_len), _k:(_k + win_len)], np.flip(y,0)[_j:(_j + win_len), _k:(_k + win_len)])
+                            # trying to make top-left pt 0,0
+                            axes[2].invert_yaxis()
+                            plt.show()
+                            #'''
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
