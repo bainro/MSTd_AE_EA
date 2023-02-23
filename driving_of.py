@@ -298,6 +298,8 @@ def make_flow_csv(load_dir="./driving"):
     n_p_o = math.floor(flow_dims[0] / (win_len - overlap)) 
     n_conv_windows = len(PFMs) * n_p_o ** 2
     rows = np.zeros((n_conv_windows, n_trial_eles))
+    print("SMALL ROWS MATRIX FOR DBG!!!")
+    rows = np.zeros((2, n_trial_eles))
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         # @TODO remove, only for debugging!
@@ -386,13 +388,14 @@ def make_flow_csv(load_dir="./driving"):
                                 # import pdb; pdb.set_trace()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
                     r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
+                    if r_i == 2: 
+                        print("EXITING EARLY; DBG"); exit()
                     rows[r_i, :] = np.array(trial)
-
-    print("EXITING EARLY; DBG"); exit()
                     
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
-    with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
+    # with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
+    with open("./test.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
         # csv_w.writerow(fields)  
         rows = rows.T
