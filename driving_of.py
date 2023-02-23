@@ -356,7 +356,8 @@ def make_flow_csv(load_dir="./driving"):
                     ys.append(_y)
     
     # parallel sorting
-    rows, hashes = zip(*sorted(zip(rows, hashes)))
+    # rows, hashes = zip(*sorted(zip(rows, hashes)))
+    hashes, rows = zip(*sorted(zip(hashes, rows)))
     rows = list(rows)
     hashes = list(hashes)
     prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len * len(ρ_prefs)), dtype=np.uint8)))
@@ -373,12 +374,8 @@ def make_flow_csv(load_dir="./driving"):
             X, Y = np.meshgrid(x, y)
             axes[0].set_title("dbg reconstruction")
             axes[0].quiver(X, Y, xs[i], ys[i])
-            axes[0].invert_yaxis()
-            x = np.arange(0, 15, 1)
-            y = np.arange(0, 15, 1)
-            X, Y = np.meshgrid(x, y)
-            axes[1].set_title("dbg reconstruction")
             axes[1].quiver(X, Y, xs[prev_i], ys[prev_i])
+            axes[0].invert_yaxis()
             axes[1].invert_yaxis()
             plt.show()
             
