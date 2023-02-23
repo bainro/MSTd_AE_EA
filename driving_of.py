@@ -350,7 +350,7 @@ def make_flow_csv(load_dir="./driving"):
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             ### @TODO remove! only for debugging
-                            #'''
+                            '''
                             fig, axes = plt.subplots(1, 1, figsize=(16, 5.0))
                             x_ = np.arange(0, win_len, 1)
                             y_ = np.arange(0, win_len, 1)
@@ -360,7 +360,7 @@ def make_flow_csv(load_dir="./driving"):
                             # trying to make top-left pt 0,0
                             axes.invert_yaxis()
                             plt.show()
-                            #'''
+                            '''
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
