@@ -383,5 +383,5 @@ def make_flow_csv(load_dir="./driving"):
     
 if __name__ == "__main__":
     # make_flow_mp4(os.environ['HOME'] + "/driving_data")
-    # make_flow_csv('/home/rbain/driving_data')
-    csv_stats(["driving-8dir-5speed.csv", "V-8dir-5speed.csv"])
+    make_flow_csv('/home/rbain/driving_data')
+    # csv_stats(["driving-8dir-5speed.csv", "V-8dir-5speed.csv"])
