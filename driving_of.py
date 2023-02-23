@@ -300,6 +300,7 @@ def make_flow_csv(load_dir="./driving"):
     rows = np.zeros((n_conv_windows, n_trial_eles))
     print("SMALL ROWS MATRIX FOR DBG!!!")
     rows = np.zeros((2, n_trial_eles))
+    row_i = 0
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         # @TODO remove, only for debugging!
@@ -331,7 +332,7 @@ def make_flow_csv(load_dir="./driving"):
             y = np.arange(0, u.shape[1], 1)
             X, Y = np.meshgrid(x, y)
             axes.set_title("dbg reconstruction")
-            axes.quiver(X, Y, np.flip(u, 0), np.flip(v, 0))
+            axes.quiver(X, Y, u, v)
             # trying to make top-left pt 0,0
             axes.invert_yaxis()
             plt.show()
@@ -342,7 +343,7 @@ def make_flow_csv(load_dir="./driving"):
             y = np.arange(0, win_len, 1)
             X, Y = np.meshgrid(x, y)
             axes.set_title("dbg top left 15x15")
-            axes.quiver(X, Y, np.flip(u[:15,:15], 0), np.flip(v[:15,:15]))
+            axes.quiver(X, Y, u[:15,:15], v[:15,:15])
             # trying to make top-left pt 0,0
             axes.invert_yaxis()
             plt.show()
@@ -350,6 +351,7 @@ def make_flow_csv(load_dir="./driving"):
             
             x = np.flip(u, 0)
             y = np.flip(v, 0)
+
             # print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
@@ -358,7 +360,7 @@ def make_flow_csv(load_dir="./driving"):
                 for k in range(n_p_o):
                     ### @TODO remove! only for debugging
                     #'''
-                    if i == 3:
+                    if i == 3 and j == n_p_o - 1 and (k == n_p_o - 1 or k == n_p_o - 2):
                         fig, axes = plt.subplots(1, 1)
                         x_ = np.arange(0, win_len, 1)
                         y_ = np.arange(0, win_len, 1)
@@ -366,8 +368,8 @@ def make_flow_csv(load_dir="./driving"):
                         axes.set_title("dbg windowed input")
                         _j_ = stride * j
                         _k_ = stride * k
-                        # axes.quiver(X, Y, x[_j_:(_j_ + win_len), _k_:(_k_ + win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
-                        axes.quiver(X, Y, x[_j_:(_j_ + win_len), _k_:(_k_ + win_len)], y[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
+                        axes.quiver(X, Y, x[_j_:(_j_ + win_len), _k_:(_k_ + win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
+                        # axes.quiver(X, Y, np.flip(x,0)[_j_:(_j_ - win_len), _k_:(_k_ - win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
                         print(f"(x1, y1): {_j_}, {_k_}; (x2, y2): {_j_ + win_len}, {_j_ + win_len}")
                         # trying to make top-left pt 0,0
                         axes.invert_yaxis()
@@ -390,8 +392,10 @@ def make_flow_csv(load_dir="./driving"):
                             # if i == dbg_n_trails - 1:	
                                 # import pdb; pdb.set_trace()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
-                    r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
-                    if k == 2: 
+                    row_i = row_i + 1
+                    # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
+                    # if k == 2: 
+                    if j == n_p_o - 1 and k == n_p_o - 1: 
                         print("EXITING EARLY; DBG"); 
                         with open("./test.csv", 'w') as csv_f: 
                             csv_w = csv.writer(csv_f) 
@@ -399,8 +403,9 @@ def make_flow_csv(load_dir="./driving"):
                             rows = rows.T
                             csv_w.writerows(rows)
                         exit()
-                    rows[k, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
-                    # rows[r_i, :] = np.array(trial)
+                        
+                    rows[row_i, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
+                    # rows[row_i, :] = np.array(trial)
                     
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
