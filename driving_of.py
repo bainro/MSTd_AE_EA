@@ -336,7 +336,7 @@ def make_flow_csv(load_dir="./driving"):
                                 hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
                                 if prev_hash != None:
                                     print(hash - prev_hash)
-                                print(prev_hash = hash)
+                                prev_hash = hash
                             if k == n_p_o - 1:
                                 exit()
                             _x = _x.flatten()
