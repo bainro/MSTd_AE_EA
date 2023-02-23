@@ -303,8 +303,10 @@ def make_flow_csv(load_dir="./driving"):
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
         # @TODO remove, only for debugging!
-        # if i > dbg_n_trails - 1:
-            # break
+        if i != 3:
+            continue
+        else
+            print("SHUT ME UP! DBG")
         
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
