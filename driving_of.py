@@ -294,10 +294,9 @@ def make_flow_csv(load_dir="./driving"):
     n_p_o = math.floor(flow_dims[0] / (win_len - overlap)) 
     print(f"ratio of new windowed inputs per old, whole input: {n_p_o ** 2}")
     n_conv_windows = len(PFMs) * n_p_o ** 2
-    rows = np.zeros((n_conv_windows, n_trial_eles))
-    row_i = 0
     # parallel arrays!
-    hashes = np.zeros(rows.shape[0])
+    rows = []
+    hashes = []
     # random.shuffle(PFMs)
     prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     
@@ -332,12 +331,12 @@ def make_flow_csv(load_dir="./driving"):
                     for ρ_pref in ρ_prefs:
                         for θ_pref in θ_prefs:
                             _j = stride * j
-                            _k = stride * k 
+                            _k = stride * k
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             if θ_pref == 0 and ρ_pref == 0.0087:
                                 hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
-                                hashes[row_i] = hash
+                                hashes.append(hash)
                                 h_i = h_i + 1
                             _x = _x.flatten()
                             _y = _y.flatten()
@@ -345,13 +344,12 @@ def make_flow_csv(load_dir="./driving"):
                             R_MT = dir_response(_x, _y, θ_pref) * speed_response(_x, _y, ρ_pref)	
                             trial += R_MT.tolist()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
-                       
-                    rows[row_i, :] = np.array(trial)
-                    row_i = row_i + 1
+                    rows.append(trial)
                     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
+        rows = np.array(rows)
         rows = rows.T
         print("rows.shape: " + str(rows.shape))
         csv_w.writerows(rows)
