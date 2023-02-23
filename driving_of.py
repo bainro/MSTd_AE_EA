@@ -390,7 +390,7 @@ def make_flow_csv(load_dir="./driving"):
                                 # import pdb; pdb.set_trace()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
                     r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
-                    if r_i == 2: 
+                    if k == 2: 
                         print("EXITING EARLY; DBG"); exit()
                     rows[k, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
                     # rows[r_i, :] = np.array(trial)
