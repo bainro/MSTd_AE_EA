@@ -292,6 +292,8 @@ def make_flow_csv(load_dir="./driving"):
     # parallel arrays!
     rows = []
     hashes = []
+    xs = []
+    ys = []
     # random.shuffle(PFMs)
     hash_fn = imagehash.average_hash
     
@@ -350,6 +352,8 @@ def make_flow_csv(load_dir="./driving"):
                     hash = hash_fn(Image.fromarray(_tmp))
                     hashes.append(hash)
                     rows.append(trial)
+                    xs.append(_x)
+                    xy.append(_y)
     
     # parallel sorting
     rows, hashes = zip(*sorted(zip(rows, hashes)))
@@ -358,14 +362,32 @@ def make_flow_csv(load_dir="./driving"):
     prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len * len(ρ_prefs)), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
+    prev_i = 0
     # '''
     for i, h in enumerate(hashes[::-1]):
         if prev_hash - h < 20:
+            
+            fig, axes = plt.subplots(2, 1)
+            x = np.arange(0, 15, 1)
+            y = np.arange(0, 15, 1)
+            X, Y = np.meshgrid(x, y)
+            axes[0].set_title("dbg reconstruction")
+            axes[0].quiver(X, Y, xs[i], ys[i])
+            axes[0].invert_yaxis()
+            x = np.arange(0, 15, 1)
+            y = np.arange(0, 15, 1)
+            X, Y = np.meshgrid(x, y)
+            axes[0].set_title("dbg reconstruction")
+            axes[0].quiver(X, Y, xs[prev_i], ys[prev_i])
+            axes[0].invert_yaxis()
+            plt.show()
+            
             # print(prev_hash - h)
             del rows[i - num_del]
             num_del = num_del + 1
         else:    
             prev_hash = h            
+            prev_i = i
     # '''
     print("trials after ~duplicate removal: ", len(rows))
                     
