@@ -370,6 +370,7 @@ def make_flow_csv(load_dir="./driving"):
                         _k_ = stride * k
                         axes.quiver(X, Y, np.flip(x, 0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
                         # axes.quiver(X, Y, np.flip(x,0)[_j_:(_j_ - win_len), _k_:(_k_ - win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
+                        print(np.sum(np.flip(x, 0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)]))
                         print(f"(x1, y1): {_j_}, {_k_}; (x2, y2): {_j_ + win_len}, {_k_ + win_len}")
                         # trying to make top-left pt 0,0
                         axes.invert_yaxis()
@@ -383,6 +384,7 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
+                            print(np.sum(_x))
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
