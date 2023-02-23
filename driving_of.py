@@ -296,6 +296,8 @@ def make_flow_csv(load_dir="./driving"):
     n_conv_windows = len(PFMs) * n_p_o ** 2
     rows = np.zeros((n_conv_windows, n_trial_eles))
     row_i = 0
+    # parallel arrays!
+    hashes = np.zeros(rows.shape[0])
     # random.shuffle(PFMs)
     prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     
@@ -335,8 +337,8 @@ def make_flow_csv(load_dir="./driving"):
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             if θ_pref == 0 and ρ_pref == 0.0087:
                                 hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
-                                print(hash - prev_hash)
-                                prev_hash = hash
+                                hashes[row_i] = hash
+                                h_i = h_i + 1
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
