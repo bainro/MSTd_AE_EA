@@ -1,4 +1,4 @@
-# script for optic flow from driving dataset: tinyurl.com/3ufzcdaa
+# script for optic flow from driving dataset: tinyurl.com/3ufzcdaa 
 # download for final_pass & OF tar files: tinyurl.com/228emu8s
 import io
 import os
