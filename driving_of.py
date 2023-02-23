@@ -363,7 +363,6 @@ def make_flow_csv(load_dir="./driving"):
     xs =     [x for _, x in sorted(zip(sums, xs),     key=lambda pair: pair[0])]
     ys =     [y for _, y in sorted(zip(sums, ys),     key=lambda pair: pair[0])]
     sums = sorted(sums)
-    print(sums)
     
     rows = list(rows)
     hashes = list(hashes)
