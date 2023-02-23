@@ -365,13 +365,22 @@ def make_flow_csv(load_dir="./driving"):
     for i, _r in enumerate(rows[::-1]):
         tl_f1 = [xs[i][0,0], ys[i][0,0]]
         tl_f2 = [xs[prev_i][0,0], ys[prev_i][0,0]]
+        tr_f1 = [xs[i][0,-1], ys[i][0,-1]]
+        tr_f2 = [xs[prev_i][0,0], ys[prev_i][0,0]]
+        bl_f1 = [xs[i][-1,0], ys[i][-1,0]]
+        bl_f2 = [xs[prev_i][-1,0], ys[prev_i][-1,0]]
         br_f1 = [xs[i][-1,-1], ys[i][-1,-1]]
         br_f2 = [xs[prev_i][-1,-1], ys[prev_i][-1,-1]]
         # avoid division by 0
         eps = 1e-12
+        # going to compare the corner flows to eachother
+        # if their sums are the same, and their corners are similar orientation as measured 
+        # by cosine similarity, they're assumed to be too similar & one is discarded :)
         cos_sim_tl = np.dot(tl_f1, tl_f2) / (np.linalg.norm(tl_f1) * np.linalg.norm(tl_f2) + eps)
+        cos_sim_tr = np.dot(tr_f1, tr_f2) / (np.linalg.norm(tr_f1) * np.linalg.norm(tr_f2) + eps)
+        cos_sim_bl = np.dot(bl_f1, bl_f2) / (np.linalg.norm(bl_f1) * np.linalg.norm(bl_f2) + eps)
         cos_sim_br = np.dot(br_f1, br_f2) / (np.linalg.norm(br_f1) * np.linalg.norm(br_f2) + eps)
-        if cos_sim_tl > .9 and cos_sim_br > .9:            
+        if cos_sim_tl > .9 and cos_sim_tr > .9 and cos_sim_bl > .9 and cos_sim_br > .9:            
             fig, axes = plt.subplots(2, 1)
             x = np.arange(0, 15, 1)
             y = np.arange(0, 15, 1)
