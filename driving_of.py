@@ -395,7 +395,7 @@ def make_flow_csv(load_dir="./driving"):
                     
                     # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     # if k == 2: 
-                    if not (j == n_p_o - 1 and k == n_p_o - 1):
+                    if not (j == n_p_o - 1 and (k == n_p_o - 1 or k == n_p_o - 2)):
                         continue
                         
                     rows[row_i, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
