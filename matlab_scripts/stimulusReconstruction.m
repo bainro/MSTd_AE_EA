@@ -26,7 +26,7 @@ SRFile = [dir 'MST-fr.csv'];
 V = csvread(VFile);
 
 %% Read test trial indices
-numTest = 10; % 500;
+numTest = 100; % 500;
 
 trialsAll = dlmread([dir, 'trials.csv'], ',');
 if (size(trialsAll,1) > 1)
