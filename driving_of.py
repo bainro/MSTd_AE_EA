@@ -391,7 +391,13 @@ def make_flow_csv(load_dir="./driving"):
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
                     r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     if k == 2: 
-                        print("EXITING EARLY; DBG"); exit()
+                        print("EXITING EARLY; DBG"); 
+                        with open("./test.csv", 'w') as csv_f: 
+                            csv_w = csv.writer(csv_f) 
+                            # csv_w.writerow(fields)  
+                            rows = rows.T
+                            csv_w.writerows(rows)
+                        exit()
                     rows[k, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
                     # rows[r_i, :] = np.array(trial)
                     
