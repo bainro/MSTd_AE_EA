@@ -7,7 +7,6 @@ import csv
 import cv2
 import math
 import random
-import imagehash
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -291,12 +290,10 @@ def make_flow_csv(load_dir="./driving"):
     n_conv_windows = len(PFMs) * n_p_o ** 2
     # parallel arrays!
     rows = []
-    hashes = []
     sums = []
     xs = []
     ys = []
     # random.shuffle(PFMs)
-    hash_fn = imagehash.average_hash
     
     for i, of_file in enumerate(PFMs):
         
@@ -350,8 +347,6 @@ def make_flow_csv(load_dir="./driving"):
                         continue
                     _tmp = np.reshape(trial, (win_len * len(θ_prefs), win_len * len(ρ_prefs)))
                     _tmp = np.uint8(_tmp * 255)
-                    hash = hash_fn(Image.fromarray(_tmp))
-                    hashes.append(hash)
                     rows.append(trial)
                     xs.append(_x)
                     ys.append(_y)
@@ -359,19 +354,15 @@ def make_flow_csv(load_dir="./driving"):
     
     # parallel sorting
     rows   = [r for _, r in sorted(zip(sums, rows),   key=lambda pair: pair[0])]
-    hashes = [h for _, h in sorted(zip(sums, hashes), key=lambda pair: pair[0])]
     xs =     [x for _, x in sorted(zip(sums, xs),     key=lambda pair: pair[0])]
     ys =     [y for _, y in sorted(zip(sums, ys),     key=lambda pair: pair[0])]
     sums = sorted(sums)
-    
-    rows = list(rows)
-    hashes = list(hashes)
-    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len * len(ρ_prefs)), dtype=np.uint8)))
+
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
     prev_i = 0
     # '''
-    for i, h in enumerate(hashes[::-1]):
+    for i, _r in enumerate(rows[::-1]):
         tl_f1 = [xs[i][0,0], ys[i][0,0]]
         tl_f2 = [xs[prev_i][0,0], ys[prev_i][0,0]]
         br_f1 = [xs[i][-1,-1], ys[i][-1,-1]]
@@ -391,12 +382,10 @@ def make_flow_csv(load_dir="./driving"):
             axes[0].invert_yaxis()
             axes[1].invert_yaxis()
             plt.show()
-            
-            # print(prev_hash - h)
+           
             del rows[i - num_del]
             num_del = num_del + 1
         else:    
-            prev_hash = h            
             prev_i = i
     # '''
     print("trials after ~duplicate removal: ", len(rows))
