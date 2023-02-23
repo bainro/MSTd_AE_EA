@@ -372,7 +372,9 @@ def make_flow_csv(load_dir="./driving"):
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
                     r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     rows[r_i, :] = np.array(trial)
-    
+
+    print("EXITING EARLY; DBG"); exit()
+                    
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
