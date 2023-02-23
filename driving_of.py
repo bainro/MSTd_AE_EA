@@ -392,7 +392,8 @@ def make_flow_csv(load_dir="./driving"):
                     r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     if r_i == 2: 
                         print("EXITING EARLY; DBG"); exit()
-                    rows[r_i, :] = np.array(trial)
+                    rows[k, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
+                    # rows[r_i, :] = np.array(trial)
                     
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
