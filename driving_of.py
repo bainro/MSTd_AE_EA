@@ -382,6 +382,8 @@ def make_flow_csv(load_dir="./driving"):
                         for θ_pref in θ_prefs:
                             _j = stride * j
                             _k = stride * k
+                            # _x = x[_j:(_j + win_len), _k:(_k + win_len)]
+                            # _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             _x = _x.flatten()
@@ -396,7 +398,7 @@ def make_flow_csv(load_dir="./driving"):
                     
                     # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     # if k == 2: 
-                    if not (j == 0 and (k == 0 or k == 1)):
+                    if not (k == 0 and (j == 0 or j == 1)):
                         continue
                         
                     print(np.sum(_x))
