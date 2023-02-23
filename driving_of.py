@@ -338,6 +338,8 @@ def make_flow_csv(load_dir="./driving"):
                     sum_flow = [np.sum(_x), np.sum(_y)]
                     tl_f = [_x[0,0], _y[0,0]]
                     br_f = [_x[-1,-1], _y[-1,-1]]
+                    if np.linalg.norm(sum_flow) * np.linalg.norm(tl_f) == 0:
+                        print("don't divide by 0 dummy!")
                     cos_sim_tl = np.dot(sum_flow, tl_f) / (np.linalg.norm(sum_flow) * np.linalg.norm(tl_f))
                     cos_sim_br = np.dot(sum_flow, br_f) / (np.linalg.norm(sum_flow) * np.linalg.norm(br_f))
                     # print(cos_sim_tl)
