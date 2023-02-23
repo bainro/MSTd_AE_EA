@@ -382,7 +382,7 @@ def make_flow_csv(load_dir="./driving"):
                     for ρ_pref in ρ_prefs:
                         for θ_pref in θ_prefs:
                             _j = stride * j
-                            _k = stride * k + 1
+                            _k = stride * k + 2
                             # _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             # _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
