@@ -19,8 +19,8 @@ vecDirs = (0:numDirs-1)/numDirs*2*pi;
 nMT = prod(dimPx)*numSpeeds*numDirs;
 
 dir = '';
-VFile = 'driving-8dir-5speed.csv';
-% VFile = 'V-8dir-5speed.csv';
+% VFile = 'driving-8dir-5speed.csv';
+VFile = 'test.csv';
 weightFile = [dir, 'conn_MT_MST_', indiForAnalysis, '.dat'];
 SRFile = [dir 'MST-fr.csv'];
 %% Read input
