@@ -292,6 +292,7 @@ def make_flow_csv(load_dir="./driving"):
     # parallel arrays!
     rows = []
     hashes = []
+    sums = []
     xs = []
     ys = []
     # random.shuffle(PFMs)
@@ -354,10 +355,10 @@ def make_flow_csv(load_dir="./driving"):
                     rows.append(trial)
                     xs.append(_x)
                     ys.append(_y)
+                    sums.append(np.sum(_x) + np.sum(_y))
     
     # parallel sorting
-    # rows, hashes = zip(*sorted(zip(rows, hashes)))
-    hashes, rows = zip(*sorted(zip(hashes, rows)))
+    rows, hashes = zip(*sorted(zip(rows, hashes, xs, ys)))
     rows = list(rows)
     hashes = list(hashes)
     prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len * len(ρ_prefs)), dtype=np.uint8)))
