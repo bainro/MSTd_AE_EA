@@ -374,8 +374,8 @@ def make_flow_csv(load_dir="./driving"):
         # avoid division by 0
         eps = 1e-12
         # going to compare the corner flows to eachother
-        # if their sums are the same, and their corners are similar orientation as measured 
-        # by cosine similarity, they're assumed to be too similar & one is discarded :)
+        # if their sums are the relatively similar, and their corners are similar orientation 
+        # as measured by cos similarity, they're assumed to be too similar & one is discarded
         cos_sim_tl = np.dot(tl_f1, tl_f2) / (np.linalg.norm(tl_f1) * np.linalg.norm(tl_f2) + eps)
         cos_sim_tr = np.dot(tr_f1, tr_f2) / (np.linalg.norm(tr_f1) * np.linalg.norm(tr_f2) + eps)
         cos_sim_bl = np.dot(bl_f1, bl_f2) / (np.linalg.norm(bl_f1) * np.linalg.norm(bl_f2) + eps)
