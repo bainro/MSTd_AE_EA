@@ -377,9 +377,9 @@ def make_flow_csv(load_dir="./driving"):
             x = np.arange(0, 15, 1)
             y = np.arange(0, 15, 1)
             X, Y = np.meshgrid(x, y)
-            axes[0].set_title("dbg reconstruction")
-            axes[0].quiver(X, Y, xs[prev_i], ys[prev_i])
-            axes[0].invert_yaxis()
+            axes[1].set_title("dbg reconstruction")
+            axes[1].quiver(X, Y, xs[prev_i], ys[prev_i])
+            axes[1].invert_yaxis()
             plt.show()
             
             # print(prev_hash - h)
