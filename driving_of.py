@@ -350,6 +350,7 @@ def make_flow_csv(load_dir="./driving"):
                         X, Y = np.meshgrid(x_, y_)
                         axes.set_title("dbg windowed input")
                         axes.quiver(X, Y, np.flip(x,0)[_j:(_j + win_len), _k:(_k + win_len)], np.flip(y,0)[_j:(_j + win_len), _k:(_k + win_len)])
+                        print(f"(x1, y1): {_j}, {_k}; (x2, y2): {_j + win_len}, {_j + win_len}")
                         # trying to make top-left pt 0,0
                         axes.invert_yaxis()
                         plt.show()
