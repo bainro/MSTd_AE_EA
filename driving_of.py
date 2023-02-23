@@ -335,7 +335,7 @@ def make_flow_csv(load_dir="./driving"):
                             R_MT = dir_response(_x, _y, θ_pref) * speed_response(_x, _y, ρ_pref)	
                             trial += R_MT.tolist()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
-                    _tmp = np.reshape(trial, (win_len, win_len, len(θ_prefs) * len(ρ_prefs)))
+                    _tmp = np.reshape(trial, (win_len * len(θ_prefs), win_len, len(ρ_prefs)))
                     _tmp = np.uint8(_tmp * 255)
                     hash = hash_fn(Image.fromarray(_tmp))
                     hashes.append(hash)
@@ -345,7 +345,7 @@ def make_flow_csv(load_dir="./driving"):
     rows, hashes = zip(*sorted(zip(rows, hashes)))
     rows = list(rows)
     hashes = list(hashes)
-    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len, win_len, len(θ_prefs) * len(ρ_prefs)), dtype=np.uint8)))
+    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len, len(ρ_prefs)), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
     # '''
