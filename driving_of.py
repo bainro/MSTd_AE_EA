@@ -337,7 +337,6 @@ def make_flow_csv(load_dir="./driving"):
                             if θ_pref == 0 and ρ_pref == 0.0087:
                                 hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
                                 hashes.append(hash)
-                                h_i = h_i + 1
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
