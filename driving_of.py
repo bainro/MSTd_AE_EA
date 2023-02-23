@@ -347,7 +347,8 @@ def make_flow_csv(load_dir="./driving"):
     
     # parallel sorting
     rows, hashes = zip(*sorted(zip(rows, hashes)))
-    print(len(rows))
+    rows = list(rows)
+    hashes = list(hashes)
     prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
     for i, h in enumerate(hashes[::-1]):
