@@ -84,8 +84,8 @@ public:
 		// training and testing parameters
 		int totalSimTrial = 14739;
 		// if training the final one to evaluate
-		int numTrain = 14239;
-		int numTest = totalSimTrial - numTrain;
+		int numTrain = 2000;//14239;
+		int numTest = totalSimTrial - 14239;//numTrain;
 		// else evolving many at once
 		if (numIndi > 1) {
 			numTrain = 2000;
