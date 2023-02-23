@@ -318,7 +318,7 @@ def make_flow_csv(load_dir="./driving"):
             x = np.flip(u, 0)
             y = np.flip(v, 0)
 
-            prev_hash = None
+            prev_hash = 0
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
             # subsampling input using j and k
