@@ -345,7 +345,7 @@ def make_flow_csv(load_dir="./driving"):
     rows, hashes = zip(*sorted(zip(rows, hashes)))
     rows = list(rows)
     hashes = list(hashes)
-    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len, len(ρ_prefs)), dtype=np.uint8)))
+    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len * len(ρ_prefs)), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
     # '''
