@@ -294,7 +294,6 @@ def make_flow_csv(load_dir="./driving"):
     hashes = []
     # random.shuffle(PFMs)
     hash_fn = imagehash.average_hash
-    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     
     for i, of_file in enumerate(PFMs):
         
@@ -330,25 +329,24 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
-                            if θ_pref == 0 and ρ_pref == 0.0087:
-                                hash = hash_fn(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
-                                hashes.append(hash)
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                             R_MT = dir_response(_x, _y, θ_pref) * speed_response(_x, _y, ρ_pref)	
                             trial += R_MT.tolist()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
+                    hash = hash_fn(Image.fromarray( np.uint8(np.reshape(trial, (win_len, win_len, len(θ_prefs) * len(ρ_prefs))) * 255) ))
+                    hashes.append(hash)
                     rows.append(trial)
     
     # parallel sorting
     rows, hashes = zip(*sorted(zip(rows, hashes)))
     rows = list(rows)
     hashes = list(hashes)
-    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
+    prev_hash = hash_fn(Image.fromarray(np.zeros((win_len, win_len, len(θ_prefs) * len(ρ_prefs)), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
-    '''
+    # '''
     for i, h in enumerate(hashes[::-1]):
         if prev_hash - h < 45:
             # print(prev_hash - h)
@@ -356,7 +354,7 @@ def make_flow_csv(load_dir="./driving"):
             num_del = num_del + 1
         else:    
             prev_hash = h            
-    '''
+    # '''
     print("trials after ~duplicate removal: ", len(rows))
                     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
