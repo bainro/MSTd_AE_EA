@@ -291,7 +291,7 @@ def make_flow_csv(load_dir="./driving"):
     overlap = 2
     stride = win_len - overlap
     n_p_o = math.floor(flow_dims[0] / (win_len - overlap)) 
-    print(f"ratio of new windowed inputs per old, whole input: {n_p_o}")
+    print(f"ratio of new windowed inputs per old, whole input: {n_p_o ** 2}")
     n_conv_windows = len(PFMs) * n_p_o ** 2
     rows = np.zeros((n_conv_windows, n_trial_eles))
     row_i = 0
