@@ -333,7 +333,7 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k 
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
-                            if θ_pref == 0:
+                            if θ_pref == 0 and ρ_pref == 0.0087:
                                 hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
                                 print(hash - prev_hash)
                                 prev_hash = hash
