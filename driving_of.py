@@ -326,10 +326,10 @@ def make_flow_csv(load_dir="./driving"):
             x = np.arange(0, u.shape[0], 1)
             y = np.arange(0, u.shape[1], 1)
             X, Y = np.meshgrid(x, y)
-            axes[2].set_title("dbg reconstruction")
-            axes[2].quiver(X, Y, u, v)
+            axes.set_title("dbg reconstruction")
+            axes.quiver(X, Y, u, v)
             # trying to make top-left pt 0,0
-            axes[2].invert_yaxis()
+            axes.invert_yaxis()
             plt.show()
             #'''          
             
@@ -355,10 +355,10 @@ def make_flow_csv(load_dir="./driving"):
                             x_ = np.arange(0, win_len, 1)
                             y_ = np.arange(0, win_len, 1)
                             X, Y = np.meshgrid(x_, y_)
-                            axes[2].set_title("dbg windowed input")
-                            axes[2].quiver(X, Y, np.flip(x,0)[_j:(_j + win_len), _k:(_k + win_len)], np.flip(y,0)[_j:(_j + win_len), _k:(_k + win_len)])
+                            axes.set_title("dbg windowed input")
+                            axes.quiver(X, Y, np.flip(x,0)[_j:(_j + win_len), _k:(_k + win_len)], np.flip(y,0)[_j:(_j + win_len), _k:(_k + win_len)])
                             # trying to make top-left pt 0,0
-                            axes[2].invert_yaxis()
+                            axes.invert_yaxis()
                             plt.show()
                             #'''
                             _x = _x.flatten()
