@@ -395,14 +395,8 @@ def make_flow_csv(load_dir="./driving"):
                     
                     # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     # if k == 2: 
-                    if j == n_p_o - 1 and k == n_p_o - 1: 
-                        print("EXITING EARLY; DBG"); 
-                        with open("./test.csv", 'w') as csv_f: 
-                            csv_w = csv.writer(csv_f) 
-                            # csv_w.writerow(fields)  
-                            rows = rows.T
-                            csv_w.writerows(rows)
-                        exit()
+                    if not (j == n_p_o - 1 and k == n_p_o - 1):
+                        continue
                         
                     rows[row_i, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
                     # rows[row_i, :] = np.array(trial)
