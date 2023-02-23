@@ -360,8 +360,8 @@ def make_flow_csv(load_dir="./driving"):
     with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
         rows = np.array(rows)
-        rows = rows.T
         print("rows.shape: " + str(rows.shape))
+        rows = rows.T
         csv_w.writerows(rows)
     
 if __name__ == "__main__":
