@@ -331,7 +331,7 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k 
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
-                            print(imagehash.average_hash(Image.fromarray(np.dstack((_x,_y)))));exit()
+                            print(imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) )));exit()
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
