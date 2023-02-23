@@ -392,7 +392,7 @@ def make_flow_csv(load_dir="./driving"):
                             # if i == dbg_n_trails - 1:	
                                 # import pdb; pdb.set_trace()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
-                    row_i = row_i + 1
+                    
                     # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     # if k == 2: 
                     if j == n_p_o - 1 and k == n_p_o - 1: 
@@ -406,6 +406,7 @@ def make_flow_csv(load_dir="./driving"):
                         
                     rows[row_i, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
                     # rows[row_i, :] = np.array(trial)
+                    row_i = row_i + 1
                     
     # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
