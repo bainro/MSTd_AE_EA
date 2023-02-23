@@ -272,8 +272,8 @@ def make_flow_csv(load_dir="./driving"):
     
     PFMs = []
     # left & right cameras in both forward & backwards time directions (~3.2k files)
-    PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/right",]
-                "optical_flow/15mm_focallength/scene_forwards/slow/into_future/left","
+    PFM_dirs = ["optical_flow/15mm_focallength/scene_forwards/slow/into_future/right",
+                "optical_flow/15mm_focallength/scene_forwards/slow/into_future/left",
                 "optical_flow/15mm_focallength/scene_backwards/slow/into_future/left",
                 "optical_flow/15mm_focallength/scene_backwards/slow/into_future/right"]
 
