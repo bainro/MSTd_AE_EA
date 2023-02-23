@@ -331,7 +331,7 @@ def make_flow_csv(load_dir="./driving"):
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             sum_flow = [np.sum(_x), np.sum(_y)]
                             tl_f = [_x[0,0], _y[0,0]]
-                            cos_sim = dot(sum_flow, tl_f)/(norm(sum_flow)*norm(tl_f))
+                            cos_sim = np.dot(sum_flow, tl_f) / (np.linalg.norm(sum_flow) * np.linalg.norm(tl_f))
                             print(cos_sim)
                             exit()
                             _x = _x.flatten()
