@@ -360,7 +360,7 @@ def make_flow_csv(load_dir="./driving"):
                 for k in range(n_p_o):
                     ### @TODO remove! only for debugging
                     #'''
-                    if i == 3 and j == n_p_o - 1 and (k == n_p_o - 1 or k == n_p_o - 2):
+                    if i == 3 and j == 0 and (k == 0 or k == 1):
                         fig, axes = plt.subplots(1, 1)
                         x_ = np.arange(0, win_len, 1)
                         y_ = np.arange(0, win_len, 1)
@@ -395,7 +395,7 @@ def make_flow_csv(load_dir="./driving"):
                     
                     # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     # if k == 2: 
-                    if not (j == n_p_o - 1 and (k == n_p_o - 1 or k == n_p_o - 2)):
+                    if not (j == 0 and (k == 0 or k == 1)):
                         continue
                         
                     rows[row_i, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
