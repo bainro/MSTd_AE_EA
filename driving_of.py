@@ -385,8 +385,8 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k
                             # _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             # _y = y[_j:(_j + win_len), _k:(_k + win_len)]
-                            _x = x[_j:(_j + win_len), _k:(_k + win_len)]
-                            _y = y[_j:(_j + win_len), _k:(_k + win_len)]
+                            _x = x[_j+6:(_j +6+ win_len), _k:(_k + win_len)]
+                            _y = y[_j+6:(_j +6+ win_len), _k:(_k + win_len)]
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
@@ -397,9 +397,7 @@ def make_flow_csv(load_dir="./driving"):
                                 # import pdb; pdb.set_trace()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
                     
-                    # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
-                    # if k == 2: 
-                    if not (k == 0 and j == n_p_o-1):
+                    if not (j == n_p_o-1 and k == 0):
                         continue
                     
                     print(np.sum(_x))
