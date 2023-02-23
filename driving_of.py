@@ -351,9 +351,11 @@ def make_flow_csv(load_dir="./driving"):
     hashes = list(hashes)
     prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
+    num_del = 0
     for i, h in enumerate(hashes[::-1]):
         if prev_hash - hash < 30:
-            del rows[i]
+            del rows[i - num_del]
+            num_del = num_del + 1
         prev_hash = hash            
     print("trials after ~duplicate removal: ", len(rows))     
                     
