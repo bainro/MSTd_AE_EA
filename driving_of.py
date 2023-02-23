@@ -381,8 +381,8 @@ def make_flow_csv(load_dir="./driving"):
                     # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
                     for ρ_pref in ρ_prefs:
                         for θ_pref in θ_prefs:
-                            _j = stride * j
-                            _k = stride * k - 1
+                            _j = stride * j + 1
+                            _k = stride * k 
                             # _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             # _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
