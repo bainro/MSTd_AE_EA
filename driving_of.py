@@ -373,8 +373,15 @@ def make_flow_csv(load_dir="./driving"):
     prev_i = 0
     # '''
     for i, h in enumerate(hashes[::-1]):
-        if prev_hash - h < 5:
-            
+        tl_f1 = [xs[i][0,0], ys[i][0,0]]
+        tl_f2 = [xs[prev_i][0,0], ys[prev_i][0,0]]
+        br_f1 = [xs[i][-1,-1], ys[i][-1,-1]]
+        br_f2 = [xs[prev_i][-1,-1], ys[prev_i][-1,-1]]
+        # avoid division by 0
+        eps = 1e-12
+        cos_sim_tl = np.dot(tl_f1, tl_f2) / (np.linalg.norm(tl_f1) * np.linalg.norm(tl_f2) + eps)
+        cos_sim_br = np.dot(br_f1, br_f2) / (np.linalg.norm(br_f1) * np.linalg.norm(br_f2) + eps)
+        if cos_sim_tl > .9 and cos_sim_br > .9:            
             fig, axes = plt.subplots(2, 1)
             x = np.arange(0, 15, 1)
             y = np.arange(0, 15, 1)
