@@ -74,6 +74,8 @@ for trialInd = 1:numTest
     %% plot MST activity
     if plotResults
     	maxD = max(max(spkData));
+	if maxD == 0:
+	    maxD = 1
         figure(3);
         subplot(1,2,2)
         [qxMT,qyMT] = plotPopulationVector(recMT, idxMT, dimPx, vecDirs, ...
