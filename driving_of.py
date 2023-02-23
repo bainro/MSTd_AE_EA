@@ -354,7 +354,7 @@ def make_flow_csv(load_dir="./driving"):
     num_del = 0
     for i, h in enumerate(hashes[::-1]):
         if prev_hash - h < 30:
-            print(prev_hash - h)
+            # print(prev_hash - h)
             del rows[i - num_del]
             num_del = num_del + 1
         prev_hash = h            
