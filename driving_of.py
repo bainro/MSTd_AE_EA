@@ -370,7 +370,7 @@ def make_flow_csv(load_dir="./driving"):
     prev_i = 0
     # '''
     for i, h in enumerate(hashes[::-1]):
-        if prev_hash - h < 15:
+        if prev_hash - h < 5:
             
             fig, axes = plt.subplots(2, 1)
             x = np.arange(0, 15, 1)
