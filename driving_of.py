@@ -324,6 +324,7 @@ def make_flow_csv(load_dir="./driving"):
             for j in range(n_p_o):
                 for k in range(n_p_o):
                     trial = []
+                    prev_hash = None
                     # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
                     for ρ_pref in ρ_prefs:
                         for θ_pref in θ_prefs:
@@ -332,7 +333,10 @@ def make_flow_csv(load_dir="./driving"):
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             if θ_pref == 0:
-                                print(imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) )))
+                                hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
+                                if prev_hash != None:
+                                    print(hash - prev_hash)
+                                prev_hash = hash
                             if k == n_p_o - 1:
                                 exit()
                             _x = _x.flatten()
