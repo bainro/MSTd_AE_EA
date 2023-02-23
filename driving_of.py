@@ -352,7 +352,8 @@ def make_flow_csv(load_dir="./driving"):
             # print(prev_hash - h)
             del rows[i - num_del]
             num_del = num_del + 1
-        prev_hash = h            
+        else:    
+            prev_hash = h            
     print("trials after ~duplicate removal: ", len(rows))     
                     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
