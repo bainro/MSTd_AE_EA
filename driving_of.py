@@ -348,7 +348,7 @@ def make_flow_csv(load_dir="./driving"):
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
     for i, h in enumerate(hashes[::-1]):
-        if prev_hash - h < 50:
+        if prev_hash - h < 40:
             # print(prev_hash - h)
             del rows[i - num_del]
             num_del = num_del + 1
