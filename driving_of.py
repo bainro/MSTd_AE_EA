@@ -355,7 +355,7 @@ def make_flow_csv(load_dir="./driving"):
             num_del = num_del + 1
         else:    
             prev_hash = h            
-    print("trials after ~duplicate removal: ", len(rows));exit()
+    print("trials after ~duplicate removal: ", len(rows))
                     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
