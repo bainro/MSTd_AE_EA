@@ -331,7 +331,8 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k 
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
-                            print(imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) )))
+                            if θ_pref == 0:
+                                print(imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) )))
                             if k == n_p_o - 1:
                                 exit()
                             _x = _x.flatten()
