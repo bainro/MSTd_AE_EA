@@ -359,7 +359,7 @@ def make_flow_csv(load_dir="./driving"):
     
     # parallel sorting
     rows, hashes = zip(*sorted(zip(rows, hashes)))
-    rows, hashes, xs, ys = zip(*sorted(zip(rows, hashes, xs, ys)))
+    rows, hashes, xs = zip(*sorted(zip(*sorted(zip(rows, hashes, xs)))))
     rows = list(rows)
     hashes = list(hashes)
     prev_hash = hash_fn(Image.fromarray(np.zeros((win_len * len(θ_prefs), win_len * len(ρ_prefs)), dtype=np.uint8)))
