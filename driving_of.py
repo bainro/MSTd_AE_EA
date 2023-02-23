@@ -284,7 +284,7 @@ def make_flow_csv(load_dir="./driving"):
         # @TODO remove! for debug only!
         num_flow_files = len(os.listdir(full_path))
         for q, pfm_file in enumerate(os.listdir(full_path)):
-            if q > num_flow_files // 100: # 16:
+            if q > num_flow_files // 800: # 16:
                 break
             PFMs.append(os.path.join(full_path, pfm_file))
     
@@ -337,8 +337,6 @@ def make_flow_csv(load_dir="./driving"):
                                 hash = imagehash.average_hash(Image.fromarray( np.uint8(np.dstack((_x,_y)) * 255) ))
                                 print(hash - prev_hash)
                                 prev_hash = hash
-                            if k == n_p_o - 1:
-                                exit()
                             _x = _x.flatten()
                             _y = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
