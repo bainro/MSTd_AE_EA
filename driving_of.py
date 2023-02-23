@@ -360,8 +360,8 @@ def make_flow_csv(load_dir="./driving"):
     # parallel sorting
     rows   = [r for _, r in sorted(zip(sums, rows),   key=lambda pair: pair[0])]
     hashes = [h for _, h in sorted(zip(sums, hashes), key=lambda pair: pair[0])]
-    xs =     [x for _, x in sorted(zip(xs, hashes),   key=lambda pair: pair[0])]
-    ys =     [y for _, y in sorted(zip(ys, hashes),   key=lambda pair: pair[0])]
+    xs =     [x for _, x in sorted(zip(sums, xs),     key=lambda pair: pair[0])]
+    ys =     [y for _, y in sorted(zip(sums, ys),     key=lambda pair: pair[0])]
     sums = sorted(sums)
     
     rows = list(rows)
