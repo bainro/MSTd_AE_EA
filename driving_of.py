@@ -358,6 +358,7 @@ def make_flow_csv(load_dir="./driving"):
                     sums.append(np.sum(_x) + np.sum(_y))
     
     # parallel sorting
+    rows, hashes = zip(*sorted(zip(rows, hashes)))
     rows, hashes, xs, ys = zip(*sorted(zip(rows, hashes, xs, ys)))
     rows = list(rows)
     hashes = list(hashes)
