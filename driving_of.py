@@ -345,6 +345,16 @@ def make_flow_csv(load_dir="./driving"):
                             trial += R_MT.tolist()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
                     rows.append(trial)
+    
+    # parallel sorting
+    rows, hashes = zip(*sorted(zip(rows, hashes)))
+    prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
+    print("trials before ~duplicate removal: ", len(rows))
+    for i, h in enumerate(hashes[::-1]):
+        if prev_hash - hash < 30:
+            del rows[i]
+        prev_hash = hash            
+    print("trials after ~duplicate removal: ", len(rows))     
                     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
     with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
