@@ -322,7 +322,7 @@ def make_flow_csv(load_dir="./driving"):
                 
             # @TODO remove; only for debugging
             #'''
-            fig, axes = plt.subplots(1, 1, figsize=(16, 5.0))
+            fig, axes = plt.subplots(1, 1)
             x = np.arange(0, u.shape[0], 1)
             y = np.arange(0, u.shape[1], 1)
             X, Y = np.meshgrid(x, y)
@@ -352,7 +352,7 @@ def make_flow_csv(load_dir="./driving"):
                             ### @TODO remove! only for debugging
                             #'''
                             if i == 3:
-                                fig, axes = plt.subplots(1, 1, figsize=(16, 5.0))
+                                fig, axes = plt.subplots(1, 1)
                                 x_ = np.arange(0, win_len, 1)
                                 y_ = np.arange(0, win_len, 1)
                                 X, Y = np.meshgrid(x_, y_)
