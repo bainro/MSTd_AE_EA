@@ -398,7 +398,7 @@ def make_flow_csv(load_dir="./driving"):
                     
                     # r_i = (i * n_p_o ** 2) + (j * n_p_o) + k
                     # if k == 2: 
-                    if not (k == 0 and j == 0):
+                    if not (k == 0 and j == 0) or (k == n_p_o-1 and j == 0):
                         continue
                     
                     
