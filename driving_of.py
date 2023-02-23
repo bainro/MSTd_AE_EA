@@ -329,17 +329,18 @@ def make_flow_csv(load_dir="./driving"):
                             _k = stride * k
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
-                            sum_flow = [np.sum(_x), np.sum(_y)]
-                            tl_f = [_x[0,0], _y[0,0]]
-                            cos_sim = np.dot(sum_flow, tl_f) / (np.linalg.norm(sum_flow) * np.linalg.norm(tl_f))
-                            print(cos_sim)
-                            exit()
-                            _x = _x.flatten()
-                            _y = _y.flatten()
+                            _xf = _x.flatten()
+                            _yf = _y.flatten()
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
-                            R_MT = dir_response(_x, _y, θ_pref) * speed_response(_x, _y, ρ_pref)	
+                            R_MT = dir_response(_xf, _yf, θ_pref) * speed_response(_xf, _yf, ρ_pref)	
                             trial += R_MT.tolist()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
+                    sum_flow = [np.sum(_x), np.sum(_y)]
+                    tl_f = [_x[0,0], _y[0,0]]
+                    cos_sim = np.dot(sum_flow, tl_f) / (np.linalg.norm(sum_flow) * np.linalg.norm(tl_f))
+                    print(cos_sim)
+                    if cos_sim > .9:
+                        continue
                     _tmp = np.reshape(trial, (win_len * len(θ_prefs), win_len * len(ρ_prefs)))
                     _tmp = np.uint8(_tmp * 255)
                     hash = hash_fn(Image.fromarray(_tmp))
