@@ -368,7 +368,7 @@ def make_flow_csv(load_dir="./driving"):
                         axes.set_title("dbg windowed input")
                         _j_ = stride * j
                         _k_ = stride * k
-                        axes.quiver(X, Y, np.flip(x[_j_:(_j_ + win_len), _k_:(_k_ + win_len)], 0), np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
+                        axes.quiver(X, Y, np.flip(x, 0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
                         # axes.quiver(X, Y, np.flip(x,0)[_j_:(_j_ - win_len), _k_:(_k_ - win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
                         print(f"(x1, y1): {_j_}, {_k_}; (x2, y2): {_j_ + win_len}, {_k_ + win_len}")
                         # trying to make top-left pt 0,0
