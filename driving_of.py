@@ -297,6 +297,8 @@ def make_flow_csv(load_dir="./driving"):
     rows = np.zeros((n_conv_windows, n_trial_eles))
     row_i = 0
     # random.shuffle(PFMs)
+    prev_hash = imagehash.average_hash(Image.fromarray( np.zeros((win_len,win_len,2)) ))
+    
     for i, of_file in enumerate(PFMs):
         
         # not sure if necessary, but for my own sanity
@@ -318,7 +320,6 @@ def make_flow_csv(load_dir="./driving"):
             x = np.flip(u, 0)
             y = np.flip(v, 0)
 
-            prev_hash = 0
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
             # subsampling input using j and k
