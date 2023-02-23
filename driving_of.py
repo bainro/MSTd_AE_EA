@@ -283,32 +283,20 @@ def make_flow_csv(load_dir="./driving"):
         # @TODO remove! for debug only!
         num_flow_files = len(os.listdir(full_path))
         for q, pfm_file in enumerate(os.listdir(full_path)):
-            if q > num_flow_files // 16:
+            if q > num_flow_files // 100: # 16:
                 break
             PFMs.append(os.path.join(full_path, pfm_file))
-    
-    # @TODO remove, only for debugging!
-    # dbg_n_trails = 2
-    # rows = np.zeros((dbg_n_trails, n_trial_eles))
     
     # conv windowed input overlap (width - stride)
     overlap = 2
     stride = win_len - overlap
-    # ratio of new windowed inputs per old, whole input
     n_p_o = math.floor(flow_dims[0] / (win_len - overlap)) 
-    print(n_p_o)
+    print(f"ratio of new windowed inputs per old, whole input: {n_p_o}")
     n_conv_windows = len(PFMs) * n_p_o ** 2
     rows = np.zeros((n_conv_windows, n_trial_eles))
-    print("SMALL ROWS MATRIX FOR DBG!!!")
-    rows = np.zeros((2, n_trial_eles))
     row_i = 0
     # random.shuffle(PFMs)
     for i, of_file in enumerate(PFMs):
-        # @TODO remove, only for debugging!
-        if i != 3:
-            continue
-        else:
-            print("SHUT ME UP! DBG")
         
         # not sure if necessary, but for my own sanity
         if of_file.endswith(".pfm"):
@@ -325,66 +313,21 @@ def make_flow_csv(load_dir="./driving"):
             # had to flip for movie, might need to for csv too.
             # not certain yet whether x needs to be flipped too.
             v *= -1
-                
-            # @TODO remove; only for debugging
-            #'''
-            fig, axes = plt.subplots(1, 1)
-            x = np.arange(0, u.shape[0], 1)
-            y = np.arange(0, u.shape[1], 1)
-            X, Y = np.meshgrid(x, y)
-            axes.set_title("dbg reconstruction")
-            axes.quiver(X, Y, u, v)
-            # trying to make top-left pt 0,0
-            axes.invert_yaxis()
-            plt.show()
-            
-            # let's peak at the top left 15x15 window
-            fig, axes = plt.subplots(1, 1)
-            x = np.arange(0, win_len, 1)
-            y = np.arange(0, win_len, 1)
-            X, Y = np.meshgrid(x, y)
-            axes.set_title("dbg top left 15x15")
-            axes.quiver(X, Y, u[:15,:15], v[:15,:15])
-            # trying to make top-left pt 0,0
-            axes.invert_yaxis()
-            plt.show()
-            #'''          
             
             x = np.flip(u, 0)
             y = np.flip(v, 0)
 
-            # print("sum of og flow for trial #" + str(i) + ": " + str(np.sum(np.abs(x) + np.abs(y))))
             # double check that format is HxW elsewhere in the code if this fails!
             assert flow_dims[0] == flow_dims[1]
             # subsampling input using j and k
             for j in range(n_p_o):
                 for k in range(n_p_o):
-                    ### @TODO remove! only for debugging
-                    #'''
-                    if j == 0 and k == 0:
-                        fig, axes = plt.subplots(1, 1)
-                        x_ = np.arange(0, win_len, 1)
-                        y_ = np.arange(0, win_len, 1)
-                        X, Y = np.meshgrid(x_, y_)
-                        axes.set_title("dbg windowed input")
-                        _j_ = stride * j
-                        _k_ = stride * k
-                        axes.quiver(X, Y, np.flip(x, 0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
-                        # axes.quiver(X, Y, np.flip(x,0)[_j_:(_j_ - win_len), _k_:(_k_ - win_len)], np.flip(y,0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)])
-                        print(np.sum(np.flip(x, 0)[_j_:(_j_ + win_len), _k_:(_k_ + win_len)]))
-                        print(f"(x1, y1): {_j_}, {_k_}; (x2, y2): {_j_ + win_len}, {_k_ + win_len}")
-                        # trying to make top-left pt 0,0
-                        axes.invert_yaxis()
-                        plt.show()
-                    #'''
                     trial = []
                     # pass the data thru equation 2 to get R_MT (ie responses of all 15x15x40 MT neurons)
                     for ρ_pref in ρ_prefs:
                         for θ_pref in θ_prefs:
-                            _j = stride * j + 2
+                            _j = stride * j
                             _k = stride * k 
-                            # _x = x[_j:(_j + win_len), _k:(_k + win_len)]
-                            # _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             _x = x[_j:(_j + win_len), _k:(_k + win_len)]
                             _y = y[_j:(_j + win_len), _k:(_k + win_len)]
                             _x = _x.flatten()
@@ -392,27 +335,16 @@ def make_flow_csv(load_dir="./driving"):
                             # eq 2: R_MT(x, y; θ_pref, ρ_pref) = d(x, y; θ_pref) * s(x, y; ρ_pref)
                             R_MT = dir_response(_x, _y, θ_pref) * speed_response(_x, _y, ρ_pref)	
                             trial += R_MT.tolist()	
-                            # @TODO REMOVE! Debug only	
-                            # if i == dbg_n_trails - 1:	
-                                # import pdb; pdb.set_trace()	
                     assert len(trial) == n_trial_eles, f"{len(trial)} != {n_trial_eles}"	
-                    
-                    if not (j == n_p_o-1 and k == 0):
-                        continue
-                    
-                    print(np.sum(_x))
-                        
-                    rows[row_i, :] = np.array(trial); print("SHUT ME UP TOO; DBG")
-                    # rows[row_i, :] = np.array(trial)
+                       
+                    rows[row_i, :] = np.array(trial)
                     row_i = row_i + 1
                     
-    # print("rows.shape: " + str(rows.shape))
     # will then save into csv wh/ each line is all MT neurons for a "trial"
-    # with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
-    with open("./test.csv", 'w') as csv_f: 
+    with open("/media/rbain/aa31c0ce-f5cd-4b96-8d9d-58b2507995e7/driving-8dir-5speed.csv", 'w') as csv_f: 
         csv_w = csv.writer(csv_f) 
-        # csv_w.writerow(fields)  
         rows = rows.T
+        print("rows.shape: " + str(rows.shape))
         csv_w.writerows(rows)
     
 if __name__ == "__main__":
