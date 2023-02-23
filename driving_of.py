@@ -280,7 +280,7 @@ def make_flow_csv(load_dir="./driving"):
     for dir in PFM_dirs:
         full_path = os.path.join(load_dir, dir)
         for q, pfm_file in enumerate(os.listdir(full_path)):
-            if not (q % 320):
+            if not (q % 100):
                 PFMs.append(os.path.join(full_path, pfm_file))
     
     # conv windowed input overlap (width - stride)
@@ -350,7 +350,7 @@ def make_flow_csv(load_dir="./driving"):
     num_del = 0
     # '''
     for i, h in enumerate(hashes[::-1]):
-        if prev_hash - h < 20:
+        if prev_hash - h < 30:
             # print(prev_hash - h)
             del rows[i - num_del]
             num_del = num_del + 1
