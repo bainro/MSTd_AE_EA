@@ -280,7 +280,7 @@ def make_flow_csv(load_dir="./driving"):
     for dir in PFM_dirs:
         full_path = os.path.join(load_dir, dir)
         for q, pfm_file in enumerate(os.listdir(full_path)):
-            if not (q % 160):
+            if not (q % 320):
                 PFMs.append(os.path.join(full_path, pfm_file))
     
     # conv windowed input overlap (width - stride)
@@ -348,6 +348,7 @@ def make_flow_csv(load_dir="./driving"):
     prev_hash = hash_fn(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     print("trials before ~duplicate removal: ", len(rows))
     num_del = 0
+    '''
     for i, h in enumerate(hashes[::-1]):
         if prev_hash - h < 45:
             # print(prev_hash - h)
@@ -355,6 +356,7 @@ def make_flow_csv(load_dir="./driving"):
             num_del = num_del + 1
         else:    
             prev_hash = h            
+    '''
     print("trials after ~duplicate removal: ", len(rows))
                     
     # will then save into csv wh/ each line is all MT neurons for a "trial"
@@ -362,6 +364,8 @@ def make_flow_csv(load_dir="./driving"):
         csv_w = csv.writer(csv_f) 
         rows = np.array(rows)
         print("rows.shape: " + str(rows.shape))
+        print("SHUFFLING!")
+        random.shuffle(rows)
         rows = rows.T
         csv_w.writerows(rows)
     
