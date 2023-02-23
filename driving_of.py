@@ -297,7 +297,7 @@ def make_flow_csv(load_dir="./driving"):
     rows = np.zeros((n_conv_windows, n_trial_eles))
     row_i = 0
     # random.shuffle(PFMs)
-    prev_hash = imagehash.average_hash(Image.fromarray( np.zeros((win_len,win_len,2)) ))
+    prev_hash = imagehash.average_hash(Image.fromarray(np.zeros((win_len,win_len,2), dtype=np.uint8)))
     
     for i, of_file in enumerate(PFMs):
         
